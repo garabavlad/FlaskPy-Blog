@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+{% from "includes/_formhelpers.html" import render_field %}
+<div class="row" style="margin-top: 7%">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <form class="form-signin" method="POST">
+            <h1 class="h3 mb-3 font-weight-normal text-center">Log in</h1>
+
+            <div class="form-group">
+                {{render_field(form.email, class_="form-control")}}
+            </div>
+
+            <div class="form-group">
+                {{render_field(form.password, class_="form-control")}}
+            </div>
+
+            <div class="checkbox mb-1 mt-4">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Log in</button>
+            <p class="mt-3 mb-3 text-muted">&copy; 2017-2020</p>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
