@@ -31,7 +31,16 @@ def is_logged_in(f):
         else:
             flash('Unauthorized access to the page.', 'danger')
             return redirect(url_for('login'))
+    return wrap
 
+def is_not_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' not in session:
+            return f(*args, **kwargs)
+        else:
+            flash('You are already logged in!', 'danger')
+            return redirect(url_for('dashboard'))
     return wrap
 
 
@@ -80,6 +89,7 @@ def support():
 
 # Registration
 @app.route('/register', methods=['GET', 'POST'])
+@is_not_logged_in
 def register():
     form = RegisterForm(request.form)
 
@@ -112,6 +122,7 @@ def register():
 
 # Login
 @app.route('/login', methods=['GET', 'POST'])
+@is_not_logged_in
 def login():
     form = LoginForm(request.form)
 
