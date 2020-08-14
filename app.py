@@ -3,15 +3,13 @@ from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from functools import wraps
 from WTFormClasses import RegisterForm, LoginForm, ArticleForm
-import secrets
 
 
 app = Flask(__name__)
 
 
 #setting app secret
-secret = secrets.token_urlsafe(32)
-app.secret_key = secret
+app.secret_key = 'dasWF@#56$VP"as1'
 
 # DATABASE
 # MySQL config
