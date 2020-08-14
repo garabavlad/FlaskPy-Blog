@@ -10,8 +10,14 @@
     <p class="lead">This application is build using Python Flask framework. It is a good place for including some nice
         articles.</p>
 
+    {% if session.logged_in %}
+    <a class="btn btn-dark btn-lg" href="/dashboard">Dashboard</a>
+    <a class="btn btn-outline-danger btn-lg" href="/logout">Logout</a>
+    {% else %}
     <a href="/login" class="btn btn-success btn-lg">Login</a>
     <a href="/register" class="btn btn-primary btn-lg">Register</a>
+    {% endif %}
+
 
 </div>
 {% endblock %}
