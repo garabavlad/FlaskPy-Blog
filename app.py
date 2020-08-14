@@ -115,9 +115,7 @@ def register():
         return redirect(url_for("login"))
 
     elif request.method == 'GET':
-        pass
-
-    return render_template('register.html', form=form)
+        return render_template('register.html', form=form)
 
 
 # Login
