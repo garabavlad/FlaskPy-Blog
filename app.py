@@ -104,7 +104,7 @@ def register():
         cur = mysql.connection.cursor()
 
         # submit to DB
-        cur.execute("INSERT INTO users (name,email,username,password) VALUES (%s, %s, %s, %s)",
+        cur.execute("INSERT INTO users_ (name,email,username,password) VALUES (%s, %s, %s, %s)",
                     (name, email, username, password))
 
         # commit changes & close connection
@@ -132,7 +132,7 @@ def login():
         cur = mysql.connection.cursor()
 
         # submit to DB & close connection
-        result = cur.execute("SELECT * FROM users WHERE email = %s", [email])
+        result = cur.execute("SELECT * FROM users_ WHERE email = %s", [email])
 
         if result > 0:
             data = cur.fetchone()
