@@ -8,10 +8,10 @@ app = Flask(__name__)
 
 # DATABASE
 # MySQL config
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'leopartino0'
-app.config['MYSQL_DB'] = 'flasky'
+app.config['MYSQL_HOST'] = 'j1r4n2ztuwm0bhh5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'apgcuzyplwnhtpzf'
+app.config['MYSQL_PASSWORD'] = 'wibpgq8uv06eciat'
+app.config['MYSQL_DB'] = 'fwtyv7la1cjn796i'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 # init MySQL
 mysql = MySQL(app)
