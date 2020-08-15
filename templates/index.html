@@ -1,7 +1,53 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="container">
+
+    <div id="slides" class="carousel slide" data-ride="carousel">
+        <ul class="carousel-indicators">
+            <li data-target="#slides" data-slide-to="0" class="active"></li>
+            <li data-target="#slides" data-slide-to="1"></li>
+            <li data-target="#slides" data-slide-to="2"></li>
+        </ul>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ url_for('static', filename='img/background.png') }}" alt="background">
+                <div class="carousel-caption">
+                    <h1 class="display2">Welcome to Flasky</h1>
+                    <h3>An awesome Flask Article App</h3>
+                    {% if session.logged_in %}
+                        <a href="/articles">
+                            <button class="btn btn-outline-light btn-lg">Top Articles</button>
+                        </a>
+                        <a href="/dashboard">
+                            <button class="btn btn-primary btn-lg">Dashboard</button>
+                        </a>
+                    {% else %}
+                        <a href="/articles">
+                            <button class="btn btn-outline-light btn-lg">Top Articles</button>
+                        </a>
+                        <a href="/register">
+                            <button class="btn btn-primary btn-lg">Register Now</button>
+                        </a>
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='img/background2.jpg') }}" alt="background">
+                <div class="carousel-caption">
+                    <h3>Being Flasky means...</h3>
+                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem dolore ipsam,
+                        iusto nesciunt soluta tempore voluptatum. Consectetur cum ea excepturi impedit, in libero
+                        maxime, minus nostrum praesentium vel voluptas.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='img/background3.jpg') }}" alt="background">
+            </div>
+        </div>
+    </div>
+
+    <div class="">
         <div class="jumbotron text-center">
             <h1>Welcome to Flasky</h1>
             <h2>An awesome Flask Article App</h2>
