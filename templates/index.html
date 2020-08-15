@@ -36,13 +36,32 @@
                 <img src="{{ url_for('static', filename='img/background2.jpg') }}" alt="background">
                 <div class="carousel-caption">
                     <h3>Being Flasky means...</h3>
-                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem dolore ipsam,
-                        iusto nesciunt soluta tempore voluptatum. Consectetur cum ea excepturi impedit, in libero
-                        maxime, minus nostrum praesentium vel voluptas.</p>
+                    <p class="lead">“Flasky” is often being used in a distinctive social sense to talk about people and
+                        actions that bring people together in a certain way... being flasky is being good at creating
+                        “social openings” — moments of mutual appreciation between people when they break out of their
+                        norms and routines by expressing their individuality in a way that gets others to express
+                        theirs.</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="{{ url_for('static', filename='img/background3.jpg') }}" alt="background">
+                <div class="carousel-caption">
+                    <h3>What is the difference between social articles and search articles?</h3>
+                    <hr>
+                    <p class="lead"><b>Social articles</b> – are on the trend articles that get tons of social media
+                        shares and
+                        people are sharing them because they drive an emotion.
+                        <br>
+                        <b>Search articles</b> – are the evergreen articles that are continually driving valuable
+                        information for
+                        user’s intent.
+                        <br>
+                        But why content marketers are so obsessed about social articles and search
+                        articles?
+                        <br>
+                        Because there will always be a “cold war” between social media and search
+                        engines.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -53,16 +72,19 @@
             <h2>An awesome Flask Article App</h2>
             <hr>
 
-            <p class="lead">This application is build using Python Flask framework. It is a good place for including
+            <p class="lead mb-4">This application is build using Python Flask framework. It is a good place for including
                 some nice
-                articles.</p>
+                articles.
+                <br>You don't need to prove that you're amazing. <b class="font-weight-bold">We already know it.</b>
+                Just write something
+                if you feel like sharing.</p>
 
             {% if session.logged_in %}
-                <a class="btn btn-dark btn-lg" href="/dashboard">Dashboard</a>
-                <a class="btn btn-outline-danger btn-lg" href="/logout">Logout</a>
+                <a class="btn btn-dark btn-lg mr-1" href="/dashboard">Dashboard</a>
+                <a class="btn btn-outline-success btn-lg ml-1" href="/add_article">New Article</a>
             {% else %}
-                <a href="/login" class="btn btn-success btn-lg">Login</a>
-                <a href="/register" class="btn btn-outline-primary btn-lg">Register</a>
+                <a href="/login" class="btn btn-success btn-lg mr-1">Login</a>
+                <a href="/register" class="btn btn-outline-primary btn-lg ml-1">Register</a>
             {% endif %}
         </div>
     </div>

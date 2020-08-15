@@ -87,6 +87,19 @@ html, body {
     text-shadow: 1px 1px 10px #000;
 }
 
+.btn-primary{
+  background-color: #6648b1;
+  border: 1px solid #6648b1;
+}
+.btn-primary:hover {
+  background-color: #563d7c;
+  border: 1px solid #563d7c;
+}
+.btn-primary:focus {
+  background-color: #483368;
+  border: 1px solid #483368;
+}
+
 /*---Media Queries --*/
 @media (max-width: 992px) {
 

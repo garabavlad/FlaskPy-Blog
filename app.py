@@ -125,14 +125,14 @@ def login():
     form = LoginForm(request.form)
 
     if request.method == 'POST' and form.validate():
-        email = request.form['email']
+        username = request.form['email']
         password_candidate = request.form['password']
 
         # creating cursor
         cur = mysql.connection.cursor()
 
         # submit to DB & close connection
-        result = cur.execute("SELECT * FROM users_ WHERE email = %s", [email])
+        result = cur.execute("SELECT * FROM users_ WHERE email = %s OR username = %s", [username, username])
 
         if result > 0:
             data = cur.fetchone()
@@ -141,7 +141,7 @@ def login():
             # compare passwrds
             if sha256_crypt.verify(password_candidate, password):
                 session['logged_in'] = True
-                session['username'] = email
+                session['username'] = username
 
                 flash("You are now logged in!", "success")
                 return redirect(url_for("dashboard"))
