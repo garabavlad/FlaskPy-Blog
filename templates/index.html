@@ -1,23 +1,23 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1>Welcome to Flasky</h1>
+            <h2>An awesome Flask Article App</h2>
+            <hr>
 
-<div class="jumbotron text-center">
-    <h1>Welcome to Flasky</h1>
-    <h2>An awesome Flask Article App</h2>
-    <hr>
+            <p class="lead">This application is build using Python Flask framework. It is a good place for including
+                some nice
+                articles.</p>
 
-    <p class="lead">This application is build using Python Flask framework. It is a good place for including some nice
-        articles.</p>
-
-    {% if session.logged_in %}
-    <a class="btn btn-dark btn-lg" href="/dashboard">Dashboard</a>
-    <a class="btn btn-outline-danger btn-lg" href="/logout">Logout</a>
-    {% else %}
-    <a href="/login" class="btn btn-success btn-lg">Login</a>
-    <a href="/register" class="btn btn-outline-primary btn-lg">Register</a>
-    {% endif %}
-
-
-</div>
+            {% if session.logged_in %}
+                <a class="btn btn-dark btn-lg" href="/dashboard">Dashboard</a>
+                <a class="btn btn-outline-danger btn-lg" href="/logout">Logout</a>
+            {% else %}
+                <a href="/login" class="btn btn-success btn-lg">Login</a>
+                <a href="/register" class="btn btn-outline-primary btn-lg">Register</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

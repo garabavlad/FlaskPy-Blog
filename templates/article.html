@@ -1,16 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    <div class="container">
+        <h1 class="text-center">Article {{ article.id }}</h1>
 
-<h1 class="text-center">Article {{article.id}}</h1>
-
-<ul class="list-group">
-    <h2>{{article.title}}</h2>
-    <small class="text-secondary">Written by {{article.author}} on {{article.create_date}}</small>
-    <hr>
-    <div>
-        <p>{{article.body | safe}}</p>
+        <ul class="list-group">
+            <h2>{{ article.title }}</h2>
+            <small class="text-secondary">Written by {{ article.author }} on {{ article.create_date }}</small>
+            <hr>
+            <div>
+                <p>{{ article.body | safe }}</p>
+            </div>
+        </ul>
     </div>
-</ul>
-
 {% endblock %}
