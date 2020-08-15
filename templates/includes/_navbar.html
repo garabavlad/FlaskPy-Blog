@@ -1,26 +1,53 @@
-<nav class="site-header sticky-top py-1">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <a class="py-2" href="/" aria-label="Product">
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor"
-                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img"
-                 viewBox="0 0 24 24" focusable="false"><title>Product</title>
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/>
+<nav class="navbar navbar-expand-md navbar-dark sticky-top site-header mb-4">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand" aria-label="Logo">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto img-logo" role="img"
+                 viewBox="0 0 24 24" focusable="false"><title>Logo</title>
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"></path>
             </svg>
         </a>
-        <a class="py-2 d-none d-md-inline-block" href="/">Home</a>
-        <a class="py-2 d-none d-md-inline-block" href="/articles">Articles</a>
-        <a class="py-2 d-none d-md-inline-block" href="/support">Support</a>
-        <a class="py-2 d-none d-md-inline-block" href="/about">About</a>
 
-        {% if session.logged_in %}
-        <a class="py-2 d-none d-md-inline-block" href="/dashboard">Dashboard</a>
-        <a class="py-2 d-none d-md-inline-block" href="/logout">Logout</a>
-        {% else %}
-        <a class="py-2 d-none d-md-inline-block" href="/register">Register</a>
-        <a class="py-2 d-none d-md-inline-block" href="/login">Login</a>
-        {% endif %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarItems">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarItems">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item {% if request.path == "/" %} {{ 'active' }} {% endif %}">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item {% if request.path == "/articles" %} {{ 'active' }} {% endif %}">
+                    <a href="/articles" class="nav-link">Articles</a>
+                </li>
+                <li class="nav-item {% if request.path == "/support" %} {{ 'active' }} {% endif %}">
+                    <a href="/support" class="nav-link">Support</a>
+                </li>
+                <li class="nav-item {% if request.path == "/about" %} {{ 'active' }} {% endif %}">
+                    <a href="/about" class="nav-link">About</a>
+                </li>
+
+                {% if session.logged_in %}
+                <li class="nav-item {% if request.path == "/dashboard" %} {{ 'active' }} {% endif %}">
+                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item" {% if request.path == "/register" %} {{ 'active' }} {% endif %}>
+                    <a href="/register" class="nav-link">Register</a>
+                </li>
+                <li class="nav-item" {% if request.path == "/login" %} {{ 'active' }} {% endif %}>
+                    <a href="/login" class="nav-link">Login</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
 
     </div>
 </nav>
+
+

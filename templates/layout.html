@@ -2,32 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Flasky</title>
 
-    <style>
-        .site-header {
-            background-color: rgba(0, 0, 0, .85);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
-        }
-
-        .site-header a {
-            color: #999;
-            transition: ease-in-out color .15s;
-        }
-
-        .site-header a:hover {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        nav {
-            margin-bottom: 25px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://kit.fontawesome.com/95f68e1922.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
 {% include 'includes/_navbar.html' %}
@@ -47,7 +29,9 @@
 <script>
     ClassicEditor
         .create(document.querySelector('#editor'))
-        .catch(error => {} );
+        .catch(error => {}
+    )
+    ;
 </script>
 </body>
 </html>

@@ -1,0 +1,52 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Titillium Web', sans-serif;
+    color: #222;
+}
+
+.site-header {
+    background-color: rgba(0, 0, 0, .85);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.img-logo {
+    width: 65px;
+    height: 65px;
+    margin-left: 3rem !important;
+    margin-right: 1rem !important;
+}
+
+.navbar a {
+    color: #999 !important;
+    transition: ease-in-out color .15s;
+}
+
+.navbar a:hover {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.navbar-brand {
+    padding: 0;
+}
+
+.navbar-nav li {
+    padding-right: 1.2rem;
+}
+
+.nav-link {
+    font-size: 1.1rem !important;
+}
+
+.active a {
+    color: white !important;
+}
+
+.footer-brand {
+    margin: 0 auto;
+    text-align: center;
+}
