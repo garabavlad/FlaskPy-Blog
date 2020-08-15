@@ -66,26 +66,39 @@
         </div>
     </div>
 
-    <div class="">
-        <div class="jumbotron text-center">
-            <h1>Welcome to Flasky</h1>
-            <h2>An awesome Flask Article App</h2>
-            <hr>
+    <div class="jumbotron text-center jumbotron-index">
+        <h1>Welcome to Flasky</h1>
+        <h2>An awesome Flask Article App</h2>
+        <hr>
 
-            <p class="lead mb-4">This application is build using Python Flask framework. It is a good place for including
-                some nice
-                articles.
-                <br>You don't need to prove that you're amazing. <b class="font-weight-bold">We already know it.</b>
-                Just write something
-                if you feel like sharing.</p>
+        <p class="lead mb-4">This application is build using Python Flask framework. It is a good place for including
+            some nice
+            articles.
+            <br>You don't need to prove that you're amazing. <b class="font-weight-bold">We already know it.</b>
+            Just write something
+            if you feel like sharing.</p>
 
-            {% if session.logged_in %}
-                <a class="btn btn-dark btn-lg mr-1" href="/dashboard">Dashboard</a>
-                <a class="btn btn-outline-success btn-lg ml-1" href="/add_article">New Article</a>
-            {% else %}
-                <a href="/login" class="btn btn-success btn-lg mr-1">Login</a>
-                <a href="/register" class="btn btn-outline-primary btn-lg ml-1">Register</a>
-            {% endif %}
+        {% if session.logged_in %}
+            <a class="btn btn-dark btn-lg mr-1" href="/dashboard">Dashboard</a>
+            <a class="btn btn-outline-success btn-lg ml-1" href="/add_article">New Article</a>
+        {% else %}
+            <a href="/login" class="btn btn-success btn-lg mr-1">Login</a>
+            <a href="/register" class="btn btn-outline-primary btn-lg ml-1">Register</a>
+        {% endif %}
+    </div>
+
+    <div class="container-fluid padding pt-5">
+        <div class="row text-center padding">
+            <div class="col-12">
+                <h1>Connect</h1>
+            </div>
+            <div class="col-12 social padding">
+                <a href="https://www.facebook.com/garaba.vlad/"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com/GarabaVladislav"><i class="fab fa-twitter"></i></a>
+                <a href="mailto:garaba.vlad@gmail.com?Subject=Flasky%20app"><i class="fab fa-google-plus-g"></i></a>
+                <a href="https://www.instagram.com/vladgaraba/"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com"><i class="fab fa-youtube"></i></a>
+            </div>
         </div>
     </div>
 {% endblock %}

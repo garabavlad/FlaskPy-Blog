@@ -87,17 +87,55 @@ html, body {
     text-shadow: 1px 1px 10px #000;
 }
 
-.btn-primary{
-  background-color: #6648b1;
-  border: 1px solid #6648b1;
+.btn-primary {
+    background-color: #6648b1;
+    border: 1px solid #6648b1;
 }
+
 .btn-primary:hover {
-  background-color: #563d7c;
-  border: 1px solid #563d7c;
+    background-color: #563d7c;
+    border: 1px solid #563d7c;
 }
+
 .btn-primary:focus {
-  background-color: #483368;
-  border: 1px solid #483368;
+    background-color: #483368;
+    border: 1px solid #483368;
+}
+
+/* Jumbotron */
+.jumbotron-index {
+    border-radius: 0;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.padding {
+    padding: 2rem;
+}
+
+/* Connect - Social */
+.social a {
+    font-size: 4.5em;
+    padding: 3rem;
+}
+
+.fa-facebook{
+  color: #3b5998;
+}
+.fa-twitter{
+  color: #00aced;
+}
+.fa-google-plus-g {
+  color: #dd4b39;
+}
+.fa-instagram {
+  color: #517fa8;
+}
+.fa-youtube {
+  color: #bb0000;
+}
+.fa-facebook:hover, .fa-twitter:hover, .fa-google-plus-g:hover, .fa-instagram:hover, .fa-youtube:hover {
+  color: #d5d5d5;
 }
 
 /*---Media Queries --*/
