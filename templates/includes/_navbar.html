@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark sticky-top site-header mb-4">
+<nav class="navbar navbar-expand-md navbar-dark sticky-top site-header {% if request.path != "/" %} {{ 'mb-4' }} {% endif %}">
     <div class="container-fluid">
         <a href="/" class="navbar-brand" aria-label="Logo">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"

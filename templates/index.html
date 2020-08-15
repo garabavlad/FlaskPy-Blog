@@ -13,20 +13,20 @@
                 <img src="{{ url_for('static', filename='img/background.png') }}" alt="background">
                 <div class="carousel-caption">
                     <h1 class="display2">Welcome to Flasky</h1>
-                    <h3>An awesome Flask Article App</h3>
+                    <h3>An Awesome Flask Article App</h3>
                     {% if session.logged_in %}
                         <a href="/articles">
-                            <button class="btn btn-outline-light btn-lg">Top Articles</button>
+                            <button class="btn btn-outline-light btn-lg mr-1">Top Articles</button>
                         </a>
                         <a href="/dashboard">
-                            <button class="btn btn-primary btn-lg">Dashboard</button>
+                            <button class="btn btn-primary btn-lg ml-1">Dashboard</button>
                         </a>
                     {% else %}
                         <a href="/articles">
-                            <button class="btn btn-outline-light btn-lg">Top Articles</button>
+                            <button class="btn btn-outline-light btn-lg mr-1">Top Articles</button>
                         </a>
                         <a href="/register">
-                            <button class="btn btn-primary btn-lg">Register Now</button>
+                            <button class="btn btn-primary btn-lg ml-1">Register Now</button>
                         </a>
                     {% endif %}
 
