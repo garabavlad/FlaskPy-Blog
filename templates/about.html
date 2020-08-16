@@ -94,12 +94,53 @@
     </div>
 
     {#  TEAM SECTION  #}
-    <div class="container" id="team">
+    <div class="container-fluid my-2" id="team">
+        <div class="container">
+            <h1 class="display-2">Meet Our Team</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ url_for('static', filename='img/team1.png') }}" alt="team member"
+                             class="card-img-top">
+                        <div class="card-body">
+                            <h4 class="card-title">John Doe</h4>
+                            <p class="card-text">John is an entrepreneur with almost 20 years of experience.</p>
+                            <a href="#" class="btn btn-outline-secondary">See profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ url_for('static', filename='img/team2.jpg') }}" alt="team member"
+                             class="card-img-top">
+                        <div class="card-body">
+                            <h4 class="card-title">Vladislav Garaba</h4>
+                            <p class="card-text">Vladislav is a developer with 2 years of web development
+                                experience.</p>
+                            <a href="#" class="btn btn-outline-secondary">See profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ url_for('static', filename='img/team3.png') }}" alt="team member"
+                             class="card-img-top">
+                        <div class="card-body">
+                            <h4 class="card-title">Mary Jo</h4>
+                            <p class="card-text">Mary is a designer with almost 10 years of digital design
+                                experience.</p>
+                            <a href="#" class="btn btn-outline-secondary">See profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
     {# LOCATION SECTION #}
-    <div class="container" id="location">
+    <div class="container my-5" id="location">
+        <h1 class="display-2">Our Head Office</h1>
         <div class="row shadow-10 map-container">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.41332964595!2d-0.11468008390112396!3d51.50563257963483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604b73f35bfff%3A0x8a6fb9251e10a493!2sFranklin-Wilkins%20Building%2C%20150%20Stamford%20St%2C%20South%20Bank%2C%20London%20SE1%209NH%2C%20UK!5e0!3m2!1sen!2s!4v1597568676193!5m2!1sen!2s"
                     width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
