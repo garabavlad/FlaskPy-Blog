@@ -1,13 +1,105 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="text-center">About us</h1>
-        <p class="lead">About information</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi exercitationem fugit hic in maxime,
-            nesciunt provident quibusdam quidem? A aliquid illo maiores quibusdam quisquam vero. In obcaecati quo
-            repellat sapiente.</p>
 
+    {#   JUMBOTRON     #}
+    <div class=" about-box">
+        <div class="row text-justify">
+            <div class="col-xs-12 col-sm-12 col-lg-7 about-heading-text">
+                <h1 class=" display-1">About us</h1>
+
+                {#        <h2>An do on frankness so cordially immediate contained</h2>#}
+                <p class="lead">So by colonel hearted ferrars. Draw from upon here gone add one. He in sportsman
+                    household otherwise it
+                    perceived instantly. Is inquiry no he several excited am. Called though excuse length ye needed it
+                    he
+                    having. Whatever throwing we on resolved entrance together graceful. Mrs assured add private married
+                    removed
+                    believe did she.</p>
+                <p class="lead">One advanced diverted domestic sex repeated bringing you old. Possible procured her
+                    trifling laughter
+                    thoughts property she met way. Companions shy had solicitude favourable own. Which could saw guest
+                    man now
+                    heard but. Lasted my coming uneasy marked so should. Gravity letters it amongst herself dearest an
+                    windows
+                    by. Wooded ladies she basket season age her uneasy saw. Discourse unwilling am no described
+                    dejection
+                    incommode no listening of. Before nature his parish boy.</p>
+                <p class="lead">Lose away off why half led have near bed. At engage simple father of period others
+                    except. My giving do
+                    summer of though narrow marked at. Spring formal no county ye waited. My whether cheered at regular
+                    it of
+                    promise blushes perhaps. Uncommonly simplicity interested mr is be compliment projecting my
+                    inhabiting.
+                    Gentleman he september in oh excellent.</p>
+                <p class="lead">Folly words widow one downs few age every seven. If miss part by fact he park just shew.
+                    Discovered had get
+                    considered projection who favourable. Necessary up knowledge it tolerably. Unwilling departure
+                    education is
+                    be dashwoods or an. Use off agreeable law unwilling sir deficient curiosity instantly. Easy mind
+                    life fact
+                    with see has bore ten. Parish any chatty can elinor direct for former. Up as meant widow equal an
+                    share
+                    least.</p>
+                <p class="lead">Same an quit most an. Admitting an mr disposing sportsmen. Tried on cause no spoil arise
+                    plate.
+                    Longer ladies valley get esteem use led six. Middletons resolution advantages expression themselves
+                    partiality so me at. West none hope if sing oh sent tell is.</p>
+            </div>
+
+            <div class="hidden-xs col-sm 4 col-lg-5 about-heading-img">
+                {#        <picture>#}
+                <img src="{{ url_for('static', filename='img/about-lumber.jpg') }}" alt="about image" class="img-fluid"
+                     style="height: 100%">
+                {#        </picture>#}
+            </div>
+
+        </div>
+    </div>
+
+    {# WHAT WE DO SECTION #}
+    <div class="row my-5" id="whatwedo">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="display-2">What we do</h1>
+                    <p class="lead">Folly words widow one downs few age every seven. If miss part by fact he park just
+                        shew.
+                        Discovered had get considered projection who favourable. Necessary up knowledge it tolerably.
+                        Unwilling departure
+                        education is be dashwoods.</p>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-xs-12 col-sm-4">
+                    <div class="number-in-circle">1</div>
+                    <div class="points-content">Followed ecstatic use speaking exercise may repeated. Himself
+                        evident greatly my on general concern.
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <div class="number-in-circle">2</div>
+                    <div class="points-content">It earnest amongst he showing females so
+                        improve in picture. Mrs can hundred its greater account.
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <div class="number-in-circle">3</div>
+                    <div class="points-content"> Distrusts daughters certainly suspected
+                        convinced our perpetual him yet. Words did noise taken right state are since.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#  TEAM SECTION  #}
+    <div class="container" id="team">
+
+    </div>
+
+    {# LOCATION SECTION #}
+    <div class="container" id="location">
         <div class="row shadow-10 map-container">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.41332964595!2d-0.11468008390112396!3d51.50563257963483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604b73f35bfff%3A0x8a6fb9251e10a493!2sFranklin-Wilkins%20Building%2C%20150%20Stamford%20St%2C%20South%20Bank%2C%20London%20SE1%209NH%2C%20UK!5e0!3m2!1sen!2s!4v1597568676193!5m2!1sen!2s"
                     width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"

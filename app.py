@@ -239,6 +239,12 @@ def logout():
     return redirect(url_for('index'))
 
 
+# Privacy
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+
 # running the application
 if __name__ == '__main__':
     app.run(debug=True)
