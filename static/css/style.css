@@ -157,6 +157,27 @@ html, body {
     margin-bottom: 4rem !important;
 }
 
+.shadow-10 {
+    box-shadow: 1px 1px 10px #222;
+}
+
+.map-container {
+    overflow: hidden;
+    padding-bottom: 46.25%;
+    position: relative;
+    height: 0;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.map-container iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
 /*---Media Queries --*/
 @media (max-width: 992px) {
 
