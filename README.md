@@ -1,6 +1,7 @@
 # Flasky Blog App
 
-A CRUD Flask Py application where users can have their own dashboard, add, edit or delete articles.
+A CRUD Flask Python application for creating, displaying, and managing articles. 
+Users have their own dashboard to manage their articles.
 
 The application can be seen live on https://flasky-article-app.herokuapp.com/
 
