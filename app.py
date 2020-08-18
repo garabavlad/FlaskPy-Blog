@@ -103,18 +103,25 @@ def register():
         # creating cursor
         cur = mysql.connection.cursor()
 
-        # submit to DB
-        cur.execute("INSERT INTO users_ (name,email,username,password) VALUES (%s, %s, %s, %s)",
-                    (name, email, username, password))
+        # checking if user email or username already exists
+        result = cur.execute("SELECT * FROM users_ WHERE email=%s OR username=%s", [email, username])
+        if result > 0:
+            flash("This email address or username is already taken.", "danger")
+            return redirect(url_for("register"))
 
-        # commit changes & close connection
-        mysql.connection.commit()
-        cur.close()
+        else:
+            # submit to DB
+            cur.execute("INSERT INTO users_ (name,email,username,password) VALUES (%s, %s, %s, %s)",
+                        (name, email, username, password))
 
-        flash("You are now registered and can log in!", "success")
-        return redirect(url_for("login"))
+            # commit changes & close connection
+            mysql.connection.commit()
+            cur.close()
 
-    elif request.method == 'GET':
+            flash("You are now registered and can log in!", "success")
+            return redirect(url_for("login"))
+
+    else:
         return render_template('register.html', form=form)
 
 
