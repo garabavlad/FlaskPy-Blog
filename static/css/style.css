@@ -218,6 +218,21 @@ html, body {
     padding: 0 40px;
 }
 
+/* Footer */
+footer {
+    background-color: #3f3f3f;
+    color: #e4e4e4;
+}
+
+footer svg, footer small {
+    color: #e4e4e4;
+}
+
+footer a:hover {
+  color: #f2f2f2 !important;
+    text-decoration: none;
+}
+
 /*---Media Queries --*/
 @media (max-width: 992px) {
     .hidden-xs {
@@ -262,26 +277,34 @@ html, body {
     .carousel-indicators {
         display: none;
     }
+
     .carousel-caption {
         top: 39%;
     }
+
     .carousel-caption h1 {
         font-size: 250%;
         text-transform: uppercase;
         text-shadow: 1px 1px 10px #fff;
     }
+
     .carousel-caption h3 {
         font-size: 110%;
         font-weight: 400;
         text-shadow: 1px 1px 7px #000;
         padding-bottom: 0.4rem;
     }
+
     .carousel-caption p {
         font-size: 90%;
         font-weight: 300;
         text-shadow: 1px 1px 5px #000;
         margin-left: -15px;
         margin-right: -15px;
+    }
+
+    footer {
+        text-align: center;
     }
 }
 
@@ -294,17 +317,20 @@ html, body {
     .carousel-caption {
         top: 38%;
     }
+
     .carousel-caption h1 {
         font-size: 250%;
         text-transform: uppercase;
         text-shadow: 1px 1px 10px #fff;
     }
+
     .carousel-caption h3 {
         font-size: 130%;
         font-weight: 400;
         text-shadow: 1px 1px 7px #000;
         padding-bottom: 0.2rem;
     }
+
     .carousel-caption p {
         font-size: 80%;
         text-shadow: 1px 1px 5px #000;
