@@ -2,19 +2,21 @@
 
 {% block body %}
     <div class="container py-0">
-        {% for article in articles %}
+        {% for article in articles|reverse %}
 
             <div class="jumbotron article-box" onclick="location.href='articles/{{ article.id }}';">
                 <div class="container article-inner">
                     <div class="row">
-                        <div class="col-9">
-                            <h1 class="display4">{{ article.title }}</h1>
-
+                        <div class="col-md-12 col-lg-3 float-right">
+                            <img src="{{ url_for('static',filename = 'img/upload/'+article.image) }}" alt="not-found"
+                                 class="img-fluid w-100">
+                        </div>
+                        <div class="col-md-12 col-lg-9">
+                            <h1 class="display4 mb-0">{{ article.title }}</h1>
+                            <small class="text-secondary mb-2">By {{ article.author }} </small>
                             <p>{{ article_body(article.body) }}</p>
                         </div>
-                        <div class="col-3">
-                            <img src="{{ url_for('static',filename = 'img/upload/'+article.image) }}" alt="not-found" class="img-fluid">
-                        </div>
+
                     </div>
 
                 </div>
