@@ -66,7 +66,7 @@ def about():
 def articles():
     # connect to db & get articles
     cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * FROM articles")
+    result = cur.execute("SELECT * FROM articles_")
 
     articles = cur.fetchall()
 
@@ -83,7 +83,7 @@ def articles():
 def article(id):
     # connect to db & get article info
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM articles WHERE id = %s", [id])
+    cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
 
     article = cur.fetchone()
     cur.close()
@@ -182,9 +182,9 @@ def dashboard():
 
     try:
         if(session['admin']):
-            cur.execute("SELECT * FROM articles");
+            cur.execute("SELECT * FROM articles_");
     except:
-        cur.execute("SELECT * FROM articles where author=%s", [session['username']])
+        cur.execute("SELECT * FROM articles_ where author=%s", [session['username']])
 
     articles = cur.fetchall()
     cur.close()
@@ -204,7 +204,7 @@ def add_article():
 
         # database logic
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO articles(title,body,author) VALUES (%s,%s,%s)", (title, body, session['username']))
+        cur.execute("INSERT INTO articles_(title,body,author) VALUES (%s,%s,%s)", (title, body, session['username']))
         mysql.connection.commit()
         cur.close()
 
@@ -226,7 +226,7 @@ def edit_article(id):
 
         # database logic
         cur = mysql.connection.cursor()
-        cur.execute("UPDATE articles SET title=%s, body=%s WHERE id=%s", (title, body, [id]))
+        cur.execute("UPDATE articles_ SET title=%s, body=%s WHERE id=%s", (title, body, [id]))
         mysql.connection.commit()
         cur.close()
 
@@ -234,7 +234,7 @@ def edit_article(id):
         return redirect(url_for('dashboard'))
     elif (request.method == "GET"):
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM articles WHERE id = %s", [id])
+        cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
         article = cur.fetchone()
         cur.close()
 
@@ -249,7 +249,7 @@ def edit_article(id):
 def delete_article(id):
     # database logic
     cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM articles WHERE id=%s and author = %s", (id, session['username']))
+    cur.execute("DELETE FROM articles_ WHERE id=%s and author = %s", (id, session['username']))
     mysql.connection.commit()
     cur.close()
 
