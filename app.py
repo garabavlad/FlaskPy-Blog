@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
+from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, make_response
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from functools import wraps
@@ -250,6 +250,25 @@ def logout():
 @app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
+
+
+# ERRORS
+#404
+@app.errorhandler(404)
+def error_404(req):
+    app.logger.info(req)
+    return make_response(render_template("error/404.html"), 404)
+
+@app.errorhandler(400)
+def bad_request(req):
+    app.logger.info(req)
+    return make_response(render_template("error/400.html"), 400)
+
+
+@app.errorhandler(500)
+def server_error(req):
+    app.logger.info(req)
+    return make_response(render_template("error/500.html"), 500)
 
 
 # running the application
