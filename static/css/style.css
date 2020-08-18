@@ -116,7 +116,7 @@ html, body {
 /* Connect - Social */
 .social a {
     font-size: 4.5em;
-    padding: 3rem;
+    padding: 2.5rem;
 }
 
 .fa-facebook {
@@ -179,7 +179,7 @@ html, body {
 }
 
 .about-box {
-    background: #9ac1a2;
+    background: #bbe2c3;
     margin-top: -4rem !important;
     padding: 4rem 1rem 3rem 4rem !important;
     margin-left: -15px;
@@ -218,19 +218,97 @@ html, body {
     padding: 0 40px;
 }
 
-
-
 /*---Media Queries --*/
 @media (max-width: 992px) {
     .hidden-xs {
         display: none !important;
     }
+
+    .social a {
+        font-size: 3.2em;
+        padding: 1.5rem;
+    }
+
+    .carousel-caption {
+        top: 43%;
+    }
+
+    .carousel-caption h1 {
+        font-size: 300%;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 15px #fff;
+    }
+
+    .carousel-caption h3 {
+        font-size: 140%;
+        font-weight: 500;
+        text-shadow: 1px 1px 10px #000;
+        padding-bottom: 0.8rem;
+    }
+
+    .carousel-caption p {
+        font-size: 100%;
+        font-weight: 400;
+        text-shadow: 1px 1px 5px #000;
+    }
 }
 
 @media (max-width: 768px) {
+    .social a {
+        font-size: 2.5em;
+        padding: 1rem;
+    }
 
+    .carousel-indicators {
+        display: none;
+    }
+    .carousel-caption {
+        top: 39%;
+    }
+    .carousel-caption h1 {
+        font-size: 250%;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 10px #fff;
+    }
+    .carousel-caption h3 {
+        font-size: 110%;
+        font-weight: 400;
+        text-shadow: 1px 1px 7px #000;
+        padding-bottom: 0.4rem;
+    }
+    .carousel-caption p {
+        font-size: 90%;
+        font-weight: 300;
+        text-shadow: 1px 1px 5px #000;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
 }
 
 @media (max-width: 576px) {
+    .social a {
+        font-size: 2.5em;
+        padding: 1rem;
+    }
 
+    .carousel-caption {
+        top: 38%;
+    }
+    .carousel-caption h1 {
+        font-size: 250%;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 10px #fff;
+    }
+    .carousel-caption h3 {
+        font-size: 130%;
+        font-weight: 400;
+        text-shadow: 1px 1px 7px #000;
+        padding-bottom: 0.2rem;
+    }
+    .carousel-caption p {
+        font-size: 80%;
+        text-shadow: 1px 1px 5px #000;
+        margin-left: -55px;
+        margin-right: -55px;
+    }
 }
