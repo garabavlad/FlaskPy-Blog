@@ -2,11 +2,10 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="text-center">Article {{ article.id }}</h1>
 
         <ul class="list-group">
-            <h2>{{ article.title }}</h2>
-            <small class="text-secondary">Written by {{ article.author }} on {{ article.create_date }}</small>
+            <h1 class="display-2 ">{{ article.title }}</h1>
+            <small class="text-secondary pl-2">Written by {{ article.author }} on {{ article.create_date }}</small>
             <hr>
             <div>
                 <p>{{ article.body | safe }}</p>

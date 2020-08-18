@@ -1,14 +1,15 @@
-from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, make_response
+from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, make_response, Markup
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from functools import wraps
 from WTFormClasses import RegisterForm, LoginForm, ArticleForm
 
-
 app = Flask(__name__)
 
+# ADMIN ACCOUNTS
+app.config['ADMIN_LIST'] = ['garaba1u', 'garaba.vlad@gmail.com']
 
-#setting app secret
+# setting app secret
 app.secret_key = 'dasWF@#56$VP"as1'
 
 # DATABASE
@@ -22,7 +23,7 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 
-# Wraps
+# WRAPS
 def is_logged_in(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -31,7 +32,9 @@ def is_logged_in(f):
         else:
             flash('Unauthorized access to the page.', 'danger')
             return redirect(url_for('login'))
+
     return wrap
+
 
 def is_not_logged_in(f):
     @wraps(f)
@@ -41,9 +44,11 @@ def is_not_logged_in(f):
         else:
             flash('You are already logged in!', 'danger')
             return redirect(url_for('dashboard'))
+
     return wrap
 
 
+# ROUTES
 # Home page
 @app.route('/')
 def index():
@@ -64,6 +69,10 @@ def articles():
     result = cur.execute("SELECT * FROM articles")
 
     articles = cur.fetchall()
+
+    for ar in articles:
+        ar['body'] = Markup(ar['body'])
+
     cur.close()
 
     return render_template('articles.html', articles=articles)
@@ -78,7 +87,7 @@ def article(id):
 
     article = cur.fetchone()
     cur.close()
-    return render_template('article.html', article = article)
+    return render_template('article.html', article=article)
 
 
 # Support page
@@ -149,13 +158,16 @@ def login():
             if sha256_crypt.verify(password_candidate, password):
                 session['logged_in'] = True
                 session['username'] = data['username']
-
-                flash("You are now logged in!", "success")
+                if (data['username'] in app.config['ADMIN_LIST']):
+                    session['admin'] = True
+                    flash("Welcome administrator %s. Glad to see you back!" % data['username'], "success")
+                else:
+                    flash("You are now logged in!", "success")
                 return redirect(url_for("dashboard"))
             else:
-                flash("The email or password didn't match!", "danger")
+                flash("The username or password didn't match!", "danger")
         else:
-            flash("The email or password didn't match", "danger")
+            flash("The username or password didn't match", "danger")
 
         cur.close()
     return render_template('login.html', form=form)
@@ -167,12 +179,17 @@ def login():
 def dashboard():
     # connect to db & get articles
     cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * FROM articles")
+
+    try:
+        if(session['admin']):
+            cur.execute("SELECT * FROM articles");
+    except:
+        cur.execute("SELECT * FROM articles where author=%s", [session['username']])
 
     articles = cur.fetchall()
     cur.close()
 
-    return render_template('dashboard.html', articles = articles)
+    return render_template('dashboard.html', articles=articles)
 
 
 # Add article
@@ -181,7 +198,7 @@ def dashboard():
 def add_article():
     form = ArticleForm(request.form)
 
-    if(request.method=='POST' and form.validate()):
+    if (request.method == 'POST' and form.validate()):
         title = form.title.data
         body = form.body.data
 
@@ -196,13 +213,14 @@ def add_article():
 
     return render_template('add_article.html', form=form)
 
+
 # Edit article
 @app.route('/edit_article/<string:id>', methods=['GET', 'POST'])
 @is_logged_in
 def edit_article(id):
     form = ArticleForm(request.form)
 
-    if(request.method=='POST' and form.validate()):
+    if (request.method == 'POST' and form.validate()):
         title = form.title.data
         body = form.body.data
 
@@ -214,7 +232,7 @@ def edit_article(id):
 
         flash('Article successfully edited!', 'success')
         return redirect(url_for('dashboard'))
-    elif(request.method == "GET"):
+    elif (request.method == "GET"):
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM articles WHERE id = %s", [id])
         article = cur.fetchone()
@@ -225,10 +243,10 @@ def edit_article(id):
 
         return render_template('edit_article.html', form=form)
 
+
 @app.route('/delete_article/<string:id>/')
 @is_logged_in
 def delete_article(id):
-
     # database logic
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM articles WHERE id=%s and author = %s", (id, session['username']))
@@ -237,6 +255,7 @@ def delete_article(id):
 
     flash('The article with id %s was successfully deleted!' % (id), 'success')
     return redirect(url_for('dashboard'))
+
 
 # Logout
 @app.route('/logout')
@@ -253,11 +272,12 @@ def privacy():
 
 
 # ERRORS
-#404
+# 404
 @app.errorhandler(404)
 def error_404(req):
     app.logger.info(req)
     return make_response(render_template("error/404.html"), 404)
+
 
 @app.errorhandler(400)
 def bad_request(req):
@@ -269,6 +289,23 @@ def bad_request(req):
 def server_error(req):
     app.logger.info(req)
     return make_response(render_template("error/500.html"), 500)
+
+#PROCESSORS
+@app.context_processor
+def utility_processor():
+    def article_body(string):
+        i1 = string.find('<p>')
+        i2 = string.find('</p>')
+        output = ''
+
+        if(i1 != -1 and i2 != -1):
+            output += string[int(i1)+3:int(i2)]
+
+        if len(output) > 300:
+            output = output[0:300] + '...'
+
+        return output
+    return dict(article_body=article_body)
 
 
 # running the application

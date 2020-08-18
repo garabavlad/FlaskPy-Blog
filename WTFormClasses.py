@@ -29,8 +29,7 @@ class RegisterForm(Form):
 
 # Login Form
 class LoginForm(Form):
-    email = StringField('Email', [
-        validators.Length(min=6, max=50),
+    email = StringField('Email or username', [
         validators.DataRequired()
     ])
     password = PasswordField('Password', [
