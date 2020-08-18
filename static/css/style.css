@@ -223,6 +223,16 @@ html, body {
     padding-right: 15%;
 }
 
+.article-box{
+    padding:2rem 1rem;
+    cursor: pointer;
+}
+
+
+
+
+
+
 /* Footer */
 footer {
     background-color: rgba(0, 0, 0, .85);

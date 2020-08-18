@@ -1,14 +1,22 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="container">
+    <div class="container py-0">
         {% for article in articles %}
 
-            <div class="jumbotron article-box">
+            <div class="jumbotron article-box" onclick="location.href='articles/{{ article.id }}';">
                 <div class="container article-inner">
-                    <a href="articles/{{ article.id }}"><h1 class="display4">{{ article.title }}</h1></a>
+                    <div class="row">
+                        <div class="col-9">
+                            <h1 class="display4">{{ article.title }}</h1>
 
-                    <p>{{ article_body(article.body) }}</p>
+                            <p>{{ article_body(article.body) }}</p>
+                        </div>
+                        <div class="col-3">
+                            <img src="{{ url_for('static',filename = 'img/site/not-found.png') }}" alt="not-found" class="img-fluid">
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
