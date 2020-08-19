@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from functools import wraps
 from WTFormClasses import RegisterForm, LoginForm, ArticleForm
+import random
 
 app = Flask(__name__)
 
@@ -306,6 +307,12 @@ def utility_processor():
 
         return output
     return dict(article_body=article_body)
+
+@app.context_processor
+def utility_processor():
+    def article_list_color_gen():
+        return '#' + str(random.randint(100000,999999)) + '14'
+    return dict(article_list_color_gen=article_list_color_gen)
 
 
 # running the application

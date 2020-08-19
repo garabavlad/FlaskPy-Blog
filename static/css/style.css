@@ -223,15 +223,31 @@ html, body {
     padding-right: 15%;
 }
 
-.article-box{
-    padding:2rem 1rem;
+.article-box {
+    padding: 2rem 1rem;
     cursor: pointer;
+    margin-bottom: .8rem;
+    /*background: #94949414;*/
 }
 
+.article-box:hover {
+    filter: drop-shadow(1px 2px 3px #737373);
+}
 
+.article-badge {
+    float: right;
+    position: relative;
+    bottom: 10px;
+    background-color: rgba(192, 193, 194, 0.3);
+    padding: .8em 1em;
+    border-radius: .5rem;
+    display: none;
+}
 
-
-
+.article-box:hover .article-badge {
+    display: inline-block;
+    filter: none !important;
+}
 
 /* Footer */
 footer {

@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="container py-0">
+    <div class="container py-0" style="margin-top: -25px;">
         {% for article in articles|reverse %}
 
-            <div class="jumbotron article-box" onclick="location.href='articles/{{ article.id }}';">
+            <div class="jumbotron article-box" onclick="location.href='articles/{{ article.id }}';" style="background: {{ article_list_color_gen() }};" >
                 <div class="container article-inner">
                     <div class="row">
                         <div class="col-md-12 col-lg-3 float-right">
@@ -20,6 +20,7 @@
                     </div>
 
                 </div>
+             <span class="badge badge-secondary article-badge">Press to open the full article</span>
             </div>
 
         {% endfor %}
