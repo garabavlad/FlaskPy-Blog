@@ -1,7 +1,11 @@
-from app import app
+from app import app, mysql
+from flask import render_template, Markup, request, flash, redirect, url_for, session
+from passlib.hash import sha256_crypt
+from wraps import is_not_logged_in, is_logged_in
+from WTFormClasses import RegisterForm, LoginForm, ArticleForm
 
 # Home page
-@app.route('/')
+# @app.route('/')
 def index():
     return render_template('index.html')
 
@@ -133,7 +137,7 @@ def dashboard():
 
     try:
         if(session['admin']):
-            cur.execute("SELECT * FROM articles_");
+            cur.execute("SELECT * FROM articles_")
     except:
         cur.execute("SELECT * FROM articles_ where author=%s", [session['username']])
 
@@ -149,7 +153,7 @@ def dashboard():
 def add_article():
     form = ArticleForm(request.form)
 
-    if (request.method == 'POST' and form.validate()):
+    if request.method == 'POST' and form.validate():
         title = form.title.data
         body = form.body.data
 
@@ -171,7 +175,7 @@ def add_article():
 def edit_article(id):
     form = ArticleForm(request.form)
 
-    if (request.method == 'POST' and form.validate()):
+    if request.method == 'POST' and form.validate():
         title = form.title.data
         body = form.body.data
 
@@ -183,7 +187,7 @@ def edit_article(id):
 
         flash('Article successfully edited!', 'success')
         return redirect(url_for('dashboard'))
-    elif (request.method == "GET"):
+    elif request.method == "GET":
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
         article = cur.fetchone()
@@ -204,7 +208,7 @@ def delete_article(id):
     mysql.connection.commit()
     cur.close()
 
-    flash('The article with id %s was successfully deleted!' % (id), 'success')
+    flash('The article with id %s was successfully deleted!' % id, 'success')
     return redirect(url_for('dashboard'))
 
 
