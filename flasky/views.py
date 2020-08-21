@@ -1,11 +1,28 @@
-from app import app, mysql
+from flasky import app
 from flask import render_template, Markup, request, flash, redirect, url_for, session
+from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
-from wraps import is_not_logged_in, is_logged_in
-from WTFormClasses import RegisterForm, LoginForm, ArticleForm
+from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm
+from flasky.wraps import is_not_logged_in, is_logged_in
+
+
+# DATABASE
+# MySQL config
+app.config['MYSQL_HOST'] = 'j1r4n2ztuwm0bhh5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'apgcuzyplwnhtpzf'
+app.config['MYSQL_PASSWORD'] = 'wibpgq8uv06eciat'
+app.config['MYSQL_DB'] = 'fwtyv7la1cjn796i'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+# init MySQL
+mysql = MySQL(app)
+
+
+#ADMINISTRATOR LIST
+# ADMINS = ['garaba1u', 'garaba.vlad@gmail.com']
+
 
 # Home page
-# @app.route('/')
+@app.route('/')
 def index():
     return render_template('index.html')
 
