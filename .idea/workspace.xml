@@ -2,68 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4535bf33-0fd3-41b2-9329-686eabc7667f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/flaskApp.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky.egg-info/PKG-INFO" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky.egg-info/SOURCES.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky.egg-info/dependency_links.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky.egg-info/requires.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky.egg-info/top_level.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky/app.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky/errors.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky/processors.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flasky/wsgi.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/setup.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/flasky/.gitignore" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Procfile" afterPath="$PROJECT_DIR$/flasky/Procfile" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/WTFormClasses.py" afterPath="$PROJECT_DIR$/flasky/WTFormClasses.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/flasky/requirements.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/runtime.txt" afterPath="$PROJECT_DIR$/flasky/runtime.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/css/style.css" afterPath="$PROJECT_DIR$/flasky/static/css/style.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/about-lumber.jpg" afterPath="$PROJECT_DIR$/flasky/static/img/about-lumber.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/about.jpg" afterPath="$PROJECT_DIR$/flasky/static/img/about.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/background.png" afterPath="$PROJECT_DIR$/flasky/static/img/background.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/background2.jpg" afterPath="$PROJECT_DIR$/flasky/static/img/background2.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/background3.jpg" afterPath="$PROJECT_DIR$/flasky/static/img/background3.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/site/gears-errs.jpg" afterPath="$PROJECT_DIR$/flasky/static/img/site/gears-errs.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/site/not-found.png" afterPath="$PROJECT_DIR$/flasky/static/img/site/not-found.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/team1.png" afterPath="$PROJECT_DIR$/flasky/static/img/team1.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/team2.jpg" afterPath="$PROJECT_DIR$/flasky/static/img/team2.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/team3.png" afterPath="$PROJECT_DIR$/flasky/static/img/team3.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/upload/23c916952e27cbe2516a42af56f126c32549f407.jpeg" afterPath="$PROJECT_DIR$/flasky/static/img/upload/23c916952e27cbe2516a42af56f126c32549f407.jpeg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/upload/531b0d3085047844775fb65bd415a1ccd13902da.jpg" afterPath="$PROJECT_DIR$/flasky/static/img/upload/531b0d3085047844775fb65bd415a1ccd13902da.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/upload/c8d33b3b5e7217fadce74558350b3d8b43dbd316.jpg" afterPath="$PROJECT_DIR$/flasky/static/img/upload/c8d33b3b5e7217fadce74558350b3d8b43dbd316.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/img/upload/not-found.png" afterPath="$PROJECT_DIR$/flasky/static/img/upload/not-found.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/about.html" afterPath="$PROJECT_DIR$/flasky/templates/about.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/add_article.html" afterPath="$PROJECT_DIR$/flasky/templates/add_article.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/article.html" afterPath="$PROJECT_DIR$/flasky/templates/article.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/articles.html" afterPath="$PROJECT_DIR$/flasky/templates/articles.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/dashboard.html" afterPath="$PROJECT_DIR$/flasky/templates/dashboard.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/edit_article.html" afterPath="$PROJECT_DIR$/flasky/templates/edit_article.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/error/400.html" afterPath="$PROJECT_DIR$/flasky/templates/error/400.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/error/404.html" afterPath="$PROJECT_DIR$/flasky/templates/error/404.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/error/500.html" afterPath="$PROJECT_DIR$/flasky/templates/error/500.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/includes/_footer.html" afterPath="$PROJECT_DIR$/flasky/templates/includes/_footer.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/includes/_formhelpers.html" afterPath="$PROJECT_DIR$/flasky/templates/includes/_formhelpers.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/includes/_messages.html" afterPath="$PROJECT_DIR$/flasky/templates/includes/_messages.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/includes/_navbar.html" afterPath="$PROJECT_DIR$/flasky/templates/includes/_navbar.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/flasky/templates/index.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/layout.html" afterPath="$PROJECT_DIR$/flasky/templates/layout.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/login.html" afterPath="$PROJECT_DIR$/flasky/templates/login.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/privacy.html" afterPath="$PROJECT_DIR$/flasky/templates/privacy.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/register.html" afterPath="$PROJECT_DIR$/flasky/templates/register.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/support.html" afterPath="$PROJECT_DIR$/flasky/templates/support.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/views.py" afterPath="$PROJECT_DIR$/flasky/views.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/wraps.py" afterPath="$PROJECT_DIR$/flasky/wraps.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -118,8 +57,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="34" lean-forward="false" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+            <state relative-caret-position="240">
+              <caret line="16" column="3" lean-forward="false" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -419,7 +358,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17155068" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -429,7 +367,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37461618" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37461618" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -826,8 +764,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="34" lean-forward="false" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+        <state relative-caret-position="240">
+          <caret line="16" column="3" lean-forward="false" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
           <folding />
         </state>
       </provider>
