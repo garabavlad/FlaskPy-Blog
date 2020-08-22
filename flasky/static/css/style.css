@@ -250,6 +250,10 @@ html, body {
     filter: none !important;
 }
 
+.ck.ck-editor__main>.ck-editor__editable {
+    min-height: 150px;
+}
+
 /* Footer */
 footer {
     background-color: rgba(0, 0, 0, .85);
