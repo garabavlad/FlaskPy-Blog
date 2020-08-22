@@ -156,6 +156,9 @@ html, body {
 .mb-6 {
     margin-bottom: 4rem !important;
 }
+.pb-6{
+    padding-bottom: 4rem !important;
+}
 
 .shadow-10 {
     box-shadow: 1px 1px 10px #222;
@@ -254,6 +257,17 @@ html, body {
     max-height: 320px;
 }
 
+.article-display:hover .article-badge {
+    display: inline-block;
+}
+
+a.article-badge{
+    font-size: 135%;
+    bottom: 20px;
+    background: none;
+    color: #2d2d2d;
+}
+
 .ck.ck-editor__main>.ck-editor__editable {
     min-height: 150px;
 }
@@ -274,6 +288,8 @@ footer a:hover {
     color: #f2f2f2 !important;
     text-decoration: none;
 }
+
+
 
 /*---Media Queries --*/
 @media (max-width: 992px) {

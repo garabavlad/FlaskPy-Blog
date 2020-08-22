@@ -203,7 +203,7 @@ def edit_article(id):
         cur.close()
 
         flash('Article successfully edited!', 'success')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('article', id=id))
     elif request.method == "GET":
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])

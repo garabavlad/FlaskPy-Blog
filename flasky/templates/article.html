@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="container mb-6">
+    <div class="container pb-6 article-display">
 
         <ul class="list-group">
             <div class="row">
@@ -12,11 +12,15 @@
                     <img src="{{ url_for('static',filename = 'img/upload/'+article.image) }}" alt="article_img" class="img-fluid rounded border article-img float-right">
                 </div>
             </div>
-            <small class="text-secondary pl-2">Written by {{ article.author }} on {{ article.create_date }}</small>
+            <p class="text-secondary mb-0">Written by {{ article.author }} on {{ article.create_date }}</p>
             <hr>
             <div>
                 <p>{{ article.body | safe }}</p>
             </div>
         </ul>
+
+        {% if session.admin or session.username == article.author %}
+        <a href="/edit_article/{{ article.id }}" class="article-badge"><i class="fas fa-pencil-alt"></i></a>
+        {% endif %}
     </div>
 {% endblock %}
