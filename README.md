@@ -9,17 +9,22 @@ The application can be seen live on [this Demo](https://flasky-article-app.herok
 
 ## Usage
 
-Open a terminal window in application folder and include
+In order to use the application we need to export the module which will be used as starting point.
+Open a terminal window in application folder and type:
 
-```export FLASK_APP=flasky```
-```export FLASK_ENV=development```
-
-```pip install -e .
-flask run```
+```
+export FLASK_APP=flasky
+export FLASK_ENV=development
+```
+After you export the module, run the following commands to start the server:
+```
+pip install -e .
+flask run
+```
 
 
 ## Database
- The database credentials can be seen [here](./flasky/views.py) and I intend to leave it public.
+ The database credentials can be seen [here](./flasky/views.py), as I intend to leave them public.
 
  ``` json
  {
