@@ -1,24 +1,14 @@
-from flasky import app
+from flasky import app, mail
 from flask import render_template, Markup, request, flash, redirect, url_for, session
+from flask_mail import Message
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm
 from flasky.wraps import is_not_logged_in, is_logged_in
+from flasky.helpers import create_activation_link, decrypt_activation_link
 
-
-# DATABASE
-# MySQL config
-app.config['MYSQL_HOST'] = 'j1r4n2ztuwm0bhh5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
-app.config['MYSQL_USER'] = 'apgcuzyplwnhtpzf'
-app.config['MYSQL_PASSWORD'] = 'wibpgq8uv06eciat'
-app.config['MYSQL_DB'] = 'fwtyv7la1cjn796i'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 # init MySQL
 mysql = MySQL(app)
-
-
-#ADMINISTRATOR LIST
-# ADMINS = ['garaba1u', 'garaba.vlad@gmail.com']
 
 
 # Home page
@@ -95,8 +85,22 @@ def register():
             cur.execute("INSERT INTO users_ (name,email,username,password) VALUES (%s, %s, %s, %s)",
                         (name, email, username, password))
 
-            # commit changes & close connection
+            # commit changes
             mysql.connection.commit()
+
+            # getting user id & creating activation link
+            cur.execute("SELECT id FROM users_ WHERE username = %s", [username])
+            user = cur.fetchone()
+            activation_link = create_activation_link(user['id'])
+
+            # sending mail with activation link
+            msg = Message("Your Flasky-App account activation link",
+                          sender=app.config['MAIL_DEFAULT_SENDER'],
+                          recipients=[email])
+            msg.html = "";
+            mail.send(msg)
+
+            # close connection
             cur.close()
 
             flash("You are now registered and can log in!", "success")
@@ -153,7 +157,7 @@ def dashboard():
     cur = mysql.connection.cursor()
 
     try:
-        if(session['admin']):
+        if (session['admin']):
             cur.execute("SELECT * FROM articles_")
     except:
         cur.execute("SELECT * FROM articles_ where author=%s", [session['username']])

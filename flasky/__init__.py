@@ -1,11 +1,13 @@
 from flask import Flask
+from flask_mail import Mail
 
 app = Flask(__name__)
 
-# ADMIN ACCOUNTS
-app.config['ADMIN_LIST'] = ['garaba1u', 'garaba.vlad@gmail.com']
-# setting app secret
-app.secret_key = 'dasWF@#56$VP"as1'
+#importing app configurations
+import flasky.config
+
+# setting up the mailing service
+mail = Mail(app)
 
 #importing views
 import flasky.views

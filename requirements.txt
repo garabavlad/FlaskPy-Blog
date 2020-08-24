@@ -12,3 +12,4 @@ protobuf==3.12.4
 six==1.15.0
 Werkzeug==1.0.1
 WTForms==2.3.3
+Crypto==1.4.1
