@@ -152,7 +152,30 @@ def login():
 @app.route('/activate')
 def activate():
     link = request.args.get('link')
-    print(link)
+    id = decrypt_activation_link(link)
+
+    # creating cursor
+    cur = mysql.connection.cursor()
+
+    # submit to DB & close connection
+    result = cur.execute("SELECT * FROM users_ WHERE id = %s", [id])
+
+    if result > 0:
+        data = cur.fetchone()
+
+        cur.execute("UPDATE users_ SET activated = '1' WHERE (id = %s);", [id])
+        mysql.connection.commit()
+
+        session['logged_in'] = True
+        session['username'] = data['username']
+        if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
+            session['admin'] = True
+            flash("Welcome administrator %s. Glad to see you back! Ur activated too!" % data['username'], "success")
+        else:
+            flash("Your account have been activated successfully!", "success")
+        return redirect(url_for("dashboard"))
+    else:
+        flash("Your account could not be found", "danger")
 
     return render_template('index.html')
 
