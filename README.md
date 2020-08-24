@@ -5,7 +5,7 @@ Users can create and manege their content using the dashboard.
 
 The application is using a MySQL database on JawsDB server
 
-The application can be seen live on [this link](https://flasky-article-app.herokuapp.com/).
+The application can be seen live on [this Demo](https://flasky-article-app.herokuapp.com/).
 
 ## Usage
 
