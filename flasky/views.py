@@ -5,7 +5,7 @@ from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm
 from flasky.wraps import is_not_logged_in, is_logged_in
-from flasky.helpers import create_activation_link, decrypt_activation_link
+from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body
 
 # init MySQL
 mysql = MySQL(app)
@@ -91,13 +91,13 @@ def register():
             # getting user id & creating activation link
             cur.execute("SELECT id FROM users_ WHERE username = %s", [username])
             user = cur.fetchone()
-            activation_link = create_activation_link(user['id'])
+            activation_link = create_activation_link(str(user['id']))
 
             # sending mail with activation link
             msg = Message("Your Flasky-App account activation link",
                           sender=app.config['MAIL_DEFAULT_SENDER'],
                           recipients=[email])
-            msg.html = "";
+            msg.html = activation_mail_body(username, request.url_root, activation_link);
             mail.send(msg)
 
             # close connection
@@ -147,6 +147,14 @@ def login():
 
         cur.close()
     return render_template('login.html', form=form)
+
+# Activating account
+@app.route('/activate')
+def activate():
+    link = request.args.get('link')
+    print(link)
+
+    return render_template('index.html')
 
 
 # Dashboard

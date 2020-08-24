@@ -24,9 +24,9 @@ def activation_mail_body(username, base_url, activation_link ):
     Hello %s!
     <br>
     Here is the link to activate your account on Flasky-App:
-    <a href=""> Click to activate</a>
+    <a href="%sactivate?link=%s"> Click to activate</a>
     <br>
     We can't wait to see you among us!
     <br>
     Have fun!
-    ''' % (username)
+    ''' % (username, base_url,activation_link)
