@@ -28,10 +28,10 @@ flask run
 
  ``` json
  {
-    'MYSQL_HOST' : 'j1r4n2ztuwm0bhh5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    'MYSQL_USER' = 'apgcuzyplwnhtpzf',
-    'MYSQL_PASSWORD' = 'wibpgq8uv06eciat',
-    'MYSQL_DB' = 'fwtyv7la1cjn796i'
+    "MYSQL_HOST" : "j1r4n2ztuwm0bhh5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "MYSQL_USER" : "apgcuzyplwnhtpzf",
+    "MYSQL_PASSWORD" : "wibpgq8uv06eciat",
+    "MYSQL_DB" : "fwtyv7la1cjn796i"
 }
 ```
 
