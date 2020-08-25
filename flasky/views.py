@@ -179,6 +179,12 @@ def activate():
 
     return render_template('index.html')
 
+# Sending activation link
+@app.route('/send_activation')
+@is_logged_in
+def send_activation():
+    pass
+
 
 # Dashboard
 @app.route('/dashboard')

@@ -272,6 +272,15 @@ a.article-badge{
     min-height: 150px;
 }
 
+.no-activate-alert {
+    bottom: 0;
+    right: 1%;
+    position: fixed;
+    left: auto;
+    top: auto;
+    width: auto;
+}
+
 /* Footer */
 footer {
     background-color: rgba(0, 0, 0, .85);
