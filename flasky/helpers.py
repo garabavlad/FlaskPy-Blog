@@ -8,7 +8,7 @@ cipher = AES.new(enc_key, AES.MODE_CFB, iv)
 
 def create_activation_link(id):
 
-    binary = iv + cipher.encrypt(id)
+    binary = iv + cipher.encrypt(id.encode("utf-8"))
     return binary.hex()
 
 def decrypt_activation_link(link):
