@@ -1,4 +1,3 @@
 /.idea
 .idea/
 flasky/__pycache__/
-flasky/config.py
