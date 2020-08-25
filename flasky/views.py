@@ -134,6 +134,7 @@ def login():
             if sha256_crypt.verify(password_candidate, password):
                 session['logged_in'] = True
                 session['username'] = data['username']
+                session['activated'] = data['activated']
                 if (data['username'] in app.config['ADMIN_LIST']):
                     session['admin'] = True
                     flash("Welcome administrator %s. Glad to see you back!" % data['username'], "success")
@@ -168,6 +169,7 @@ def activate():
 
         session['logged_in'] = True
         session['username'] = data['username']
+        session['activated'] = data['activated']
         if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
             session['admin'] = True
             flash("Welcome administrator %s. Glad to see you back! Ur activated too!" % data['username'], "success")
@@ -183,6 +185,7 @@ def activate():
 @app.route('/send_activation')
 @is_logged_in
 def send_activation():
+    print(session['activated'])
     pass
 
 

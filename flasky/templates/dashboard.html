@@ -38,8 +38,10 @@
                 </tr>
             {% endfor %}
         </table>
-        <div class="alert alert-warning no-activate-alert" role="alert">
-            You haven't activated your account! <a href="/send_activation" >Resend link</a>!
-        </div>
+        {% if not session.activated %}
+            <div class="alert alert-warning no-activate-alert" role="alert">
+                You haven't activated your account! <a href="/send_activation">Resend link</a>!
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
