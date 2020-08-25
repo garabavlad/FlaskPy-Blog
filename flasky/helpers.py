@@ -4,15 +4,16 @@ import codecs
 
 enc_key = b'PnueFan8Xs]xeq6P'
 iv = Random.new().read(AES.block_size)
-cipher = AES.new(enc_key, AES.MODE_CFB, iv)
 
 def create_activation_link(id):
 
+    cipher = AES.new(enc_key, AES.MODE_CFB, iv)
     binary = iv + cipher.encrypt(id.encode("utf-8"))
     return binary.hex()
 
 def decrypt_activation_link(link):
 
+    cipher = AES.new(enc_key, AES.MODE_CFB, iv)
     decode_hex = codecs.getdecoder("hex_codec")
     string = decode_hex(link)[0]
 
