@@ -135,7 +135,7 @@ def login():
                 session['logged_in'] = True
                 session['username'] = data['username']
                 session['activated'] = data['activated']
-                if (data['username'] in app.config['ADMIN_LIST']):
+                if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
                     session['admin'] = True
                     flash("Welcome administrator %s. Glad to see you back!" % data['username'], "success")
                 else:
@@ -155,38 +155,75 @@ def activate():
     link = request.args.get('link')
     id = decrypt_activation_link(link)
 
+    if(id == -1):
+        flash("Invalid activation link!", "danger")
+        return redirect(url_for("index"))
+
     # creating cursor
     cur = mysql.connection.cursor()
 
-    # submit to DB & close connection
+    # setting user as activated
+    cur.execute("UPDATE users_ SET activated = '1' WHERE (id = %s);", [id])
+    mysql.connection.commit()
+
+    # getting user details for creating a logging session
     result = cur.execute("SELECT * FROM users_ WHERE id = %s", [id])
 
     if result > 0:
         data = cur.fetchone()
 
-        cur.execute("UPDATE users_ SET activated = '1' WHERE (id = %s);", [id])
-        mysql.connection.commit()
-
         session['logged_in'] = True
         session['username'] = data['username']
         session['activated'] = data['activated']
+
         if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
             session['admin'] = True
-            flash("Welcome administrator %s. Glad to see you back! Ur activated too!" % data['username'], "success")
+            if data['activated']:
+                flash("Your account is already activated!", "warning")
+            else:
+                flash("Welcome administrator %s. Glad to see you back! Ur activated too!" % data['username'], "success")
         else:
-            flash("Your account have been activated successfully!", "success")
-        return redirect(url_for("dashboard"))
+            if data['activated']:
+                flash("Your account is already activated!", "warning")
+            else:
+                flash("Your account have been activated successfully!", "success")
     else:
         flash("Your account could not be found", "danger")
+        return redirect(url_for("index"))
 
-    return render_template('index.html')
+    return redirect(url_for("dashboard"))
 
 # Sending activation link
 @app.route('/send_activation')
 @is_logged_in
 def send_activation():
-    print(session['activated'])
-    pass
+    username = session['username']
+
+    # creating cursor
+    cur = mysql.connection.cursor()
+
+    # getting user id & email
+    result = cur.execute("SELECT id,email FROM users_ WHERE username = %s", [username])
+
+    if result > 0:
+        data = cur.fetchone()
+
+        email = data['email']
+        id = data['id']
+        activation_link = create_activation_link(str(id))
+
+        msg = Message("Your Flasky-App account activation link",
+                      sender=app.config['MAIL_DEFAULT_SENDER'],
+                      recipients=[email])
+
+        msg.html = activation_mail_body(username, request.url_root, activation_link)
+        mail.send(msg)
+
+        flash("The activation link was sent successfully to %s!" % email, "success")
+    else:
+        flash("Failed to create the activation link", "danger")
+
+    return redirect(url_for("dashboard"))
 
 
 # Dashboard

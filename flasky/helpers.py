@@ -17,7 +17,13 @@ def decrypt_activation_link(link):
     string = decode_hex(link)[0]
 
     binary = cipher.decrypt(string)[len(iv):]
-    return str(binary, 'utf-8')
+
+    try:
+        to_return = str(binary, 'utf-8')
+    except:
+        to_return = -1
+
+    return to_return
 
 def activation_mail_body(username, base_url, activation_link ):
     return '''
