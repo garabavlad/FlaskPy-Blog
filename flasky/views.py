@@ -259,7 +259,6 @@ def add_article():
         title = form.title.data
         body = form.body.data
         file = request.files['image']
-        print(file)
 
         # checking for valid file
         if file and allowed_file(file.filename):
@@ -294,15 +293,29 @@ def edit_article(id):
     if request.method == 'POST' and form.validate():
         title = form.title.data
         body = form.body.data
+        file = request.files['image']
+
+        # checking for valid file
+        if file and allowed_file(file.filename):
+            extension = os.path.splitext(file.filename)[1]
+            filename = secrets.token_hex(20) + extension
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            query = "UPDATE articles_ SET title=%s, body=%s, image=%s WHERE id=%s"
+            query_args = (title, body, filename, [id])
+        else:
+            query = "UPDATE articles_ SET title=%s, body=%s WHERE id=%s"
+            query_args = (title, body, [id])
 
         # database logic
         cur = mysql.connection.cursor()
-        cur.execute("UPDATE articles_ SET title=%s, body=%s WHERE id=%s", (title, body, [id]))
+        cur.execute(query, query_args)
         mysql.connection.commit()
         cur.close()
 
         flash('Article successfully edited!', 'success')
         return redirect(url_for('article', id=id))
+
     elif request.method == "GET":
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
