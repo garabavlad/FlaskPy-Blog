@@ -259,6 +259,7 @@ def add_article():
         title = form.title.data
         body = form.body.data
         file = request.files['image']
+        print(file)
 
         # checking for valid file
         if file and allowed_file(file.filename):

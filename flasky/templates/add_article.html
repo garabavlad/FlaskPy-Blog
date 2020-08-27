@@ -15,9 +15,13 @@
                         {{ render_field(form.body, class_="form-control", id="editor") }}
                     </div>
 
-                    <input type=file name=image>
+                    <div class="form-group">
+                        {{ render_field(form.image, class_="form-control-file") }}
+                    </div>
 
-                    <button class="btn btn-primary " type="submit">Submit</button>
+                    <div class="form-group">
+                        <button class="btn btn-primary " type="submit">Submit</button>
+                    </div>
 
                 </form>
             </div>

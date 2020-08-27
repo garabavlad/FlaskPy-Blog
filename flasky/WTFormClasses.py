@@ -1,4 +1,5 @@
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from flask_wtf.file import FileField, FileAllowed
 
 
 # Form classes
@@ -39,5 +40,10 @@ class LoginForm(Form):
 
 # Add article Form
 class ArticleForm(Form):
-    title = StringField('Article Title', [validators.Length(min=1, max=200)], render_kw={"placeholder": "The Great Comedian"})
-    body = TextAreaField('Article Content', [validators.Length(min=20)], render_kw={"placeholder": "What do you think about the great comedian?"})
+    title = StringField('Article Title', [validators.Length(min=1, max=200)],
+                        render_kw={"placeholder": "The Great Comedian"})
+    body = TextAreaField('Article Content', [validators.Length(min=20)],
+                         render_kw={"placeholder": "What do you think about the great comedian?"})
+    image = FileField('Upload an image', validators=[
+        FileAllowed(['jpg', 'jpeg', 'png'], 'Only images are allowed!')
+    ])
