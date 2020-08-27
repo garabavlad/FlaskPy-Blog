@@ -8,6 +8,8 @@ The application is using a MySQL database on JawsDB server
 The application can be seen live on [this Demo](https://flasky-article-app.herokuapp.com/).
 
 ## Usage
+First this first - Config file.
+
 
 In order to use the application we need to export the module which will be used as starting point.
 Open a terminal window in application folder and type:
@@ -35,4 +37,4 @@ flask run
 }
 ```
 
-Enjoy!
+Have fun!

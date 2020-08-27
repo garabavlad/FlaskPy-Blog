@@ -97,8 +97,11 @@ def register():
             msg = Message("Your Flasky-App account activation link",
                           sender=app.config['MAIL_DEFAULT_SENDER'],
                           recipients=[email])
-            msg.html = activation_mail_body(username, request.url_root, activation_link);
-            mail.send(msg)
+            msg.html = activation_mail_body(username, request.url_root, activation_link)
+            try:
+                mail.send(msg)
+            except:
+                app.logger.info('Failed to send mail; check your SMTP connexion')
 
             # close connection
             cur.close()
@@ -217,7 +220,10 @@ def send_activation():
                       recipients=[email])
 
         msg.html = activation_mail_body(username, request.url_root, activation_link)
-        mail.send(msg)
+        try:
+            mail.send(msg)
+        except:
+            app.logger.info('Failed to send mail; check your SMTP connexion')
 
         flash("The activation link was sent successfully to %s!" % email, "success")
     else:
