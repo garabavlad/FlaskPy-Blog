@@ -3,6 +3,12 @@ from flask_mail import Mail
 
 app = Flask(__name__)
 
+#setting local environment variables
+try:
+    import flasky.env
+except:
+    print('No env file')
+
 #importing app configurations
 import flasky.config
 

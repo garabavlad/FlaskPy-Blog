@@ -1,6 +1,7 @@
 from Crypto.Cipher import AES
 from Crypto import Random
 import codecs
+from flasky import app
 
 enc_key = b'PnueFan8Xs]xeq6P'
 iv = Random.new().read(AES.block_size)
@@ -36,3 +37,7 @@ def activation_mail_body(username, base_url, activation_link ):
     <br>
     Have fun!
     ''' % (username, base_url,activation_link)
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']

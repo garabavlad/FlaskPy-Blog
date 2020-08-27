@@ -5,7 +5,10 @@ from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm
 from flasky.wraps import is_not_logged_in, is_logged_in
-from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body
+from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file
+from werkzeug.utils import secure_filename
+import os
+import secrets
 
 # init MySQL
 mysql = MySQL(app)
@@ -258,12 +261,26 @@ def add_article():
     form = ArticleForm(request.form)
 
     if request.method == 'POST' and form.validate():
+        #receiving text data from form
         title = form.title.data
         body = form.body.data
+        file = request.files['image']
+
+        # checking for valid file
+        if file and allowed_file(file.filename):
+            extension = os.path.splitext(file.filename)[1]
+            filename = secrets.token_hex(20) + extension
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            query = "INSERT INTO articles_(title,body,author,image) VALUES (%s,%s,%s, %s)"
+            query_args = (title, body, session['username'], filename)
+        else:
+            query = "INSERT INTO articles_(title,body,author) VALUES (%s,%s,%s)"
+            query_args = (title, body, session['username'])
 
         # database logic
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO articles_(title,body,author) VALUES (%s,%s,%s)", (title, body, session['username']))
+        cur.execute(query, query_args)
         mysql.connection.commit()
         cur.close()
 

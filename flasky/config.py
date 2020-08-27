@@ -5,6 +5,7 @@ import os
 app.config['ADMIN_LIST'] = ['garaba1u', 'garaba.vlad@gmail.com'] # you might put in ur email or username for admin privileges
 
 # setting app secret
+os.environ['SECRET_KEY'] = 'asd'
 app.secret_key = os.environ['SECRET_KEY'] # replace with your own secret string
 
 # DATABASE MySQL config
@@ -23,3 +24,7 @@ app.config['MAIL_PASSWORD']  = os.environ['SMTP_PASSWORD'] # replace with your o
 app.config['MAIL_DEFAULT_SENDER']  = 'no-reply@flasky-article-app.herokuapp.com'
 app.config['MAIL_MAX_EMAILS']  = None
 app.config['MAIL_ASCII_ATTACHMENTS']  = False
+
+# Config for file uploading
+app.config['UPLOAD_FOLDER'] = os.environ['UPLOAD_FOLDER']
+app.config['ALLOWED_EXTENSIONS'] = {'png','jpeg','jpg'}
