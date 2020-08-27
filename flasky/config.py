@@ -5,7 +5,6 @@ import os
 app.config['ADMIN_LIST'] = ['garaba1u', 'garaba.vlad@gmail.com'] # you might put in ur email or username for admin privileges
 
 # setting app secret
-os.environ['SECRET_KEY'] = 'asd'
 app.secret_key = os.environ['SECRET_KEY'] # replace with your own secret string
 
 # DATABASE MySQL config

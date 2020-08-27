@@ -13,3 +13,5 @@ six==1.15.0
 Werkzeug==1.0.1
 WTForms==2.3.3
 Crypto==1.4.1
+flask-mail==0.9.1
+pycryptodome==3.4.3

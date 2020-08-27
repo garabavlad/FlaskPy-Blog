@@ -184,15 +184,9 @@ def activate():
 
         if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
             session['admin'] = True
-            if data['activated']:
-                flash("Your account is already activated!", "warning")
-            else:
-                flash("Welcome administrator %s. Glad to see you back! Ur activated too!" % data['username'], "success")
+            flash("Welcome administrator %s. Glad to see you back! Ur activated too!" % data['username'], "success")
         else:
-            if data['activated']:
-                flash("Your account is already activated!", "warning")
-            else:
-                flash("Your account have been activated successfully!", "success")
+            flash("Your account have been activated successfully!", "success")
     else:
         flash("Your account could not be found", "danger")
         return redirect(url_for("index"))
