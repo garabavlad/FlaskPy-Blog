@@ -364,7 +364,22 @@ def payment():
 # Successful payment page
 @app.route('/success_payment')
 def success_payment():
-    return render_template('success_payment.html')
+    session_id = request.args.get('session_id')
+
+    if session_id == None:
+        flash("Unauthorized request","danger")
+        return redirect(url_for("index"))
+
+    # Retrieving data from stripe API
+    try:
+        ssn = stripe.checkout.Session.retrieve(session_id)
+    except:
+        flash("Invalid Session ID","danger")
+        return redirect(url_for("index"))
+
+    cst = stripe.Customer.retrieve(ssn.customer)
+
+    return render_template('success_payment.html', customer= cst.email)
 
 # Checkout page
 @app.route('/checkout_session', methods=['POST'])
@@ -382,7 +397,7 @@ def checkout_session():
       'quantity': 1,
     }],
     mode='payment',
-    success_url=url_for('success_payment', _external=True),
+    success_url=url_for('success_payment', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
     cancel_url=url_for('payment', _external=True)
   )
 
