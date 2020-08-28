@@ -1,5 +1,6 @@
 from flasky import app
 import os
+import stripe
 
 # admin accounts
 app.config['ADMIN_LIST'] = ['garaba1u', 'garaba.vlad@gmail.com'] # you might put in ur email or username for admin privileges
@@ -27,3 +28,6 @@ app.config['MAIL_ASCII_ATTACHMENTS']  = False
 # Config for file uploading
 app.config['UPLOAD_FOLDER'] = os.environ['UPLOAD_FOLDER']
 app.config['ALLOWED_EXTENSIONS'] = {'png','jpeg','jpg'}
+
+stripe.api_key = os.environ['STRIPE_SECRET_KEY']
+app.config['STRIPE_PUBLISHABLE_KEY'] = os.environ['STRIPE_PUBLISHABLE_KEY']

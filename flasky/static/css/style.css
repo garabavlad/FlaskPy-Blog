@@ -156,7 +156,8 @@ html, body {
 .mb-6 {
     margin-bottom: 4rem !important;
 }
-.pb-6{
+
+.pb-6 {
     padding-bottom: 4rem !important;
 }
 
@@ -253,7 +254,7 @@ html, body {
     filter: none !important;
 }
 
-.article-img{
+.article-img {
     max-height: 320px;
 }
 
@@ -261,14 +262,14 @@ html, body {
     display: inline-block;
 }
 
-a.article-badge{
+a.article-badge {
     font-size: 135%;
     bottom: 20px;
     background: none;
     color: #2d2d2d;
 }
 
-.ck.ck-editor__main>.ck-editor__editable {
+.ck.ck-editor__main > .ck-editor__editable {
     min-height: 150px;
 }
 
@@ -279,6 +280,118 @@ a.article-badge{
     left: auto;
     top: auto;
     width: auto;
+}
+
+/* Credit Card */
+.cc-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cc-base {
+    background: #ccc;
+    height: 340px;
+    width: 595px;
+    border-radius: 15px;
+}
+
+.cc-inner {
+    background-color: #0c0014;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg %3E%3Cpolygon fill='%230d1838' points='1600%2C160 0%2C460 0%2C350 1600%2C50'/%3E%3Cpolygon fill='%230e315d' points='1600%2C260 0%2C560 0%2C450 1600%2C150'/%3E%3Cpolygon fill='%230f4981' points='1600%2C360 0%2C660 0%2C550 1600%2C250'/%3E%3Cpolygon fill='%231062a6' points='1600%2C460 0%2C760 0%2C650 1600%2C350'/%3E%3Cpolygon fill='%23117aca' points='1600%2C800 0%2C800 0%2C750 1600%2C450'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: auto 147%;
+    background-position: center;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 13px;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+.cc-expire {
+    margin: 0;
+    font-size: 1.8em !important;
+}
+
+/* Controls chip icon */
+
+.cc-chip {
+    height: 80px;
+    margin: 25px 0 25px 0;
+}
+
+.gold path {
+    fill: url(#gold-gradient);
+}
+
+svg {
+    display: block;
+}
+
+/* Controls name size */
+
+.cc-logo {
+    transform: scale(.5);
+    margin-left: -75px;
+}
+
+.Card-number {
+    margin-top: -25px;
+    display: flex;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.Card-number ul {
+    padding: 0;
+}
+
+.Card-number ul li {
+    list-style: none;
+    float: left;
+    margin: 0px 10px;
+    font-size: 2.2em;
+}
+
+#first-cc-li {
+    margin-left: 0;
+}
+
+#last-cc-li {
+    margin-right: 0;
+}
+
+.Expire {
+    font-size: .75em;
+    text-align: center;
+}
+
+.Expire h4 {
+    font-weight: 400;
+    color: #aaa;
+    margin: 0;
+    /*   word-spacing: 9999999px; */
+    text-transform: uppercase;
+}
+
+.Name h3 {
+    position: absolute;
+    bottom: 0;
+    left: 18%;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 1.35em;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.Visa {
+    width: 175px;
+    position: absolute;
+    bottom: -125px;
+    right: 0;
+    padding: inherit;
 }
 
 /* Footer */
@@ -298,10 +411,18 @@ footer a:hover {
     text-decoration: none;
 }
 
-
-
 /*---Media Queries --*/
+@media (max-width: 1200px) {
+    .Card-number ul li {
+        list-style: none;
+        float: left;
+        margin: 0px 10px;
+        font-size: 1.8em;
+    }
+}
+
 @media (max-width: 992px) {
+
     .hidden-xs {
         display: none !important;
     }
@@ -333,6 +454,11 @@ footer a:hover {
         font-weight: 400;
         text-shadow: 1px 1px 5px #000;
     }
+
+    .navbar-nav li {
+        padding-right: .1rem;
+    }
+
 }
 
 @media (max-width: 768px) {
@@ -407,5 +533,22 @@ footer a:hover {
         text-shadow: 1px 1px 5px #000;
         margin-left: -55px;
         margin-right: -55px;
+    }
+
+    .cc-chip {
+        height: 52px;
+    }
+
+    .Card-number ul li {
+        font-size: 1.4em;
+    }
+    .Expire h4 {
+        font-size: 1.2rem;
+    }
+    .cc-expire{
+    font-size: 1.4em !important;
+    }
+    .Visa{
+        width: 144px;
     }
 }

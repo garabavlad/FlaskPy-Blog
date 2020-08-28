@@ -1,14 +1,14 @@
 from flasky import app, mail
-from flask import render_template, Markup, request, flash, redirect, url_for, session
+from flask import render_template, Markup, request, flash, redirect, url_for, session, jsonify
 from flask_mail import Message
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm
 from flasky.wraps import is_not_logged_in, is_logged_in
 from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file
-from werkzeug.utils import secure_filename
 import os
 import secrets
+import stripe
 
 # init MySQL
 mysql = MySQL(app)
@@ -324,10 +324,11 @@ def edit_article(id):
 
         form.title.data = article['title']
         form.body.data = article['body']
+        form.image.data = 'asd'
 
         return render_template('edit_article.html', form=form)
 
-
+#deleting articles
 @app.route('/delete_article/<string:id>/')
 @is_logged_in
 def delete_article(id):
@@ -353,3 +354,36 @@ def logout():
 @app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
+
+# Payments
+# Payment page
+@app.route('/payment')
+def payment():
+    return render_template('payment.html')
+
+# Successful payment page
+@app.route('/success_payment')
+def success_payment():
+    return render_template('success_payment.html')
+
+# Checkout page
+@app.route('/checkout_session', methods=['POST'])
+def checkout_session():
+  chkout_session = stripe.checkout.Session.create(
+    payment_method_types=['card'],
+    line_items=[{
+      'price_data': {
+        'currency': 'usd',
+        'product_data': {
+          'name': 'A little donation',
+        },
+        'unit_amount': 1000,
+      },
+      'quantity': 1,
+    }],
+    mode='payment',
+    success_url=url_for('success_payment', _external=True),
+    cancel_url=url_for('payment', _external=True)
+  )
+
+  return jsonify({'id':chkout_session.id, 'pk':app.config['STRIPE_PUBLISHABLE_KEY']})
