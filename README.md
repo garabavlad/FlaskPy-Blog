@@ -21,7 +21,7 @@ export FLASK_ENV=development
 
 For Windows cmd:
 ```
-set FLASK_APP=flaskr
+set FLASK_APP=flasky
 set FLASK_ENV=development
 ```
 
