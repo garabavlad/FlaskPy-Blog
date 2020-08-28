@@ -18,6 +18,13 @@ Open a terminal window in application folder and type:
 export FLASK_APP=flasky
 export FLASK_ENV=development
 ```
+
+For Windows cmd:
+```
+set FLASK_APP=flaskr
+set FLASK_ENV=development
+```
+
 After you export the module, run the following commands to start the server:
 ```
 pip install -e .
