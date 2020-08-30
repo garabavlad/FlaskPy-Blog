@@ -24,14 +24,14 @@
                             <p>{{ article_body(article.body) }}</p>
                             <div class="fb-share-button"
                                  data-href="http://flasky-article-app.herokuapp.com/articles/{{ article.id }}/"
-                                 data-layout="button" data-size="large">
+                                 data-layout="button" data-size="small">
                                 <a target="_blank"
                                    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fflasky-article-app.herokuapp.com%2Farticles%2F4%2F&amp;src=sdkpreparse"
                                    class="fb-xfbml-parse-ignore">Share</a>
                             </div>
                             <a class="twitter-share-button"
                                href="https://twitter.com/intent/tweet"
-                               data-size="large"
+                               data-size="small"
                                data-text="{{ article.title }}"
                                data-url="http://flasky-article-app.herokuapp.com/articles/{{ article.id }}/"
                                data-hashtags="flaskyapp"
