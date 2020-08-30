@@ -27,6 +27,24 @@
             </div>
         </ul>
 
+            <div class="fb-share-button"
+                 data-href="http://flasky-article-app.herokuapp.com/articles/{{ article.id }}/"
+                 data-layout="button" data-size="large">
+                <a target="_blank"
+                   href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fflasky-article-app.herokuapp.com%2Farticles%2F4%2F&amp;src=sdkpreparse"
+                   class="fb-xfbml-parse-ignore">Share</a>
+            </div>
+
+            <a class="twitter-share-button"
+               href="https://twitter.com/intent/tweet"
+               data-size="large"
+               data-text="{{ article.title }}"
+               data-url="http://flasky-article-app.herokuapp.com/articles/{{ article.id }}/"
+               data-hashtags="flaskyapp"
+               data-related="twitterapi,twitter">
+                Tweet
+            </a>
+
         {% if session.admin or session.username == article.author %}
             <a href="/edit_article/{{ article.id }}" class="article-badge"><i class="fas fa-pencil-alt"></i></a>
         {% endif %}
