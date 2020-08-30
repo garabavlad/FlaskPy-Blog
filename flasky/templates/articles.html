@@ -1,10 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    {#  Media Script  #}
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v8.0"
+            nonce="StdBT1rg"></script>
+    <script src="{{ url_for('static', filename='js/twitter.js') }}"></script>
+
     <div class="container py-0" style="margin-top: -25px;">
         {% for article in articles|reverse %}
 
-            <div class="jumbotron article-box" onclick="location.href='articles/{{ article.id }}';" style="background: {{ article_list_color_gen() }};" >
+            <div class="jumbotron article-box" onclick="location.href='articles/{{ article.id }}';"
+                 style="background: {{ article_list_color_gen() }};">
                 <div class="container article-inner">
                     <div class="row">
                         <div class="col-md-12 col-lg-3 float-right">
@@ -15,12 +22,27 @@
                             <h1 class="display4 mb-0">{{ article.title }}</h1>
                             <small class="text-secondary mb-2">By {{ article.author }} </small>
                             <p>{{ article_body(article.body) }}</p>
+                            <div class="fb-share-button"
+                                 data-href="http://flasky-article-app.herokuapp.com/articles/{{ article.id }}/"
+                                 data-layout="button" data-size="large">
+                                <a target="_blank"
+                                   href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fflasky-article-app.herokuapp.com%2Farticles%2F4%2F&amp;src=sdkpreparse"
+                                   class="fb-xfbml-parse-ignore">Share</a>
+                            </div>
+                            <a class="twitter-share-button"
+                               href="https://twitter.com/intent/tweet"
+                               data-size="large"
+                               data-text="{{ article.title }}"
+                               data-url="http://flasky-article-app.herokuapp.com/articles/{{ article.id }}/"
+                               data-hashtags="flaskyapp"
+                               data-related="twitterapi,twitter">
+                                Tweet
+                            </a>
                         </div>
-
                     </div>
 
                 </div>
-             <span class="badge badge-secondary article-badge">Press to open the full article</span>
+                <span class="badge badge-secondary article-badge">Press to open the full article</span>
             </div>
 
         {% endfor %}

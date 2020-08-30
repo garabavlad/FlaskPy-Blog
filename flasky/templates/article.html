@@ -1,6 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    {#  Media Script  #}
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v8.0"
+            nonce="StdBT1rg"></script>
+    <script src="{{ url_for('static', filename='js/twitter.js') }}"></script>
+
+
     <div class="container pb-6 article-display">
 
         <ul class="list-group">
@@ -9,7 +16,8 @@
                     <h1 class="display-4 ">{{ article.title }}</h1>
                 </div>
                 <div class="col-6">
-                    <img src="{{ url_for('static',filename = 'img/upload/'+article.image) }}" alt="article_img" class="img-fluid rounded border article-img float-right">
+                    <img src="{{ url_for('static',filename = 'img/upload/'+article.image) }}" alt="article_img"
+                         class="img-fluid rounded border article-img float-right">
                 </div>
             </div>
             <p class="text-secondary mb-0">Written by {{ article.author }} on {{ article.create_date }}</p>
@@ -20,7 +28,7 @@
         </ul>
 
         {% if session.admin or session.username == article.author %}
-        <a href="/edit_article/{{ article.id }}" class="article-badge"><i class="fas fa-pencil-alt"></i></a>
+            <a href="/edit_article/{{ article.id }}" class="article-badge"><i class="fas fa-pencil-alt"></i></a>
         {% endif %}
     </div>
 {% endblock %}

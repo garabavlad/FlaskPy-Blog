@@ -8,7 +8,7 @@ The application is using a MySQL database on JawsDB server
 The application can be seen live on [this Demo](https://flasky-article-app.herokuapp.com/).
 
 ## Usage
-First this first - check [Config file](./flasky/config.py) and replace with your own details.
+First thing first - configuration. Check [config file](./flasky/config.py) and replace with your own credentials where indicated.
 
 
 In order to use the application we need to export the module which will be used as starting point.

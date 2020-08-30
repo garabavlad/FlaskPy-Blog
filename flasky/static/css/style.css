@@ -228,10 +228,10 @@ html, body {
 }
 
 .article-box {
-    padding: 2rem 1rem;
+    padding: 0;
+    padding-top: 1rem;
     cursor: pointer;
-    margin-bottom: .8rem;
-    /*background: #94949414;*/
+    margin-bottom: .4rem;
 }
 
 .article-box:hover {
@@ -242,9 +242,10 @@ html, body {
 .article-badge {
     float: right;
     position: relative;
-    bottom: 10px;
-    background-color: rgba(192, 193, 194, 0.3);
-    padding: .8em 1em;
+    bottom: 31px;
+    right: 11px;
+    background-color: rgba(192, 193, 194, 0.4);
+    padding: .4em 1em;
     border-radius: .5rem;
     display: none;
 }
@@ -267,6 +268,14 @@ a.article-badge {
     bottom: 20px;
     background: none;
     color: #2d2d2d;
+}
+
+.article-inner p {
+    margin: .5rem;
+}
+
+.fb_iframe_widget{
+    bottom: 6px;
 }
 
 .ck.ck-editor__main > .ck-editor__editable {
@@ -542,13 +551,16 @@ footer a:hover {
     .Card-number ul li {
         font-size: 1.4em;
     }
+
     .Expire h4 {
         font-size: 1.2rem;
     }
-    .cc-expire{
-    font-size: 1.4em !important;
+
+    .cc-expire {
+        font-size: 1.4em !important;
     }
-    .Visa{
+
+    .Visa {
         width: 144px;
     }
 }
