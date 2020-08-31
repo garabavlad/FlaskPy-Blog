@@ -11,12 +11,12 @@ def error_404(req):
 
 
 @app.errorhandler(400)
-def bad_request(req):
+def error_400(req):
     app.logger.info(req)
     return make_response(render_template("error/400.html"), 400)
 
 
 @app.errorhandler(500)
-def server_error(req):
+def error_500(req):
     app.logger.info(req)
     return make_response(render_template("error/500.html"), 500)

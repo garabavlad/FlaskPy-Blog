@@ -230,6 +230,7 @@ html, body {
 .article-box {
     padding: 0;
     padding-top: 1rem;
+    padding-bottom: .5rem;
     cursor: pointer;
     margin-bottom: .4rem;
 }
@@ -242,7 +243,7 @@ html, body {
 .article-badge {
     float: right;
     position: relative;
-    bottom: 31px;
+    bottom: 25px;
     right: 11px;
     background-color: rgba(192, 193, 194, 0.4);
     padding: .4em 1em;
@@ -264,7 +265,7 @@ html, body {
 }
 
 a.article-badge {
-    font-size: 135%;
+    font-size: 115%;
     bottom: 20px;
     background: none;
     color: #2d2d2d;
