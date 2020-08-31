@@ -404,6 +404,10 @@ svg {
     padding: inherit;
 }
 
+.grecaptcha-badge {
+    z-index: 10000;
+}
+
 /* Footer */
 footer {
     background-color: rgba(0, 0, 0, .85);
@@ -469,6 +473,9 @@ footer a:hover {
         padding-right: .1rem;
     }
 
+    .article-badge{
+        display: none !important;
+    }
 }
 
 @media (max-width: 768px) {
