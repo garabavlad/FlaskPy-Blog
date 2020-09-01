@@ -16,4 +16,4 @@ Crypto==1.4.1
 flask-mail==0.9.1
 pycryptodome==3.4.3
 stripe==2.50.0
-authlib=0.14.3
+authlib=0.14.1

@@ -51,13 +51,14 @@ flask run
     <li>JawsDB for creating and managing database tables.</li>
     <li>App is currently hosted on Heroku.</li>
     <li>Using Git alongside app development.</li>
+    <li>OAuth2 integration with Google.</li>
+    <li>Google reCAPTCHA v3 on login and register pages.</li>
     <li>Using WTForms for validating Flask forms.</li>
     <li>Integrated Stripe and PayPal payment methods.</li>
     <li>Integrated Flask-mail for sending mails.</li>
     <li>Using PyCrypto for encrypting and generating user activation tokens.</li>
     <li>Allowed users to upload images for thier articles.</li>
     <li>Share buttons for Facebook and Twitter on article pages.</li>
-    <li>Google reCAPTCHA v3 on login and register pages.</li>
     <li>Created user dashboard to manage their personal articles.</li>
     <li>Using CKEditor for creating a well formatted text for articles.</li>
     <li>Using flask processors to clear and select data to display on articles thumbnail.</li>
