@@ -45,6 +45,25 @@ flask run
 ```
 
 ## Features
- This project so far is
+ From all the features included in this app, I'd like to point out the most important ones:
+ <ul>
+    <li>Bootstrap4, Fontawesome and GoogleFonts for creating website UI/UX.</li>
+    <li>JawsDB for creating and managing database tables.</li>
+    <li>App is currently hosted on Heroku.</li>
+    <li>Using Git alongside app development.</li>
+    <li>Using WTForms for validating Flask forms.</li>
+    <li>Integrated Stripe and PayPal payment methods.</li>
+    <li>Integrated Flask-mail for sending mails.</li>
+    <li>Using PyCrypto for encrypting and generating user activation tokens.</li>
+    <li>Allowed users to upload images for thier articles.</li>
+    <li>Share buttons for Facebook and Twitter on article pages.</li>
+    <li>Google reCAPTCHA v3 on login and register pages.</li>
+    <li>Created user dashboard to manage their personal articles.</li>
+    <li>Using CKEditor for creating a well formatted text for articles.</li>
+    <li>Using flask processors to clear and select data to display on articles thumbnail.</li>
+    <li>Using flask processors to generate a unique and random color for each article on Artciles page.</li>
+    <li>Using @wraps to create middleware for user authentication.</li>
+    <li>Flask error handling for HTTP 400,404 and 500 errors.</li>
+ </ul>
 
 Have fun!

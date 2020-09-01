@@ -1,4 +1,5 @@
 from flasky import app
+from authlib.integrations.flask_client import OAuth
 import os
 import stripe
 
@@ -29,5 +30,20 @@ app.config['MAIL_ASCII_ATTACHMENTS']  = False
 app.config['UPLOAD_FOLDER'] = os.environ['UPLOAD_FOLDER']
 app.config['ALLOWED_EXTENSIONS'] = {'png','jpeg','jpg'}
 
+# Stripe configuration
 stripe.api_key = os.environ['STRIPE_SECRET_KEY']
 app.config['STRIPE_PUBLISHABLE_KEY'] = os.environ['STRIPE_PUBLISHABLE_KEY']
+
+# OAuth registration
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id=os.environ['GOOGLE_OAUTH2_CLIENT_ID'],
+    client_secret=os.environ['GOOGLE_OAUTH2_CLIENT_SECRET'],
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_params=None,
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    authorize_params=None,
+    api_base_url='https://www.googleapis.com/oauth2/v1/',
+    client_kwargs={'scope', 'openid profile email'},
+)

@@ -6,6 +6,7 @@ from passlib.hash import sha256_crypt
 from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm
 from flasky.wraps import is_not_logged_in, is_logged_in
 from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file
+from flasky.config import oauth
 import os
 import secrets
 import stripe
@@ -155,13 +156,38 @@ def login():
         cur.close()
     return render_template('login.html', form=form)
 
+# OAuth login
+@app.route('/ologin')
+def ologin():
+    google = oauth.create_client('google')
+    redirect_uri = url_for('authorize', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+# OAuth authorize
+@app.route('/authorize')
+def authorize():
+    google = oauth.create_client('google')
+    token = google.authorize_access_token()
+    resp = google.get('userinfo')
+    user_info = resp.json()
+    # do something with the token and profile
+    return redirect('/')
+
+# Logout
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You have logged out successfully!', 'success')
+    return redirect(url_for('index'))
+
+
 # Activating account
 @app.route('/activate')
 def activate():
     link = request.args.get('link')
     id = decrypt_activation_link(link)
 
-    if(id == -1):
+    if (id == -1):
         flash("Invalid activation link!", "danger")
         return redirect(url_for("index"))
 
@@ -192,6 +218,7 @@ def activate():
         return redirect(url_for("index"))
 
     return redirect(url_for("dashboard"))
+
 
 # Sending activation link
 @app.route('/send_activation')
@@ -255,7 +282,7 @@ def add_article():
     form = ArticleForm(request.form)
 
     if request.method == 'POST' and form.validate():
-        #receiving text data from form
+        # receiving text data from form
         title = form.title.data
         body = form.body.data
         file = request.files['image']
@@ -328,7 +355,8 @@ def edit_article(id):
 
         return render_template('edit_article.html', form=form)
 
-#deleting articles
+
+# Deleting articles
 @app.route('/delete_article/<string:id>/')
 @is_logged_in
 def delete_article(id):
@@ -342,18 +370,11 @@ def delete_article(id):
     return redirect(url_for('dashboard'))
 
 
-# Logout
-@app.route('/logout')
-def logout():
-    session.clear()
-    flash('You have logged out successfully!', 'success')
-    return redirect(url_for('index'))
-
-
 # Privacy
 @app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
+
 
 # Payments
 # Payment page
@@ -361,44 +382,46 @@ def privacy():
 def payment():
     return render_template('payment.html')
 
+
 # Successful payment page
 @app.route('/success_payment')
 def success_payment():
     session_id = request.args.get('session_id')
 
     if session_id == None:
-        flash("Unauthorized request","danger")
+        flash("Unauthorized request", "danger")
         return redirect(url_for("index"))
 
     # Retrieving data from stripe API
     try:
         ssn = stripe.checkout.Session.retrieve(session_id)
     except:
-        flash("Invalid Session ID","danger")
+        flash("Invalid Session ID", "danger")
         return redirect(url_for("index"))
 
     cst = stripe.Customer.retrieve(ssn.customer)
 
-    return render_template('success_payment.html', customer= cst.email)
+    return render_template('success_payment.html', customer=cst.email)
+
 
 # Checkout page
 @app.route('/checkout_session', methods=['POST'])
 def checkout_session():
-  chkout_session = stripe.checkout.Session.create(
-    payment_method_types=['card'],
-    line_items=[{
-      'price_data': {
-        'currency': 'usd',
-        'product_data': {
-          'name': 'A little donation',
-        },
-        'unit_amount': 1000,
-      },
-      'quantity': 1,
-    }],
-    mode='payment',
-    success_url=url_for('success_payment', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-    cancel_url=url_for('payment', _external=True)
-  )
+    chkout_session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'usd',
+                'product_data': {
+                    'name': 'A little donation',
+                },
+                'unit_amount': 1000,
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url=url_for('success_payment', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url=url_for('payment', _external=True)
+    )
 
-  return jsonify({'id':chkout_session.id, 'pk':app.config['STRIPE_PUBLISHABLE_KEY']})
+    return jsonify({'id': chkout_session.id, 'pk': app.config['STRIPE_PUBLISHABLE_KEY']})
