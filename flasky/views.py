@@ -165,46 +165,62 @@ def login():
 @is_not_logged_in
 def google_login():
     google = oauth.create_client('google')  # create the google oauth client
-    redirect_uri = url_for('google_authorize', _external=True) # redirecting user to google auth
+    redirect_uri = url_for('google_authorize', _external=True)  # redirecting user to google auth
     return google.authorize_redirect(redirect_uri)
+
 
 # OAuth Google authorize
 @app.route('/google/authorize')
 @is_not_logged_in
 def google_authorize():
-    google = oauth.create_client('google') # google oauth client
-    token = google.authorize_access_token() # getting google authorization token
-    resp = google.get('userinfo', token=token) # getting user info
+    google = oauth.create_client('google')  # google oauth client
+    token = google.authorize_access_token()  # getting google authorization token
+    resp = google.get('userinfo', token=token)  # getting user info
     user_info = resp.json()
+
+    # getting values from Google OAUTH API
+    name = user_info['name']
+    email = user_info['email']
 
     # checking if user exists in db
     cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * FROM users_ WHERE id = %s", [id])
-    if result > 0: # the user is in db
+    result = cur.execute("SELECT * FROM users_ WHERE email=%s", [email])
+    if result > 0:  # the user is in db
         data = cur.fetchone()
+        username = data['username']
 
-        session['auth'] = {}
-        session['auth']['username'] = data['username']
-        session['auth']['activated'] = data['activated']
-        session['auth']['email'] = data['email']
+    else:  # creating new user in db
 
-        if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
-            session['auth']['admin'] = True
-            flash("Welcome administrator %s. Glad to see you back! Ur activated too!" % data['username'], "success")
-        else:
-            flash("Your account have been activated successfully!", "success")
-    else: # creating new user in db
-        flash("Your account could not be found", "danger")
-        return redirect(url_for("index"))
+        # generating an username and password
+        username = user_info['given_name'] + '.' + user_info['family_name'] + '.' + secrets.token_hex(2)
+        password = sha256_crypt.encrypt(str(secrets.token_hex(10)))
 
-    print(user_info)
+        # inserting new user to DB
+        cur.execute("INSERT INTO users_ (name,email,username,password) VALUES (%s, %s, %s, %s)",
+                    (name, email, username, password))
+        mysql.connection.commit()
 
-    return redirect('/')
+    # creating auth session
+    session['auth'] = {}
+    session['auth']['username'] = username
+    session['auth']['activated'] = '0' # user is not activated
+    session['auth']['email'] = email
+
+    # checking if email is in admin list
+    if username in app.config['ADMIN_LIST'] or email in app.config['ADMIN_LIST']:
+        session['auth']['admin'] = True
+        flash("Welcome administrator %s. Glad to see you back!" % username, "success")
+    else:
+        flash("You have logged in successfully!", "success")
+
+    cur.close()
+    return redirect('/dashboard')
+
 
 # Logout
 @app.route('/logout')
 def logout():
-    session.pop('auth')
+    if 'auth' in session: session.pop('auth')
     flash('You have logged out successfully!', 'success')
     return redirect(url_for('index'))
 
