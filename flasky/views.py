@@ -140,7 +140,7 @@ def login():
             # compare passwrds
             if sha256_crypt.verify(password_candidate, password):
                 # passwords matched so create an auth session
-                # session['logged_in'] = True
+                session['auth'] = {}
                 session['auth']['username'] = data['username']
                 session['auth']['email'] = data['email']
                 session['auth']['activated'] = data['activated']
@@ -165,20 +165,40 @@ def login():
 @is_not_logged_in
 def google_login():
     google = oauth.create_client('google')  # create the google oauth client
-    redirect_uri = url_for('google_authorize', _external=True)
-    print(redirect_uri)
+    redirect_uri = url_for('google_authorize', _external=True) # redirecting user to google auth
     return google.authorize_redirect(redirect_uri)
 
 # OAuth Google authorize
 @app.route('/google/authorize')
 @is_not_logged_in
 def google_authorize():
-    google = oauth.create_client('google')
-    token = google.authorize_access_token()
-    resp = google.get('userinfo', token=token)
+    google = oauth.create_client('google') # google oauth client
+    token = google.authorize_access_token() # getting google authorization token
+    resp = google.get('userinfo', token=token) # getting user info
     user_info = resp.json()
-    # do something with the token and profile
+
+    # checking if user exists in db
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT * FROM users_ WHERE id = %s", [id])
+    if result > 0: # the user is in db
+        data = cur.fetchone()
+
+        session['auth'] = {}
+        session['auth']['username'] = data['username']
+        session['auth']['activated'] = data['activated']
+        session['auth']['email'] = data['email']
+
+        if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
+            session['auth']['admin'] = True
+            flash("Welcome administrator %s. Glad to see you back! Ur activated too!" % data['username'], "success")
+        else:
+            flash("Your account have been activated successfully!", "success")
+    else: # creating new user in db
+        flash("Your account could not be found", "danger")
+        return redirect(url_for("index"))
+
     print(user_info)
+
     return redirect('/')
 
 # Logout
@@ -212,9 +232,10 @@ def activate():
     if result > 0:
         data = cur.fetchone()
 
-        # session['logged_in'] = True
+        session['auth'] = {}
         session['auth']['username'] = data['username']
         session['auth']['activated'] = data['activated']
+        session['auth']['email'] = data['email']
 
         if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
             session['auth']['admin'] = True

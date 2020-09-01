@@ -34,7 +34,7 @@ app.config['ALLOWED_EXTENSIONS'] = {'png','jpeg','jpg'}
 stripe.api_key = os.environ['STRIPE_SECRET_KEY']
 app.config['STRIPE_PUBLISHABLE_KEY'] = os.environ['STRIPE_PUBLISHABLE_KEY']
 
-# OAuth registration
+# Google OAuth2 registration
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
