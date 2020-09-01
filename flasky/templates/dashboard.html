@@ -4,7 +4,7 @@
     <div class="container">
         <h1 class="text-center">Dashboard</h1>
         <h1>
-            <small>Welcome {{ session.username }}</small>
+            <small>Welcome {{ session.auth.username }}</small>
         </h1>
         <a href="/add_article" class="btn btn-primary pull-right">New Article</a>
         <hr>
@@ -35,7 +35,7 @@
                 </tr>
             {% endfor %}
         </table>
-        {% if not session.activated %}
+        {% if not session.auth.activated %}
             <div class="alert alert-warning no-activate-alert" role="alert">
                 You haven't activated your account! <a href="/send_activation">Resend link</a>!
             </div>

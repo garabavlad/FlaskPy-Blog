@@ -139,11 +139,14 @@ def login():
 
             # compare passwrds
             if sha256_crypt.verify(password_candidate, password):
-                session['logged_in'] = True
-                session['username'] = data['username']
-                session['activated'] = data['activated']
+                # passwords matched so create an auth session
+                # session['logged_in'] = True
+                session['auth']['username'] = data['username']
+                session['auth']['email'] = data['email']
+                session['auth']['activated'] = data['activated']
                 if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
-                    session['admin'] = True
+                    # checking if username or email is in admin list
+                    session['auth']['admin'] = True
                     flash("Welcome administrator %s. Glad to see you back!" % data['username'], "success")
                 else:
                     flash("You are now logged in!", "success")
@@ -160,7 +163,7 @@ def login():
 # OAuth Google login
 @app.route('/google/login')
 @is_not_logged_in
-def ologin():
+def google_login():
     google = oauth.create_client('google')  # create the google oauth client
     redirect_uri = url_for('google_authorize', _external=True)
     print(redirect_uri)
@@ -168,6 +171,7 @@ def ologin():
 
 # OAuth Google authorize
 @app.route('/google/authorize')
+@is_not_logged_in
 def google_authorize():
     google = oauth.create_client('google')
     token = google.authorize_access_token()
@@ -180,7 +184,7 @@ def google_authorize():
 # Logout
 @app.route('/logout')
 def logout():
-    session.clear()
+    session.pop('auth')
     flash('You have logged out successfully!', 'success')
     return redirect(url_for('index'))
 
@@ -208,12 +212,12 @@ def activate():
     if result > 0:
         data = cur.fetchone()
 
-        session['logged_in'] = True
-        session['username'] = data['username']
-        session['activated'] = data['activated']
+        # session['logged_in'] = True
+        session['auth']['username'] = data['username']
+        session['auth']['activated'] = data['activated']
 
         if (data['username'] in app.config['ADMIN_LIST'] or data['email'] in app.config['ADMIN_LIST']):
-            session['admin'] = True
+            session['auth']['admin'] = True
             flash("Welcome administrator %s. Glad to see you back! Ur activated too!" % data['username'], "success")
         else:
             flash("Your account have been activated successfully!", "success")
@@ -228,7 +232,7 @@ def activate():
 @app.route('/send_activation')
 @is_logged_in
 def send_activation():
-    username = session['username']
+    username = session['auth']['username']
 
     # creating cursor
     cur = mysql.connection.cursor()
@@ -268,10 +272,10 @@ def dashboard():
     cur = mysql.connection.cursor()
 
     try:
-        if (session['admin']):
+        if (session['auth']['admin']):
             cur.execute("SELECT * FROM articles_")
     except:
-        cur.execute("SELECT * FROM articles_ where author=%s", [session['username']])
+        cur.execute("SELECT * FROM articles_ where author=%s", [session['auth']['username']])
 
     articles = cur.fetchall()
     cur.close()
@@ -298,10 +302,10 @@ def add_article():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             query = "INSERT INTO articles_(title,body,author,image) VALUES (%s,%s,%s, %s)"
-            query_args = (title, body, session['username'], filename)
+            query_args = (title, body, session['auth']['username'], filename)
         else:
             query = "INSERT INTO articles_(title,body,author) VALUES (%s,%s,%s)"
-            query_args = (title, body, session['username'])
+            query_args = (title, body, session['auth']['username'])
 
         # database logic
         cur = mysql.connection.cursor()
@@ -366,7 +370,7 @@ def edit_article(id):
 def delete_article(id):
     # database logic
     cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM articles_ WHERE id=%s and author = %s", (id, session['username']))
+    cur.execute("DELETE FROM articles_ WHERE id=%s and author = %s", (id, session['auth']['username']))
     mysql.connection.commit()
     cur.close()
 

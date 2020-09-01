@@ -14,7 +14,7 @@
                 <div class="carousel-caption">
                     <h1 class="display2">Welcome to Flasky</h1>
                     <h3>An Awesome Flask Article App</h3>
-                    {% if session.logged_in %}
+                    {% if session.auth.username %}
                         <a href="/articles">
                             <button class="btn btn-outline-light btn-lg mr-1">Top Articles</button>
                         </a>
@@ -78,7 +78,7 @@
             Just write something
             if you feel like sharing.</p>
 
-        {% if session.logged_in %}
+        {% if session.auth.username %}
             <a class="btn btn-dark btn-lg mr-1" href="/dashboard">Dashboard</a>
             <a class="btn btn-outline-success btn-lg ml-1" href="/add_article">New Article</a>
         {% else %}

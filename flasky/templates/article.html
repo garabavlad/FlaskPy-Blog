@@ -45,7 +45,7 @@
                 Tweet
             </a>
 
-        {% if session.admin or session.username == article.author %}
+        {% if session.auth.admin or session.auth.username == article.author %}
             <a href="/edit_article/{{ article.id }}" class="article-badge"><i class="fas fa-pencil-alt mr-1"></i> Edit Article</a>
         {% endif %}
     </div>

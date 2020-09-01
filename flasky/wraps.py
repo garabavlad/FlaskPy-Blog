@@ -6,7 +6,7 @@ from flask import flash, redirect, url_for, session
 def is_logged_in(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'logged_in' in session:
+        if 'username' in session['auth']:
             return f(*args, **kwargs)
         else:
             flash('Unauthorized access to the page.', 'danger')
@@ -18,7 +18,7 @@ def is_logged_in(f):
 def is_not_logged_in(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'logged_in' not in session:
+        if 'username' not in session['auth']:
             return f(*args, **kwargs)
         else:
             flash('You are already logged in!', 'danger')
