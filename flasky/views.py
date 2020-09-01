@@ -6,7 +6,7 @@ from passlib.hash import sha256_crypt
 from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm
 from flasky.wraps import is_not_logged_in, is_logged_in
 from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file
-from flasky.config import oauth
+from flasky.config import oauth, google
 import os
 import secrets
 import stripe
@@ -156,21 +156,25 @@ def login():
         cur.close()
     return render_template('login.html', form=form)
 
-# OAuth login
-@app.route('/ologin')
+
+# OAuth Google login
+@app.route('/google/login')
+@is_not_logged_in
 def ologin():
-    google = oauth.create_client('google')
-    redirect_uri = url_for('authorize', _external=True)
+    google = oauth.create_client('google')  # create the google oauth client
+    redirect_uri = url_for('google_authorize', _external=True)
+    print(redirect_uri)
     return google.authorize_redirect(redirect_uri)
 
-# OAuth authorize
-@app.route('/authorize')
-def authorize():
+# OAuth Google authorize
+@app.route('/google/authorize')
+def google_authorize():
     google = oauth.create_client('google')
     token = google.authorize_access_token()
-    resp = google.get('userinfo')
+    resp = google.get('userinfo', token=token)
     user_info = resp.json()
     # do something with the token and profile
+    print(user_info)
     return redirect('/')
 
 # Logout
