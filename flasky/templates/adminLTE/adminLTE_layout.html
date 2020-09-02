@@ -70,7 +70,6 @@
 <script src="{{ url_for('static', filename='dist/js/pages/dashboard3.js') }}"></script>
 
 
-
 {#\ !!!!!!!!!!!!!!!!!!! \#}
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url_for('static', filename='dist/js/demo.js') }}"></script>
@@ -82,6 +81,16 @@
             "autoWidth": false,
         });
     });
+
+    // deleting adminLTE advertisment
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#uvpn_rate_us").remove();
+            $("#new-tab-sidebar").remove();
+        }, 3000);
+
+    });
+
 </script>
 </body>
 </html>

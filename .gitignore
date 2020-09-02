@@ -1,4 +1,5 @@
 /.idea
+.DS_Store
 .idea/
 flasky/__pycache__/
 flasky/env.py

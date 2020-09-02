@@ -7,7 +7,7 @@
             <small>Welcome {{ session.auth.username }}</small>
         </h1>
         <p class="lead">
-            Try out the <a href="/admin/dashboard">Admin Dashboard</a>!
+            Switch to <a href="/admin/dashboard">Admin Dashboard</a>!
         </p>
         <a href="/add_article" class="btn btn-primary pull-right">New Article</a>
         <hr>
@@ -30,7 +30,7 @@
 
             {% for article in articles|reverse %}
                 <tr>
-                    <td><a href="/articles/{{ article.id }}"> {{ article.title }} </a></td>
+                    <td><a href="/articles/{{ article.id }}" class="text-dark"> {{ article.title }} </a></td>
                     <td>{{ article.author }}</td>
                     <td>{{ article.create_date }}</td>
                     <td><a href="/edit_article/{{ article.id }}"><i class="fas fa-pencil-alt"></i></a></td>

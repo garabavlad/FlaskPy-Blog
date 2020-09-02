@@ -557,6 +557,10 @@ footer a:hover {
         margin-right: -15px;
     }
 
+    .article-box-title {
+        font-size: 1.8rem;
+    }
+
     footer {
         text-align: center;
     }
@@ -614,5 +618,9 @@ footer a:hover {
 
     .Visa {
         width: 144px;
+    }
+
+    .article-box-title {
+        font-size: 1.7rem;
     }
 }
