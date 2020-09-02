@@ -10,6 +10,7 @@
     </p>
 
     <a href="/become_admin" class="btn btn-outline-danger pull-right {% if session.auth.admin %} disabled {% endif %}">Become an Administrator</a>
+    <a href="/become_user" class="btn btn-outline-info pull-right {% if not session.auth.admin %} disabled {% endif %}">Become an User</a>
     <a href="/add_article" class="btn btn-primary pull-right">New Article</a>
     <hr>
     <table class="table table-striped">

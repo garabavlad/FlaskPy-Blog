@@ -3,3 +3,5 @@
 .idea/
 flasky/__pycache__/
 flasky/env.py
+flasky.egg-info/
+__pycache__/

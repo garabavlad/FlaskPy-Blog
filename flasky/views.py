@@ -233,6 +233,15 @@ def become_admin():
 
     return redirect('/dashboard')
 
+# Become user
+@app.route('/become_user')
+def become_user():
+    if 'auth' in session and 'admin' in session['auth']:
+        session['auth'].pop('admin')
+        flash('You just became an user!', 'info')
+
+    return redirect('/dashboard')
+
 
 # Activating account
 @app.route('/activate')
