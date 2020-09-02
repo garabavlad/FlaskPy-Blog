@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-md-12 col-lg-9">
                             <h2 class="display4 mb-0 article-box-title">{{ article.title }}</h2>
-                            <small class="text-secondary mb-2">By {{ article.author }} </small>
+                            <small class="text-secondary mb-2">By {{ article.author }} on {{ article.create_date }}</small>
                             <p>{{ article_body(article.body) }}</p>
                             <div class="fb-share-button"
                                  data-href="http://flasky-article-app.herokuapp.com/articles/{{ article.id }}/"

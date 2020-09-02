@@ -4,7 +4,7 @@ from flask_mail import Message
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm
-from flasky.wraps import is_not_logged_in, is_logged_in
+from flasky.middleware import is_not_logged_in, is_logged_in, is_admin
 from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file
 from flasky.config import oauth, google
 import os
@@ -38,6 +38,7 @@ def articles():
 
     for ar in articles:
         ar['body'] = Markup(ar['body'])
+        ar['create_date'] = ar['create_date'].strftime("%b %d %Y")
 
     cur.close()
 
@@ -52,6 +53,7 @@ def article(id):
     cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
 
     article = cur.fetchone()
+    article['create_date'] = article['create_date'].strftime("%b %d %Y")
     cur.close()
     return render_template('article.html', article=article)
 
@@ -323,14 +325,26 @@ def send_activation():
 # Admin Dashboard
 @app.route('/admin/dashboard')
 @is_logged_in
+@is_admin
 def admin_dashboard():
     return render_template('adminLTE/dashboard.html')
 
 @app.route('/admin/dashboard/articles')
 @is_logged_in
+@is_admin
 def admin_dashboard_articles():
     return render_template('adminLTE/articles.html')
 
+@app.route('/admin/dashboard/articles/new', methods=['GET', 'POST'])
+@is_logged_in
+@is_admin
+def admin_dashboard_article_new():
+    form = ArticleForm(request.form)
+
+    if request.method == 'POST':
+        return
+
+    return render_template('adminLTE/add_article.html' ,form=form)
 
 # Dashboard
 @app.route('/dashboard')
@@ -384,7 +398,7 @@ def add_article():
         mysql.connection.commit()
         cur.close()
 
-        flash('New article successfully created!', 'success')
+        flash('New article created successfully.', 'success')
         return redirect(url_for('dashboard'))
 
     return render_template('add_article.html', form=form)
