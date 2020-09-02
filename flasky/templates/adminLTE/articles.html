@@ -1,5 +1,16 @@
 {% extends 'adminLTE/adminLTE_layout.html' %}
 
+{% block stylesheet_includes %}
+
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+
+{% endblock %}
+
+
 {% block content_wrapper %}
 
     <!-- Content Wrapper. Contains page content -->
@@ -30,8 +41,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    <a href="/admin/dashboard/articles/new" class="btn  btn-success btn-sm mr-1 text-white"><i class="fas fa-plus mx-1"></i> New</a>
-                                    <a class="btn  btn-primary btn-sm text-white"> <i class="fas fa-trash mx-1"></i> Trash</a>
+                                    <a href="/admin/dashboard/articles/new"
+                                       class="btn  btn-success btn-sm mr-1 text-white"><i class="fas fa-plus mx-1"></i>
+                                        New</a>
+                                    <a class="btn  btn-default btn-sm text-secondary"> <i class="fas fa-trash mx-1"></i>
+                                        Trash</a>
                                 </h3>
                             </div>
                             <!-- /.card-header -->
@@ -482,3 +496,20 @@
 
 {% endblock %}
 
+
+{% block scripts_includes %}
+
+    <!-- DataTables -->
+    <script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+
+    <script> $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });</script>
+
+{% endblock %}

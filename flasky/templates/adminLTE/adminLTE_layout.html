@@ -11,11 +11,9 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- DataTables -->
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+
+    {% block stylesheet_includes %}{% endblock %}
+
     <!-- IonIcons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -53,44 +51,15 @@
 <!-- Bootstrap -->
 <script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-<!-- DataTables -->
-<script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ url_for('static', filename='plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ url_for('static', filename='plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ url_for('static', filename='plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+{% block scripts_includes %}{% endblock %}
 
 <!-- AdminLTE -->
 <script src="{{ url_for('static', filename='dist/js/adminlte.js') }}"></script>
 
-<!-- OPTIONAL SCRIPTS -->
-<script src="{{ url_for('static', filename='plugins/chart.js/Chart.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url_for('static', filename='dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ url_for('static', filename='dist/js/pages/dashboard3.js') }}"></script>
 
-
-{#\ !!!!!!!!!!!!!!!!!!! \#}
-<!-- AdminLTE for demo purposes -->
-<script src="{{ url_for('static', filename='dist/js/demo.js') }}"></script>
-<!-- Page specific script -->
-<script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-    });
-
-    // deleting adminLTE advertisment
-    $(document).ready(function () {
-        setTimeout(function () {
-            $("#uvpn_rate_us").remove();
-            $("#new-tab-sidebar").remove();
-        }, 3000);
-
-    });
-
-</script>
 </body>
 </html>

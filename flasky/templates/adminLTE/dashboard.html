@@ -1,5 +1,10 @@
 {% extends 'adminLTE/adminLTE_layout.html' %}
 
+{% block stylesheet_includes %}
+
+{% endblock %}
+
+
 {% block content_wrapper %}
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -284,4 +289,11 @@
 
 {% endblock %}
 
+
+{% block scripts_includes %}
+
+<!-- Chart js -->
+<script src="{{ url_for('static', filename='plugins/chart.js/Chart.min.js') }}"></script>
+
+{% endblock %}
 

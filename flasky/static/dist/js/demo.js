@@ -460,4 +460,16 @@
         //replace the "Choose a file" label
         $(this).next('.custom-file-label').html(fileName);
     })
+
+    $('.textarea').summernote();
+
+    // deleting adminLTE advertisment
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#uvpn_rate_us").remove();
+            $("#new-tab-sidebar").remove();
+        }, 3000);
+
+    });
+
 })(jQuery)
