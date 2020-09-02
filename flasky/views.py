@@ -203,7 +203,7 @@ def google_authorize():
     # creating auth session
     session['auth'] = {}
     session['auth']['username'] = username
-    session['auth']['activated'] = '0' # user is not activated
+    session['auth']['activated'] = 0 # user is not activated
     session['auth']['email'] = email
 
     # checking if email is in admin list
@@ -223,6 +223,15 @@ def logout():
     if 'auth' in session: session.pop('auth')
     flash('You have logged out successfully!', 'success')
     return redirect(url_for('index'))
+
+# Become admin
+@app.route('/become_admin')
+def become_admin():
+    if 'auth' in session:
+        session['auth']['admin'] = True
+        flash('You just became an administrator, congrats!', 'info')
+
+    return redirect('/dashboard')
 
 
 # Activating account
