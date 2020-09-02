@@ -303,10 +303,15 @@ def send_activation():
 
 # ADMINISTRATION
 # Admin Dashboard
-@app.route('/admin')
+@app.route('/admin/dashboard')
 @is_logged_in
-def aa():
-    return render_template('adminLTE/index3.html')
+def admin_dashboard():
+    return render_template('adminLTE/dashboard.html')
+
+@app.route('/admin/dashboard/articles')
+@is_logged_in
+def admin_dashboard_articles():
+    return render_template('adminLTE/articles.html')
 
 
 # Dashboard
