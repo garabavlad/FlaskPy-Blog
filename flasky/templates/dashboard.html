@@ -1,47 +1,45 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="text-center">Dashboard</h1>
-        <h1>
-            <small>Welcome {{ session.auth.username }}</small>
-        </h1>
-        <p class="lead">
-            Switch to <a href="/admin/dashboard">Admin Dashboard</a>!
-        </p>
-        <a href="/add_article" class="btn btn-primary pull-right">New Article</a>
-        <hr>
-        <table class="table table-striped">
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Date Created</th>
-                <th></th>
-                <th></th>
+    <h1 class="text-center">Dashboard</h1>
+    <h1>
+        <small>Welcome {{ session.auth.username }}</small>
+    </h1>
+    <p class="lead">
+        Switch to <a href="/admin/dashboard">Admin Dashboard</a>!
+    </p>
+    <a href="/add_article" class="btn btn-primary pull-right">New Article</a>
+    <hr>
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date Created</th>
+            <th></th>
+        </tr>
+
+{#        <colgroup>#}
+{#            <col span="1" style="width: 40%;">#}
+{#            <col span="1" style="width: 11%;">#}
+{#            <col span="1" style="width: 8%;">#}
+{#            <col span="1" style="width: 5%;">#}
+{#        </colgroup>#}
+
+        {% for article in articles|reverse %}
+            <tr class="udash-tr">
+                <td><a href="/articles/{{ article.id }}"> {{ article.title }} </a></td>
+                <td>{{ article.author }}</td>
+                <td>{{ article.create_date }}</td>
+                <td class="">
+                    <a href="/edit_article/{{ article.id }}" class="mr-2"><i class="fas fa-pencil-alt"></i></a>
+                    <a href="/delete_article/{{ article.id }}" class="text-danger"><i class="far fa-trash-alt"></i></a>
+                </td>
             </tr>
-
-            <colgroup>
-                <col span="1" style="width: 22%;">
-                <col span="1" style="width: 13%;">
-                <col span="1" style="width: 12%;">
-                <col span="1" style="width: 1%;">
-                <col span="1" style="width: 1%;">
-            </colgroup>
-
-            {% for article in articles|reverse %}
-                <tr>
-                    <td><a href="/articles/{{ article.id }}" class="text-dark"> {{ article.title }} </a></td>
-                    <td>{{ article.author }}</td>
-                    <td>{{ article.create_date }}</td>
-                    <td><a href="/edit_article/{{ article.id }}"><i class="fas fa-pencil-alt"></i></a></td>
-                    <td><a href="/delete_article/{{ article.id }}"><i class="far fa-trash-alt"></i></a></td>
-                </tr>
-            {% endfor %}
-        </table>
-        {% if not session.auth.activated %}
-            <div class="alert alert-warning no-activate-alert" role="alert">
-                You haven't activated your account! <a href="/send_activation">Resend link</a>!
-            </div>
-        {% endif %}
-    </div>
+        {% endfor %}
+    </table>
+    {% if not session.auth.activated %}
+        <div class="alert alert-warning no-activate-alert" role="alert">
+            You haven't activated your account! <a href="/send_activation">Resend link</a>!
+        </div>
+    {% endif %}
 {% endblock %}

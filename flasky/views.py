@@ -330,6 +330,9 @@ def dashboard():
     articles = cur.fetchall()
     cur.close()
 
+    for ar in articles:
+        ar['create_date'] = ar['create_date'].strftime("%b %d %Y")
+
     return render_template('dashboard.html', articles=articles)
 
 

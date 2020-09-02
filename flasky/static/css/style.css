@@ -161,6 +161,10 @@ html, body {
     padding-bottom: 4rem !important;
 }
 
+.text-purple{
+    color: #6648b1!important;
+}
+
 .shadow-10 {
     box-shadow: 1px 1px 10px #222;
 }
@@ -452,6 +456,16 @@ svg {
     background: #1669f2;
 }
 
+/* User Dashboard */
+.udash-table-actions a {
+    display: none;
+}
+
+.udash-tr:hover a {
+    display: inline;
+}
+
+
 /* Footer */
 footer {
     background-color: rgba(0, 0, 0, .85);
@@ -520,6 +534,10 @@ footer a:hover {
     .article-badge {
         display: none !important;
     }
+
+    .udash-table-actions a {
+    display: inline;
+}
 }
 
 @media (max-width: 768px) {
