@@ -135,8 +135,8 @@ html, body {
     color: #517fa8;
 }
 
-.fa-youtube {
-    color: #bb0000;
+.fa-github {
+    color: #24292e;
 }
 
 .fa-facebook:hover, .fa-twitter:hover, .fa-google-plus-g:hover, .fa-instagram:hover, .fa-youtube:hover {
@@ -569,11 +569,11 @@ footer a:hover {
 @media (max-width: 576px) {
     .social a {
         font-size: 2.5em;
-        padding: 1rem;
+        padding: .6rem;
     }
 
     .carousel-caption {
-        top: 38%;
+        top: 22%;
     }
 
     .carousel-caption h1 {

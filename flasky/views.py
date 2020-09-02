@@ -301,6 +301,14 @@ def send_activation():
     return redirect(url_for("dashboard"))
 
 
+# ADMINISTRATION
+# Admin Dashboard
+@app.route('/admin')
+@is_logged_in
+def aa():
+    return render_template('adminLTE/index3.html')
+
+
 # Dashboard
 @app.route('/dashboard')
 @is_logged_in
