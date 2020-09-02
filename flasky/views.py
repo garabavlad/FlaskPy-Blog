@@ -342,7 +342,29 @@ def admin_dashboard_article_new():
     form = ArticleForm(request.form)
 
     if request.method == 'POST':
-        return
+        title = form.title.data
+        body = form.body.data
+        file = request.files['image']
+
+        # checking for valid file
+        if file and allowed_file(file.filename):
+            extension = os.path.splitext(file.filename)[1]
+            filename = secrets.token_hex(20) + extension
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            query = "INSERT INTO articles_(title,body,author,image) VALUES (%s,%s,%s, %s)"
+            query_args = (title, body, session['auth']['username'], filename)
+        else:
+            query = "INSERT INTO articles_(title,body,author) VALUES (%s,%s,%s)"
+            query_args = (title, body, session['auth']['username'])
+
+        cur = mysql.connection.cursor()
+        cur.execute(query, query_args)
+        mysql.connection.commit()
+        cur.close()
+
+        flash('New article created successfully.', 'success')
+        return redirect(url_for('admin_dashboard_articles'))
 
     return render_template('adminLTE/add_article.html' ,form=form)
 

@@ -9,13 +9,14 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Articles</h1>
+                        <h1>New Article</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Articles</li>
+                            <li class="breadcrumb-item"><a href="/admin/dashboard/articles">Articles</a></li>
+                            <li class="breadcrumb-item active">New</li>
                         </ol>
                     </div>
                 </div>
@@ -31,31 +32,34 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 {% from "includes/_formhelpers.html" import render_field %}
-                                <div class="container pb-6">
-                                    <div class="row">
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-8">
-                                            <form class="form-signin" method="POST" enctype="multipart/form-data">
-                                                <div class="form-group">
-                                                    {{ render_field(form.title, class_="form-control") }}
-                                                </div>
 
-                                                <div class="form-group">
-                                                    {{ render_field(form.body, class_="form-control", id="editor") }}
-                                                </div>
+                                <div class="card card-primary">
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+                                    <form class="form-signin" method="POST" enctype="multipart/form-data">
+                                        <div class="card-body">
 
-                                                <div class="form-group">
-                                                    {{ render_field(form.image, class_="form-control-file") }}
-                                                </div>
+                                            <div class="form-group">
+                                                {{ render_field(form.title, class_="form-control") }}
+                                            </div>
 
-                                                <div class="form-group">
-                                                    <button class="btn btn-primary " type="submit">Submit</button>
-                                                </div>
+                                            <div class="form-group">
+                                                {{ render_field(form.body, class_="form-control", id="editor") }}
+                                            </div>
 
-                                            </form>
+                                            <div class="form-group" id="adash-new-article-file">
+                                                {{ render_field(form.image, class_="form-control-file") }}
+                                            </div>
+
                                         </div>
-                                    </div>
+                                        <!-- /.card-body -->
+
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
                                 </div>
+
                             </div>
                             <!-- /.card-body -->
                         </div>
