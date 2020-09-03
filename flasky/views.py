@@ -32,12 +32,11 @@ def about():
 def articles():
     # connect to db & get articles
     cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * FROM articles_")
+    cur.execute("SELECT * FROM articles_")
 
     articles = cur.fetchall()
 
     for ar in articles:
-        ar['body'] = Markup(ar['body'])
         ar['create_date'] = ar['create_date'].strftime("%b %d %Y")
 
     cur.close()
@@ -333,7 +332,17 @@ def admin_dashboard():
 @is_logged_in
 @is_admin
 def admin_dashboard_articles():
-    return render_template('adminLTE/articles.html')
+    # connecting to db and getting articles
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM articles_")
+
+    articles = cur.fetchall()
+
+    for ar in articles:
+        ar['create_date'] = ar['create_date'].strftime("%b %d %Y")
+
+    cur.close()
+    return render_template('adminLTE/articles.html', articles=articles)
 
 @app.route('/admin/dashboard/articles/new', methods=['GET', 'POST'])
 @is_logged_in
