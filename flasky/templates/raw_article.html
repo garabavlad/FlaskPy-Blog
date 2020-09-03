@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Flasky App</title>
+    <link rel="shortcut icon" type="image/jpg" href="{{ url_for('static', filename='img/fav-icon.png') }}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://kit.fontawesome.com/95f68e1922.js" crossorigin="anonymous"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+
+</head>
+<body>
+
+<div class="container-fluid" style="min-height: 540px;">
+    {#  Media Script  #}
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v8.0"
+            nonce="StdBT1rg"></script>
+    <script src="{{ url_for('static', filename='js/twitter.js') }}"></script>
+
+
+    <div class="container pb-6 article-display">
+
+        <ul class="list-group">
+            <div class="row">
+                <div class="col-6">
+                    <h1 class="display-4 ">{{ article.title }}</h1>
+                </div>
+                <div class="col-6">
+                    <img src="{{ url_for('static',filename = 'img/upload/'+article.image) }}" alt="article_img"
+                         class="img-fluid rounded border article-img float-right">
+                </div>
+            </div>
+            <p class="text-secondary mb-0">Written by {{ article.author }} on {{ article.create_date }}</p>
+            <hr>
+            <div>
+                <p>{{ article.body | safe }}</p>
+            </div>
+        </ul>
+
+        <div class="fb-share-button"
+             data-href="http://flasky-article-app.herokuapp.com/articles/{{ article.id }}/"
+             data-layout="button" data-size="large">
+            <a target="_blank"
+               href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fflasky-article-app.herokuapp.com%2Farticles%2F4%2F&amp;src=sdkpreparse"
+               class="fb-xfbml-parse-ignore">Share</a>
+        </div>
+
+        <a class="twitter-share-button"
+           href="https://twitter.com/intent/tweet"
+           data-size="large"
+           data-text="{{ article.title }}"
+           data-url="http://flasky-article-app.herokuapp.com/articles/{{ article.id }}/"
+           data-hashtags="flaskyapp"
+           data-related="twitterapi,twitter">
+            Tweet
+        </a>
+
+    </div>
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
+<script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+
+
+
+
+
+
+

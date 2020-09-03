@@ -56,6 +56,17 @@ def article(id):
     cur.close()
     return render_template('article.html', article=article)
 
+# Returns a raw article page for iframes
+@app.route('/raw/articles/<string:id>/')
+def raw_article(id):
+    # connect to db & get article info
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
+
+    article = cur.fetchone()
+    article['create_date'] = article['create_date'].strftime("%b %d %Y")
+    cur.close()
+    return render_template('raw_article.html', article=article)
 
 # Support page
 @app.route('/support')
@@ -343,6 +354,12 @@ def admin_dashboard_articles():
 
     cur.close()
     return render_template('adminLTE/articles.html', articles=articles)
+
+@app.route('/admin/dashboard/articles/<string:id>')
+@is_logged_in
+@is_admin
+def admin_dashboard_articles_article(id):
+    return render_template('adminLTE/article.html', id=id)
 
 @app.route('/admin/dashboard/articles/new', methods=['GET', 'POST'])
 @is_logged_in
