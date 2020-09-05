@@ -444,6 +444,22 @@ def admin_dashboard_article_edit(id):
         return render_template('adminLTE/edit_article.html', form=form)
 
 
+@app.route('/admin/dashboard/articles/delete/<string:id>')
+@is_logged_in
+@is_admin
+def admin_dashboard_articles_delete(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("UPDATE articles_ SET deleted=%s WHERE id=%s", (1, [id]))
+
+    mysql.connection.commit()
+    cur.close()
+
+    flash('The article with id %s was successfully deleted!' % id, 'success')
+
+    return redirect(url_for(admin_dashboard_articles))
+
+
 # Dashboard
 @app.route('/dashboard')
 @is_logged_in
@@ -552,7 +568,9 @@ def edit_article(id):
 def delete_article(id):
     # database logic
     cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM articles_ WHERE id=%s and author = %s", (id, session['auth']['username']))
+    # request from a non admin user; have to check if he's the author
+    cur.execute("UPDATE articles_ SET deleted=%s WHERE id=%s and author=%s", (1, [id, session['auth']['username']]))
+
     mysql.connection.commit()
     cur.close()
 
