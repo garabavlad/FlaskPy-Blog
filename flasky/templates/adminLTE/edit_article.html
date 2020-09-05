@@ -1,0 +1,90 @@
+{% extends 'adminLTE/adminLTE_layout.html' %}
+
+{% block stylesheet_includes %}
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/summernote/summernote-bs4.min.css') }}">
+{% endblock %}
+
+
+{% block content_wrapper %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Edit Article</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/dashboard/articles">Articles</a></li>
+                            <li class="breadcrumb-item active">Edit</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                {% from "includes/_formhelpers.html" import render_field %}
+
+                                <div class="card card-primary">
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+                                    <form class="form-signin" method="POST" enctype="multipart/form-data">
+                                        <div class="card-body">
+
+                                            <div class="form-group">
+                                                {{ render_field(form.title, class_="form-control") }}
+                                            </div>
+
+                                            <div class="form-group">
+                                                {{ render_field(form.body, class_="textarea") }}
+                                            </div>
+
+                                            <div class="form-group" id="adash-new-article-file">
+                                                {{ render_field(form.image, class_="form-control-file") }}
+                                            </div>
+
+                                        </div>
+                                        <!-- /.card-body -->
+
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+{% endblock %}
+
+
+{% block scripts_includes %}
+    <!-- Summernote -->
+    <script src="{{ url_for('static', filename='plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+{% endblock %}

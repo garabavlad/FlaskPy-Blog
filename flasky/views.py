@@ -56,6 +56,7 @@ def article(id):
     cur.close()
     return render_template('article.html', article=article)
 
+
 # Returns a raw article page for iframes
 @app.route('/raw/articles/<string:id>/')
 def raw_article(id):
@@ -67,6 +68,7 @@ def raw_article(id):
     article['create_date'] = article['create_date'].strftime("%b %d %Y")
     cur.close()
     return render_template('raw_article.html', article=article)
+
 
 # Support page
 @app.route('/support')
@@ -215,7 +217,7 @@ def google_authorize():
     # creating auth session
     session['auth'] = {}
     session['auth']['username'] = username
-    session['auth']['activated'] = 0 # user is not activated
+    session['auth']['activated'] = 0  # user is not activated
     session['auth']['email'] = email
 
     # checking if email is in admin list
@@ -236,6 +238,7 @@ def logout():
     flash('You have logged out successfully!', 'success')
     return redirect(url_for('index'))
 
+
 # Become admin
 @app.route('/become_admin')
 def become_admin():
@@ -244,6 +247,7 @@ def become_admin():
         flash('You just became an administrator, congrats!', 'info')
 
     return redirect('/dashboard')
+
 
 # Become user
 @app.route('/become_user')
@@ -339,6 +343,7 @@ def send_activation():
 def admin_dashboard():
     return render_template('adminLTE/dashboard.html')
 
+
 @app.route('/admin/dashboard/articles')
 @is_logged_in
 @is_admin
@@ -355,11 +360,13 @@ def admin_dashboard_articles():
     cur.close()
     return render_template('adminLTE/articles.html', articles=articles)
 
+
 @app.route('/admin/dashboard/articles/<string:id>')
 @is_logged_in
 @is_admin
 def admin_dashboard_articles_article(id):
     return render_template('adminLTE/article.html', id=id)
+
 
 @app.route('/admin/dashboard/articles/new', methods=['GET', 'POST'])
 @is_logged_in
@@ -367,7 +374,7 @@ def admin_dashboard_articles_article(id):
 def admin_dashboard_article_new():
     form = ArticleForm(request.form)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate():
         title = form.title.data
         body = form.body.data
         file = request.files['image']
@@ -392,7 +399,50 @@ def admin_dashboard_article_new():
         flash('New article created successfully.', 'success')
         return redirect(url_for('admin_dashboard_articles'))
 
-    return render_template('adminLTE/add_article.html' ,form=form)
+    return render_template('adminLTE/add_article.html', form=form)
+
+
+@app.route('/admin/dashboard/articles/edit/<string:id>', methods=['GET', 'POST'])
+@is_logged_in
+@is_admin
+def admin_dashboard_article_edit(id):
+    form = ArticleForm(request.form)
+
+    if request.method == 'POST' and form.validate():
+        title = form.title.data
+        body = form.body.data
+        file = request.files['image']
+
+        # checking for valid file
+        if file and allowed_file(file.filename):
+            extension = os.path.splitext(file.filename)[1]
+            filename = secrets.token_hex(20) + extension
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            query = "UPDATE articles_ SET title=%s, body=%s, image=%s WHERE id=%s"
+            query_args = (title, body, filename, [id])
+        else:
+            query = "UPDATE articles_ SET title=%s, body=%s WHERE id=%s"
+            query_args = (title, body, [id])
+
+        cur = mysql.connection.cursor()
+        cur.execute(query, query_args)
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Article edited successfully', 'success')
+        return redirect(url_for('admin_dashboard_articles'))
+    elif request.method == "GET":
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
+        article = cur.fetchone()
+        cur.close()
+
+        form.title.data = article['title']
+        form.body.data = article['body']
+
+        return render_template('adminLTE/edit_article.html', form=form)
+
 
 # Dashboard
 @app.route('/dashboard')
@@ -492,7 +542,6 @@ def edit_article(id):
 
         form.title.data = article['title']
         form.body.data = article['body']
-        form.image.data = 'asd'
 
         return render_template('edit_article.html', form=form)
 

@@ -465,6 +465,12 @@ svg {
     display: inline;
 }
 
+a.disabled{
+    pointer-events: none;
+    cursor: default;
+    color: darkgray;
+}
+
 
 /* Footer */
 footer {
