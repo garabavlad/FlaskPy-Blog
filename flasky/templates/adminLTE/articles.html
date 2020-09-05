@@ -26,7 +26,17 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Articles</li>
+                            {% if trashed %}
+
+                                <li class="breadcrumb-item"><a href="/admin/dashboard/articles">Articles</a></li>
+                                <li class="breadcrumb-item active">Trashed</li>
+
+
+                            {% else %}
+
+                                <li class="breadcrumb-item active">Articles</li>
+
+                            {% endif %}
                         </ol>
                     </div>
                 </div>
@@ -44,18 +54,24 @@
                                     <a href="/admin/dashboard/articles/new"
                                        class="btn  btn-success btn-sm mr-1 text-white"><i class="fas fa-plus mx-1"></i>
                                         New</a>
-                                    <a class="btn  btn-default btn-sm text-secondary"> <i class="fas fa-trash mx-1"></i>
-                                        Trash</a>
+
+                                    {% if trashed %}
+
+                                        <a href="?show=published" class="btn  btn-primary btn-sm text-white"> <i
+                                                class="far fa-eye"></i>
+                                            Published</a>
+
+                                    {% else %}
+
+                                        <a href="?show=trashed" class="btn  btn-default btn-sm text-secondary"> <i
+                                                class="fas fa-trash mx-1"></i>
+                                            Trash</a>
+
+                                    {% endif %}
+
+
                                 </h3>
                             </div>
-                        <div class="form-input">
-            <input type="search" class="form-control" value="" />
-            <span class="input-group-btn">
-                <button class="btn btn-default">
-                    Search
-                </button>
-            </span>
-        </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-striped">
@@ -70,12 +86,37 @@
                                     <tbody>
                                     {% for article in articles|reverse %}
                                         <tr id="article{{ article.id }}">
-                                            <td><a href="/admin/dashboard/articles/{{ article.id }}"> {{ article.title }} </a></td>
+                                            <td>
+                                                {% if trashed %}
+
+                                                    <a class="text-red"
+                                                       href="/admin/dashboard/articles/{{ article.id }}"> {{ article.title }} </a>
+
+                                                {% else %}
+
+                                                    <a href="/admin/dashboard/articles/{{ article.id }}"> {{ article.title }} </a>
+
+                                                {% endif %}
+
+                                            </td>
                                             <td>{{ article.author }}</td>
                                             <td>{{ article.create_date }}</td>
                                             <td class="">
-                                                <a href="/admin/dashboard/articles/edit/{{ article.id }}" class="mr-2"><i class="fas fa-pencil-alt"></i></a>
-                                                <a href="/admin/dashboard/articles/delete/{{ article.id }}" class="text-danger"><i class="far fa-trash-alt"></i></a>
+                                                {% if trashed %}
+
+                                                    <a href="/admin/dashboard/articles/edit/{{ article.id }}"
+                                                       class="mr-2"><i class="fas fa-redo"></i></a>
+
+                                                {% else %}
+
+                                                    <a href="/admin/dashboard/articles/edit/{{ article.id }}"
+                                                       class="mr-2"><i class="fas fa-pencil-alt"></i></a>
+                                                    <a href="/admin/dashboard/articles/delete/{{ article.id }}"
+                                                       class="text-danger"><i class="far fa-trash-alt"></i></a>
+
+                                                {% endif %}
+
+
                                             </td>
                                         </tr>
                                     {% endfor %}

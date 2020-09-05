@@ -32,7 +32,7 @@ def about():
 def articles():
     # connect to db & get articles
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM articles_")
+    cur.execute("SELECT * FROM articles_ WHERE deleted=0")
 
     articles = cur.fetchall()
 
@@ -125,7 +125,7 @@ def delete_article(id):
     # database logic
     cur = mysql.connection.cursor()
     # request from a non admin user; have to check if he's the author
-    cur.execute("UPDATE articles_ SET deleted=%s WHERE id=%s and author=%s", (1, [id, session['auth']['username']]))
+    cur.execute("UPDATE articles_ SET deleted=%s WHERE id=%s and author=%s", (1, id, session['auth']['username']))
 
     mysql.connection.commit()
     cur.close()
@@ -426,9 +426,16 @@ def admin_dashboard():
 @is_logged_in
 @is_admin
 def admin_dashboard_articles():
+    get_show = request.args.get("show")
+
     # connecting to db and getting articles
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM articles_")
+    if get_show == 'trashed':
+        cur.execute("SELECT * FROM articles_ WHERE deleted = 1")
+        trashed = 1
+    else:
+        cur.execute("SELECT * FROM articles_ WHERE deleted = 0")
+        trashed = 0
 
     articles = cur.fetchall()
 
@@ -436,7 +443,7 @@ def admin_dashboard_articles():
         ar['create_date'] = ar['create_date'].strftime("%b %d %Y")
 
     cur.close()
-    return render_template('adminLTE/articles.html', articles=articles)
+    return render_template('adminLTE/articles.html', articles=articles , trashed=trashed)
 
 
 @app.route('/admin/dashboard/articles/<string:id>')
@@ -547,9 +554,9 @@ def dashboard():
 
     try:
         if (session['auth']['admin']):
-            cur.execute("SELECT * FROM articles_")
+            cur.execute("SELECT * FROM articles_ WHERE deleted = 0")
     except:
-        cur.execute("SELECT * FROM articles_ where author=%s", [session['auth']['username']])
+        cur.execute("SELECT * FROM articles_ WHERE author=%s AND deleted = 0", [session['auth']['username']])
 
     articles = cur.fetchall()
     cur.close()
