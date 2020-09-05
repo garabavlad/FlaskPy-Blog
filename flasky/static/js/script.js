@@ -2,7 +2,12 @@ ClassicEditor
         .create(document.querySelector('#editor'))
         .catch(error => {}
     );
-
+$(function () {
+        $("#udash-table").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
 
 // ReCAPTCHA form submits
 function onRegisterSubmit(token) {

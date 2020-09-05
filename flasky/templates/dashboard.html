@@ -1,6 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+
     <h1 class="text-center">Dashboard</h1>
     <h1>
         <small>Welcome {% if session.auth.admin %} administrator {% endif %} {{ session.auth.username }}</small>
@@ -9,17 +15,22 @@
         Switch to <a href="/admin/dashboard">Admin Dashboard</a>!
     </p>
 
-    <a href="/become_admin" class="btn btn-outline-danger pull-right {% if session.auth.admin %} disabled {% endif %}">Become an Administrator</a>
-    <a href="/become_user" class="btn btn-outline-info pull-right {% if not session.auth.admin %} disabled {% endif %}">Become an User</a>
+    <a href="/become_admin" class="btn btn-outline-danger pull-right {% if session.auth.admin %} disabled {% endif %}">Become
+        an Administrator</a>
+    <a href="/become_user" class="btn btn-outline-info pull-right {% if not session.auth.admin %} disabled {% endif %}">Become
+        an User</a>
     <a href="/add_article" class="btn btn-primary pull-right">New Article</a>
 
-    <table class="table table-striped mt-3">
+    <div class="my-4">
+    <table class="table table-striped table-bordered mt-3" id="udash-table">
+        <thead>
         <tr>
             <th>Article Title</th>
             <th>Author</th>
             <th>Date</th>
             <th></th>
         </tr>
+        </thead>
         {% for article in articles|reverse %}
             <tr class="udash-tr">
                 <td><a href="/articles/{{ article.id }}"> {{ article.title }} </a></td>
@@ -31,10 +42,20 @@
                 </td>
             </tr>
         {% endfor %}
+        <tfoot>
+        <tr>
+            <th>Article Title</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+        </tfoot>
     </table>
+    </div>
     {% if not session.auth.activated %}
         <div class="alert alert-warning no-activate-alert" role="alert">
             You haven't activated your account! <a href="/send_activation">Resend link</a>!
         </div>
     {% endif %}
+
 {% endblock %}
