@@ -65,6 +65,42 @@ def article(id):
     return render_template('article.html', article=article)
 
 
+# Add article
+@app.route('/add_article', methods=['GET', 'POST'])
+@is_logged_in
+def add_article():
+    form = ArticleForm(request.form)
+
+    if request.method == 'POST' and form.validate():
+        # receiving text data from form
+        title = form.title.data
+        body = form.body.data
+        file = request.files['image']
+
+        # checking for valid file
+        if file and allowed_file(file.filename):
+            extension = os.path.splitext(file.filename)[1]
+            filename = secrets.token_hex(20) + extension
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            query = "INSERT INTO articles_(title,body,author,image) VALUES (%s,%s,%s, %s)"
+            query_args = (title, body, session['auth']['username'], filename)
+        else:
+            query = "INSERT INTO articles_(title,body,author) VALUES (%s,%s,%s)"
+            query_args = (title, body, session['auth']['username'])
+
+        # database logic
+        cur = mysql.connection.cursor()
+        cur.execute(query, query_args)
+        mysql.connection.commit()
+        cur.close()
+
+        flash('New article created successfully.', 'success')
+        return redirect(url_for('dashboard'))
+
+    return render_template('add_article.html', form=form)
+
+
 # Edit article
 @app.route('/edit_article/<string:id>', methods=['GET', 'POST'])
 @is_logged_in
@@ -131,6 +167,22 @@ def delete_article(id):
     cur.close()
 
     flash('The article with id %s was successfully deleted!' % id, 'success')
+    return redirect(url_for('dashboard'))
+
+
+# Returning articles
+@app.route('/return_article/<string:id>/')
+@is_logged_in
+def return_article(id):
+    # database logic
+    cur = mysql.connection.cursor()
+    # request from a non admin user; have to check if he's the author
+    cur.execute("UPDATE articles_ SET deleted=%s WHERE id=%s and author=%s", (0, id, session['auth']['username']))
+
+    mysql.connection.commit()
+    cur.close()
+
+    flash('The article with id %s was moved out of the trash successfully!' % id, 'success')
     return redirect(url_for('dashboard'))
 
 
@@ -443,7 +495,7 @@ def admin_dashboard_articles():
         ar['create_date'] = ar['create_date'].strftime("%b %d %Y")
 
     cur.close()
-    return render_template('adminLTE/articles.html', articles=articles , trashed=trashed)
+    return render_template('adminLTE/articles.html', articles=articles, trashed=trashed)
 
 
 @app.route('/admin/dashboard/articles/<string:id>')
@@ -542,10 +594,26 @@ def admin_dashboard_articles_delete(id):
 
     flash('The article with id %s was successfully deleted!' % id, 'success')
 
-    return redirect(url_for(admin_dashboard_articles))
+    return redirect(url_for('admin_dashboard_articles'))
 
 
-# Dashboard
+@app.route('/admin/dashboard/articles/return/<string:id>')
+@is_logged_in
+@is_admin
+def admin_dashboard_articles_return(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("UPDATE articles_ SET deleted=%s WHERE id=%s", (0, [id]))
+
+    mysql.connection.commit()
+    cur.close()
+
+    flash('The article with id %s was moved out of the trash successfully!' % id, 'success')
+
+    return redirect(url_for('admin_dashboard_articles'))
+
+
+# User Dashboard
 @app.route('/dashboard')
 @is_logged_in
 def dashboard():
@@ -565,42 +633,6 @@ def dashboard():
         ar['create_date'] = ar['create_date'].strftime("%b %d %Y")
 
     return render_template('dashboard.html', articles=articles)
-
-
-# Add article
-@app.route('/add_article', methods=['GET', 'POST'])
-@is_logged_in
-def add_article():
-    form = ArticleForm(request.form)
-
-    if request.method == 'POST' and form.validate():
-        # receiving text data from form
-        title = form.title.data
-        body = form.body.data
-        file = request.files['image']
-
-        # checking for valid file
-        if file and allowed_file(file.filename):
-            extension = os.path.splitext(file.filename)[1]
-            filename = secrets.token_hex(20) + extension
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-            query = "INSERT INTO articles_(title,body,author,image) VALUES (%s,%s,%s, %s)"
-            query_args = (title, body, session['auth']['username'], filename)
-        else:
-            query = "INSERT INTO articles_(title,body,author) VALUES (%s,%s,%s)"
-            query_args = (title, body, session['auth']['username'])
-
-        # database logic
-        cur = mysql.connection.cursor()
-        cur.execute(query, query_args)
-        mysql.connection.commit()
-        cur.close()
-
-        flash('New article created successfully.', 'success')
-        return redirect(url_for('dashboard'))
-
-    return render_template('add_article.html', form=form)
 
 
 # Privacy
