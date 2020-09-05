@@ -49,16 +49,94 @@ def articles():
 def article(id):
     # connect to db & get article info
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
+    res = cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
 
-    article = cur.fetchone()
-    article['create_date'] = article['create_date'].strftime("%b %d %Y")
+    if res:
+        article = cur.fetchone()
+        article['create_date'] = article['create_date'].strftime("%b %d %Y")
+
+        if article['deleted'] == b'1':
+            flash("The requested article is in the trash", "danger")
+    else:
+        flash("The requested article is not available", "danger")
+        return redirect(url_for("articles"))
+
     cur.close()
     return render_template('article.html', article=article)
 
 
+# Edit article
+@app.route('/edit_article/<string:id>', methods=['GET', 'POST'])
+@is_logged_in
+def edit_article(id):
+    form = ArticleForm(request.form)
+
+    if request.method == 'POST' and form.validate():
+        title = form.title.data
+        body = form.body.data
+        file = request.files['image']
+
+        # checking for valid file
+        if file and allowed_file(file.filename):
+            extension = os.path.splitext(file.filename)[1]
+            filename = secrets.token_hex(20) + extension
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            query = "UPDATE articles_ SET title=%s, body=%s, image=%s WHERE id=%s"
+            query_args = (title, body, filename, [id])
+        else:
+            query = "UPDATE articles_ SET title=%s, body=%s WHERE id=%s"
+            query_args = (title, body, [id])
+
+        # database logic
+        cur = mysql.connection.cursor()
+        cur.execute(query, query_args)
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Article successfully edited!', 'success')
+        return redirect(url_for('article', id=id))
+
+    elif request.method == "GET":
+        cur = mysql.connection.cursor()
+        res = cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
+
+        if res:  # checking if article is not deleted
+            article = cur.fetchone()
+            article['create_date'] = article['create_date'].strftime("%b %d %Y")
+
+            if article['deleted'] == b'1':
+                flash("The requested article is in the trash", "danger")
+        else:
+            flash("The requested article is not available", "danger")
+            return redirect(url_for("articles"))
+
+        form.title.data = article['title']
+        form.body.data = article['body']
+
+        cur.close()
+        return render_template('edit_article.html', form=form)
+
+
+# Deleting articles
+@app.route('/delete_article/<string:id>/')
+@is_logged_in
+def delete_article(id):
+    # database logic
+    cur = mysql.connection.cursor()
+    # request from a non admin user; have to check if he's the author
+    cur.execute("UPDATE articles_ SET deleted=%s WHERE id=%s and author=%s", (1, [id, session['auth']['username']]))
+
+    mysql.connection.commit()
+    cur.close()
+
+    flash('The article with id %s was successfully deleted!' % id, 'success')
+    return redirect(url_for('dashboard'))
+
+
 # Returns a raw article page for iframes
 @app.route('/raw/articles/<string:id>/')
+@is_admin
 def raw_article(id):
     # connect to db & get article info
     cur = mysql.connection.cursor()
@@ -516,66 +594,6 @@ def add_article():
         return redirect(url_for('dashboard'))
 
     return render_template('add_article.html', form=form)
-
-
-# Edit article
-@app.route('/edit_article/<string:id>', methods=['GET', 'POST'])
-@is_logged_in
-def edit_article(id):
-    form = ArticleForm(request.form)
-
-    if request.method == 'POST' and form.validate():
-        title = form.title.data
-        body = form.body.data
-        file = request.files['image']
-
-        # checking for valid file
-        if file and allowed_file(file.filename):
-            extension = os.path.splitext(file.filename)[1]
-            filename = secrets.token_hex(20) + extension
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-            query = "UPDATE articles_ SET title=%s, body=%s, image=%s WHERE id=%s"
-            query_args = (title, body, filename, [id])
-        else:
-            query = "UPDATE articles_ SET title=%s, body=%s WHERE id=%s"
-            query_args = (title, body, [id])
-
-        # database logic
-        cur = mysql.connection.cursor()
-        cur.execute(query, query_args)
-        mysql.connection.commit()
-        cur.close()
-
-        flash('Article successfully edited!', 'success')
-        return redirect(url_for('article', id=id))
-
-    elif request.method == "GET":
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
-        article = cur.fetchone()
-        cur.close()
-
-        form.title.data = article['title']
-        form.body.data = article['body']
-
-        return render_template('edit_article.html', form=form)
-
-
-# Deleting articles
-@app.route('/delete_article/<string:id>/')
-@is_logged_in
-def delete_article(id):
-    # database logic
-    cur = mysql.connection.cursor()
-    # request from a non admin user; have to check if he's the author
-    cur.execute("UPDATE articles_ SET deleted=%s WHERE id=%s and author=%s", (1, [id, session['auth']['username']]))
-
-    mysql.connection.commit()
-    cur.close()
-
-    flash('The article with id %s was successfully deleted!' % id, 'success')
-    return redirect(url_for('dashboard'))
 
 
 # Privacy
