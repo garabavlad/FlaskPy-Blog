@@ -30,12 +30,15 @@ class RegisterForm(Form):
 
 # Login Form
 class LoginForm(Form):
-    email = StringField('Email or username', [
+    email = StringField('', [
         validators.DataRequired()
-    ])
-    password = PasswordField('Password', [
+    ],
+    render_kw={"placeholder": "Email or Username"})
+    password = PasswordField('', [
         validators.DataRequired()
-    ])
+    ],
+    render_kw={"placeholder": "Password"})
+
 
 
 # Add article Form
