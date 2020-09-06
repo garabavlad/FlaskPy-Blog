@@ -7,25 +7,30 @@ from flask_wtf.file import FileField, FileAllowed
 
 # Registration form
 class RegisterForm(Form):
-    name = StringField('Name', [
+    name = StringField('', [
         validators.Length(min=1, max=50),
         validators.DataRequired()
-    ])
-    username = StringField('Username', [
+    ],
+    render_kw={"placeholder": "Full name"})
+    username = StringField('', [
         validators.Length(min=4, max=25),
         validators.DataRequired()
-    ])
-    email = StringField('Email', [
+    ],
+    render_kw={"placeholder": "Username"})
+    email = StringField('', [
         validators.Length(min=6, max=50),
         validators.DataRequired()
-    ])
-    password = PasswordField('Password', [
+    ],
+    render_kw={"placeholder": "Email"})
+    password = PasswordField('', [
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Passwords do not match')
-    ])
-    confirm = PasswordField('Confirm Password', [
+    ],
+    render_kw={"placeholder": "Password"})
+    confirm = PasswordField('', [
         validators.DataRequired()
-    ])
+    ],
+    render_kw={"placeholder": "Retype password"})
 
 
 # Login Form
