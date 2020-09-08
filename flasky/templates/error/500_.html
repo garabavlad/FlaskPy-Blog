@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | 404 Page not found</title>
+  <title>AdminLTE 3 | 500 Error</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -22,7 +22,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../dashboard.html" class="nav-link">Home</a>
+        <a href="../adminLTE/dashboard.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -145,7 +145,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../dashboard.html" class="brand-link">
+    <a href="../adminLTE/dashboard.html" class="brand-link">
       <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
@@ -189,7 +189,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../../index.html" class="nav-link">
+                <a href="../index.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Dashboard v1</p>
                 </a>
@@ -201,7 +201,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../../dashboard.html" class="nav-link">
+                <a href="../adminLTE/dashboard.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Dashboard v3</p>
                 </a>
@@ -416,7 +416,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../../articles.html" class="nav-link">
+                <a href="../adminLTE/articles.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>DataTables</p>
                 </a>
@@ -545,25 +545,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../../../login.html" class="nav-link">
+                <a href="../login.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Login</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../../../register.html" class="nav-link">
+                <a href="../register.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Register</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../examples/forgot-password.html" class="nav-link">
+                <a href="../adminLTE/examples/forgot-password.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Forgot Password</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../examples/recover-password.html" class="nav-link">
+                <a href="../adminLTE/examples/recover-password.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Recover Password</p>
                 </a>
@@ -587,25 +587,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../examples/404.html" class="nav-link active">
+                <a href="404.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Error 404</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../examples/500.html" class="nav-link">
+                <a href="../examples/500_.html" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Error 500</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../examples/pace.html" class="nav-link">
+                <a href="/pace.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pace</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../examples/blank.html" class="nav-link">
+                <a href="/blank.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Blank Page</p>
                 </a>
@@ -723,12 +723,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>404 Error Page</h1>
+            <h1>500 Error Page</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">404 Error Page</li>
+              <li class="breadcrumb-item active">500 Error Page</li>
             </ol>
           </div>
         </div>
@@ -738,14 +738,14 @@
     <!-- Main content -->
     <section class="content">
       <div class="error-page">
-        <h2 class="headline text-warning"> 404</h2>
+        <h2 class="headline text-danger">500</h2>
 
         <div class="error-content">
-          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
+          <h3><i class="fas fa-exclamation-triangle text-danger"></i> Oops! Something went wrong.</h3>
 
           <p>
-            We could not find the page you were looking for.
-            Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+            We will work on fixing that right away.
+            Meanwhile, you may <a href="../index.html">return to dashboard</a> or try using the search form.
           </p>
 
           <form class="search-form">
@@ -753,16 +753,16 @@
               <input type="text" name="search" class="form-control" placeholder="Search">
 
               <div class="input-group-append">
-                <button type="submit" name="submit" class="btn btn-warning"><i class="fas fa-search"></i>
+                <button type="submit" name="submit" class="btn btn-danger"><i class="fas fa-search"></i>
                 </button>
               </div>
             </div>
             <!-- /.input-group -->
           </form>
         </div>
-        <!-- /.error-content -->
       </div>
       <!-- /.error-page -->
+
     </section>
     <!-- /.content -->
   </div>

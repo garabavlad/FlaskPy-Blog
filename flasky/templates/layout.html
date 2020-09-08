@@ -3,14 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Flasky App</title>
+    {# FAVICON #}
     <link rel="shortcut icon" type="image/jpg" href="{{ url_for('static', filename='img/fav-icon.png') }}"/>
+
+    {# BOOTSTRAP 4 #}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {# GOOGLE FONTS #}
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {# FONT AWESOME #}
     <script src="https://kit.fontawesome.com/95f68e1922.js" crossorigin="anonymous"></script>
+    {# STRIPE #}
     <script src="https://js.stripe.com/v3/"></script>
+
+    {% block style_includes %}{% endblock %}
+
+    {# LOCAL STYLE CSS #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 
 </head>
 <body>
@@ -29,12 +39,16 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
 <script src="{{ url_for('static', filename='js/payment.js') }}"></script>
- <!-- DataTables -->
-    <script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 
+<!-- DataTables -->
+<script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+
+{% block scripts %}{% endblock %}
+
+{# LOCAL SCRIPTS #}
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

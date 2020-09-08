@@ -1,11 +1,36 @@
 {% extends 'layout.html' %}
 
-{% block body %}
-    <div class="container">
-        <h1>Look at that <u>404</u> floating around!</h1>
-        <h2>Seems like we couldn't find what you were looking for!</h2>
-        <img src="{{ url_for('static', filename='img/site/gears-errs.jpg') }}" alt="error gears"
-             class="img-fluid float-right error-gears">
-    </div>
-    </div>
+{% block style_includes %}
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/adminlte.min.css') }}">
 {% endblock %}
+
+{% block body %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="error-page">
+            <h2 class="headline text-warning"> 404</h2>
+
+            <div class="error-content">
+                <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
+
+                <p>
+                    Seems like we could not find what you were looking for.
+                    Meanwhile, you may <a href="/dashboard">return to dashboard</a>.
+                </p>
+                <img src="{{ url_for('static', filename='img/site/gears-errs.jpg') }}" alt="error gears"
+                     class="img-fluid float-right error-gears">
+
+            </div>
+            <!-- /.error-content -->
+        </div>
+        <!-- /.error-page -->
+    </section>
+    <!-- /.content -->
+{% endblock %}
+
