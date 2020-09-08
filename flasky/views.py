@@ -261,11 +261,6 @@ def register():
         return render_template('register.html', form=form)
 
 
-@app.route('/aaa')
-def err():
-    abort(500)
-    return (500)
-
 # Login
 @app.route('/login', methods=['GET', 'POST'])
 @is_not_logged_in
