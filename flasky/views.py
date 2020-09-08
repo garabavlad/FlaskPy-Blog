@@ -1,5 +1,5 @@
 from flasky import app, mail
-from flask import render_template, Markup, request, flash, redirect, url_for, session, jsonify
+from flask import render_template, abort, request, flash, redirect, url_for, session, jsonify
 from flask_mail import Message
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
@@ -260,6 +260,11 @@ def register():
     else:
         return render_template('register.html', form=form)
 
+
+@app.route('/aaa')
+def err():
+    abort(500)
+    return (500)
 
 # Login
 @app.route('/login', methods=['GET', 'POST'])
