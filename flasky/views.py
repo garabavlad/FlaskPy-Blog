@@ -41,7 +41,7 @@ def articles():
 
     cur.close()
 
-    return render_template('articles.html', articles=articles)
+    return render_template('articles/articles.html', articles=articles)
 
 
 # Article page
@@ -62,7 +62,7 @@ def article(id):
         return redirect(url_for("articles"))
 
     cur.close()
-    return render_template('article.html', article=article)
+    return render_template('articles/article.html', article=article)
 
 
 # Add article
@@ -98,7 +98,7 @@ def add_article():
         flash('New article created successfully.', 'success')
         return redirect(url_for('dashboard'))
 
-    return render_template('add_article.html', form=form)
+    return render_template('articles/add_article.html', form=form)
 
 
 # Edit article
@@ -151,7 +151,7 @@ def edit_article(id):
         form.body.data = article['body']
 
         cur.close()
-        return render_template('edit_article.html', form=form)
+        return render_template('articles/edit_article.html', form=form)
 
 
 # Deleting articles
@@ -197,7 +197,7 @@ def raw_article(id):
     article = cur.fetchone()
     article['create_date'] = article['create_date'].strftime("%b %d %Y")
     cur.close()
-    return render_template('raw_article.html', article=article)
+    return render_template('articles/raw_article.html', article=article)
 
 
 # Support page
@@ -258,7 +258,7 @@ def register():
             return redirect(url_for("login"))
 
     else:
-        return render_template('register.html', form=form)
+        return render_template('auth/register.html', form=form)
 
 
 # Login
@@ -301,7 +301,17 @@ def login():
             flash("The username or password didn't match", "danger")
 
         cur.close()
-    return render_template('login.html', form=form)
+    return render_template('auth/login.html', form=form)
+
+# Forgot password
+@app.route('/iforgot')
+def iforgot():
+    return render_template('auth/forgot-password.html')
+
+# PAssword recoved
+@app.route('/recover')
+def recover():
+    return render_template('auth/recover-password.html')
 
 
 # OAuth Google login
