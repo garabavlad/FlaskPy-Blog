@@ -5,7 +5,8 @@ from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm, ForgotPwForm
 from flasky.middleware import is_not_logged_in, is_logged_in, is_admin
-from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file
+from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file, \
+    pwreset_mail_body, create_pwreset_link
 from flasky.config import oauth, google
 import os
 import secrets
@@ -310,14 +311,16 @@ def iforgot():
     if request.method == 'POST' and form.validate():
         email = request.form['email']
         cur = mysql.connection.cursor()
-        result = cur.execute("SELECT id FROM users_ WHERE email = %s", [email])
+        result = cur.execute("SELECT id, username FROM users_ WHERE email = %s", [email])
 
         if result > 0:
-            msg = Message("Your Flasky-App account activation link",
+            usr = cur.fetchone()
+            reset_link = create_pwreset_link(str(usr['id']))
+            msg = Message("Flasky-App password reset",
                           sender=app.config['MAIL_DEFAULT_SENDER'],
                           recipients=[email])
 
-            msg.html = activation_mail_body(username, request.url_root, activation_link)
+            msg.html = pwreset_mail_body(usr['username'], request.url_root, reset_link)
             try:
                 mail.send(msg)
             except:

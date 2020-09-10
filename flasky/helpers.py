@@ -33,6 +33,7 @@ def create_pwreset_link(id):
     binary = iv + cipher.encrypt(id.encode("utf-8"))
     return binary.hex()
 
+
 def decrypt_pwreset_link(link):
     cipher = AES.new(enc_key_activation, AES.MODE_CFB, iv)
     decode_hex = codecs.getdecoder("hex_codec")
@@ -58,6 +59,19 @@ def activation_mail_body(username, base_url, activation_link):
     <br>
     Have fun!
     ''' % (username, base_url, activation_link)
+
+
+def pwreset_mail_body(username, base_url, reset_link):
+    return '''
+    Hello %s!
+    <br>
+    You requested a password change for your account on Flasky-App:
+    <a href="%srecover/%s"> Click to activate</a>
+    <br>
+    We can't wait to see you among us!
+    <br>
+    Have fun!
+    ''' % (username, base_url, reset_link)
 
 
 def allowed_file(filename):
