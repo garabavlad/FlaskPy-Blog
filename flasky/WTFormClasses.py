@@ -11,26 +11,26 @@ class RegisterForm(Form):
         validators.Length(min=1, max=50),
         validators.DataRequired()
     ],
-    render_kw={"placeholder": "Full name"})
+                       render_kw={"placeholder": "Full name"})
     username = StringField('', [
         validators.Length(min=4, max=25),
         validators.DataRequired()
     ],
-    render_kw={"placeholder": "Username"})
+                           render_kw={"placeholder": "Username"})
     email = StringField('', [
         validators.Length(min=6, max=50),
         validators.DataRequired()
     ],
-    render_kw={"placeholder": "Email"})
+                        render_kw={"placeholder": "Email"})
     password = PasswordField('', [
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Passwords do not match')
     ],
-    render_kw={"placeholder": "Password"})
+                             render_kw={"placeholder": "Password"})
     confirm = PasswordField('', [
         validators.DataRequired()
     ],
-    render_kw={"placeholder": "Retype password"})
+                            render_kw={"placeholder": "Retype password"})
 
 
 # Login Form
@@ -38,12 +38,11 @@ class LoginForm(Form):
     email = StringField('', [
         validators.DataRequired()
     ],
-    render_kw={"placeholder": "Email or Username"})
+                        render_kw={"placeholder": "Email or Username"})
     password = PasswordField('', [
         validators.DataRequired()
     ],
-    render_kw={"placeholder": "Password"})
-
+                             render_kw={"placeholder": "Password"})
 
 
 # Add article Form
@@ -55,3 +54,11 @@ class ArticleForm(Form):
     image = FileField('Upload an image', validators=[
         FileAllowed(['jpg', 'jpeg', 'png'], 'Only images are allowed!')
     ])
+
+
+# Add article Form
+class ForgotPwForm(Form):
+    email = StringField('', [
+        validators.DataRequired()
+    ],
+                        render_kw={"placeholder": "Email"})

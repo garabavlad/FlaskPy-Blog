@@ -3,7 +3,7 @@ from flask import render_template, abort, request, flash, redirect, url_for, ses
 from flask_mail import Message
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
-from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm
+from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm, ForgotPwForm
 from flasky.middleware import is_not_logged_in, is_logged_in, is_admin
 from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file
 from flasky.config import oauth, google
@@ -304,11 +304,37 @@ def login():
     return render_template('auth/login.html', form=form)
 
 # Forgot password
-@app.route('/iforgot')
+@app.route('/iforgot', methods=['POST', 'GET'])
 def iforgot():
-    return render_template('auth/forgot-confirm.html')
+    form = ForgotPwForm(request.form)
+    if request.method == 'POST' and form.validate():
+        email = request.form['email']
+        cur = mysql.connection.cursor()
+        result = cur.execute("SELECT id FROM users_ WHERE email = %s", [email])
 
-# PAssword recoved
+        if result > 0:
+            msg = Message("Your Flasky-App account activation link",
+                          sender=app.config['MAIL_DEFAULT_SENDER'],
+                          recipients=[email])
+
+            msg.html = activation_mail_body(username, request.url_root, activation_link)
+            try:
+                mail.send(msg)
+            except:
+                app.logger.info('Failed to send mail; check your SMTP connexion')
+
+        cur.close()
+        return redirect(url_for('iforgot', sent='true'))
+
+    is_sent = request.args.get('sent')
+
+    if is_sent == 'true':
+        to_return = render_template('auth/forgot-password.html', sent=1)
+    else:
+        to_return = render_template('auth/forgot-password.html', sent=0, form=form)
+    return to_return
+
+# Password recoved
 @app.route('/recover/<string:code>')
 def recover(code):
     return render_template('auth/recover-password.html')
