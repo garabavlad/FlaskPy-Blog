@@ -66,7 +66,7 @@ def pwreset_mail_body(username, base_url, reset_link):
     Hello %s!
     <br>
     You requested a password change for your account on Flasky-App:
-    <a href="%srecover/%s"> Click to activate</a>
+    <a href="%srecover/%s"> Click to reset your password</a>
     <br>
     We can't wait to see you among us!
     <br>

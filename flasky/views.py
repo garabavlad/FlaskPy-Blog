@@ -3,10 +3,10 @@ from flask import render_template, abort, request, flash, redirect, url_for, ses
 from flask_mail import Message
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
-from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm, ForgotPwForm
+from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm, ForgotPwForm, RecoverPwForm
 from flasky.middleware import is_not_logged_in, is_logged_in, is_admin
 from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file, \
-    pwreset_mail_body, create_pwreset_link
+    pwreset_mail_body, create_pwreset_link, decrypt_pwreset_link
 from flasky.config import oauth, google
 import os
 import secrets
@@ -338,9 +338,27 @@ def iforgot():
     return to_return
 
 # Password recoved
-@app.route('/recover/<string:code>')
+@app.route('/recover/<string:code>', methods=['POST', 'GET'])
 def recover(code):
-    return render_template('auth/recover-password.html')
+    form = RecoverPwForm(request.form)
+    if request.method == 'POST' and form.validate():
+        id = decrypt_pwreset_link(code)
+
+        if (id == -1):
+            flash("Invalid activation link!", "danger")
+            return redirect(url_for("index"))
+
+
+        password = sha256_crypt.encrypt(str(form.password.data))
+        cur = mysql.connection.cursor()
+
+        cur.execute("UPDATE users_ SET password = %s WHERE id = %s", [password, id])
+        mysql.connection.commit()
+
+        cur.close()
+        flash('Your password was reset successfully', 'success')
+        return redirect(url_for('login'))
+    return render_template('auth/recover-password.html', form=form)
 
 
 # OAuth Google login

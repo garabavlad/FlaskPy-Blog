@@ -56,9 +56,22 @@ class ArticleForm(Form):
     ])
 
 
-# Add article Form
+# Forgot password Form
 class ForgotPwForm(Form):
     email = StringField('', [
         validators.DataRequired()
     ],
                         render_kw={"placeholder": "Email"})
+
+
+# Recover password Form
+class RecoverPwForm(Form):
+    password = PasswordField('', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords do not match')
+    ],
+                             render_kw={"placeholder": "Password"})
+    confirm = PasswordField('', [
+        validators.DataRequired()
+    ],
+                            render_kw={"placeholder": "Confirm password"})
