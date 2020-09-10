@@ -309,8 +309,8 @@ def iforgot():
     return render_template('auth/forgot-password.html')
 
 # PAssword recoved
-@app.route('/recover')
-def recover():
+@app.route('/recover/<string:code>')
+def recover(code):
     return render_template('auth/recover-password.html')
 
 
