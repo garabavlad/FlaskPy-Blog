@@ -670,6 +670,24 @@ def admin_dashboard_articles_return(id):
     return redirect(url_for('admin_dashboard_articles'))
 
 
+@app.route('/admin/dashboard/users')
+@is_logged_in
+@is_admin
+def admin_dashboard_users():
+    # connecting to db and getting users details
+    cur = mysql.connection.cursor()
+
+    cur.execute("SELECT id, name, email,username, register_date, activated  FROM users_")
+
+    users = cur.fetchall()
+
+    for ar in users:
+        ar['register_date'] = ar['register_date'].strftime("%b %d %Y")
+
+    cur.close()
+    return render_template('adminLTE/users.html', users=users)
+
+
 # User Dashboard
 @app.route('/dashboard')
 @is_logged_in
