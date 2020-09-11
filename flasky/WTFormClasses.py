@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators, BooleanField
 from flask_wtf.file import FileField, FileAllowed
 
 
@@ -75,3 +75,15 @@ class RecoverPwForm(Form):
         validators.DataRequired()
     ],
                             render_kw={"placeholder": "Confirm password"})
+
+class AdminDashboardUser(Form):
+    name = StringField('Full name', [
+        validators.DataRequired()
+    ], render_kw={"placeholder": "Full name"})
+    email = StringField('Email', [
+        validators.DataRequired()
+    ], render_kw={'placeholder': "Email"})
+    username = StringField('Username', [
+        validators.DataRequired()
+    ], render_kw={'placeholder': 'Username'})
+    activated = BooleanField('')

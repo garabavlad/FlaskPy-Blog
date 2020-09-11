@@ -3,7 +3,7 @@ from flask import render_template, abort, request, flash, redirect, url_for, ses
 from flask_mail import Message
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
-from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm, ForgotPwForm, RecoverPwForm
+from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm, ForgotPwForm, RecoverPwForm, AdminDashboardUser
 from flasky.middleware import is_not_logged_in, is_logged_in, is_admin
 from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file, \
     pwreset_mail_body, create_pwreset_link, decrypt_pwreset_link
@@ -686,6 +686,48 @@ def admin_dashboard_users():
 
     cur.close()
     return render_template('adminLTE/users.html', users=users)
+
+
+@app.route('/admin/dashboard/users/edit/<string:id>', methods=['POST', 'GET'])
+@is_logged_in
+@is_admin
+def admin_dashboard_users_edit(id):
+    form =  AdminDashboardUser(request.form)
+
+    if request.method == "POST" and form.validate():
+        name = form.name.data
+        email = form.email.data
+        username = form.username.data
+        is_activated = form.activated.data
+        active = 1 if is_activated else 0
+
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE users_ SET name=%s, email=%s, username=%s, activated=%s WHERE id=%s", (name, email, username, active, [id]))
+        mysql.connection.commit()
+        cur.close()
+
+        flash('User successfully edited!', 'success')
+        return redirect(url_for('admin_dashboard_users'))
+
+    elif request.method == 'GET':
+        # connecting to db and getting users details
+        cur = mysql.connection.cursor()
+
+        reslt = cur.execute("SELECT name, email, username, activated FROM users_ WHERE id=%s", [id])
+
+        if reslt:
+            user = cur.fetchone()
+            form.name.data = user['name']
+            form.email.data = user['email']
+            form.username.data = user['username']
+            form.activated.data = user['activated']
+
+            cur.close()
+            return render_template('adminLTE/edit_user.html', form=form)
+        else:
+            flash('User not available', 'danger')
+            return redirect(url_for('admin_dashboard_users'))
+
 
 
 # User Dashboard
