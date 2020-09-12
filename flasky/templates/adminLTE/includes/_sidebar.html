@@ -37,9 +37,10 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="/admin/dashboard/articles"
-                       class="nav-link {% if request.path == "/admin/dashboard/articles" %} {{ 'active' }} {% endif %}">
+                <li class="nav-item
+                {% if "/admin/dashboard/articles" in request.path %} {{ 'menu-open' }} {% endif %}">
+                    <a href="#"
+                       class="nav-link {% if "/admin/dashboard/articles" in request.path %} {{ 'active' }} {% endif %}">
                         <i class="nav-icon fas fa-table"></i>
                         <p>
                             Articles
@@ -47,10 +48,28 @@
 
                         </p>
                     </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/dashboard/articles"
+                               class="nav-link {% if request.path == "/admin/dashboard/articles" %} {{ 'active' }} {% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Articles</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/dashboard/articles/new"
+                               class="nav-link {% if request.path == "/admin/dashboard/articles/new" %} {{ 'active' }} {% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New Article</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/admin/dashboard/users" class="nav-link">
+                    <a href="/admin/dashboard/users"
+                       class="nav-link {% if "/admin/dashboard/users" in request.path %} {{ 'active' }} {% endif %}">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             Users
@@ -63,26 +82,26 @@
                         <p>
                             Layout Options
                             <i class="fas fa-angle-left right"></i>
-                            <span class="badge badge-info right">6</span>
+                            <span class="badge badge-info right">3</span>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Top Navigation</p>
+                                <p>Layout Option #1</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Fixed Footer</p>
+                                <p>Layout Option #2</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Collapsed Sidebar</p>
+                                <p>Layout Option #3</p>
                             </a>
                         </li>
                     </ul>
@@ -99,19 +118,19 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>General Elements</p>
+                                <p>Form #1</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Advanced Elements</p>
+                                <p>Form #2</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Editors</p>
+                                <p>Form #3</p>
                             </a>
                         </li>
                     </ul>
