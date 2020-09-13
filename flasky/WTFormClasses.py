@@ -87,3 +87,7 @@ class AdminDashboardUser(Form):
         validators.DataRequired()
     ], render_kw={'placeholder': 'Username'})
     activated = BooleanField('')
+    password = PasswordField('', [
+        validators.Length(min=5, max=40),
+        validators.Optional()
+    ], render_kw={'placeholder': 'Password'})

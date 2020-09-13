@@ -134,25 +134,24 @@ def edit_article(id):
         flash('Article successfully edited!', 'success')
         return redirect(url_for('article', id=id))
 
-    elif request.method == "GET":
-        cur = mysql.connection.cursor()
-        res = cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
+    cur = mysql.connection.cursor()
+    res = cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
 
-        if res:  # checking if article is not deleted
-            article = cur.fetchone()
-            article['create_date'] = article['create_date'].strftime("%b %d %Y")
+    if res:  # checking if article is not deleted
+        article = cur.fetchone()
+        article['create_date'] = article['create_date'].strftime("%b %d %Y")
 
-            if article['deleted'] == b'1':
-                flash("The requested article is in the trash", "danger")
-        else:
-            flash("The requested article is not available", "danger")
-            return redirect(url_for("articles"))
+        if article['deleted'] == b'1':
+            flash("The requested article is in the trash", "danger")
+    else:
+        flash("The requested article is not available", "danger")
+        return redirect(url_for("articles"))
 
-        form.title.data = article['title']
-        form.body.data = article['body']
+    form.title.data = article['title']
+    form.body.data = article['body']
 
-        cur.close()
-        return render_template('articles/edit_article.html', form=form)
+    cur.close()
+    return render_template('articles/edit_article.html', form=form)
 
 
 # Deleting articles
@@ -389,12 +388,14 @@ def google_authorize():
     if result > 0:  # the user is in db
         data = cur.fetchone()
         username = data['username']
+        is_activated = data['activated']
 
     else:  # creating new user in db
 
         # generating an username and password
         username = user_info['given_name'] + '.' + user_info['family_name'] + '.' + secrets.token_hex(2)
         password = sha256_crypt.encrypt(str(secrets.token_hex(10)))
+        is_activated = 0
 
         # inserting new user to DB
         cur.execute("INSERT INTO users_ (name,email,username,password) VALUES (%s, %s, %s, %s)",
@@ -404,7 +405,7 @@ def google_authorize():
     # creating auth session
     session['auth'] = {}
     session['auth']['username'] = username
-    session['auth']['activated'] = 0  # user is not activated
+    session['auth']['activated'] = is_activated  # user is not activated
     session['auth']['email'] = email
 
     # checking if email is in admin list
@@ -626,16 +627,16 @@ def admin_dashboard_article_edit(id):
 
         flash('Article edited successfully', 'success')
         return redirect(url_for('admin_dashboard_articles'))
-    elif request.method == "GET":
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
-        article = cur.fetchone()
-        cur.close()
 
-        form.title.data = article['title']
-        form.body.data = article['body']
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM articles_ WHERE id = %s", [id])
+    article = cur.fetchone()
+    cur.close()
 
-        return render_template('adminLTE/edit_article.html', form=form)
+    form.title.data = article['title']
+    form.body.data = article['body']
+
+    return render_template('adminLTE/edit_article.html', form=form)
 
 
 @app.route('/admin/dashboard/articles/delete/<string:id>')
@@ -698,35 +699,38 @@ def admin_dashboard_users_edit(id):
         name = form.name.data
         email = form.email.data
         username = form.username.data
+        password = sha256_crypt.encrypt(str(form.password.data)) if form.password.data != '' else None
         is_activated = form.activated.data
         active = 1 if is_activated else 0
 
         cur = mysql.connection.cursor()
-        cur.execute("UPDATE users_ SET name=%s, email=%s, username=%s, activated=%s WHERE id=%s", (name, email, username, active, [id]))
+        if password:
+            cur.execute("UPDATE users_ SET name=%s, email=%s, username=%s, activated=%s, password=%s WHERE id=%s", (name, email, username, active, password, [id]))
+        else:
+            cur.execute("UPDATE users_ SET name=%s, email=%s, username=%s, activated=%s WHERE id=%s", (name, email, username, active, [id]))
         mysql.connection.commit()
         cur.close()
 
         flash('User successfully edited!', 'success')
         return redirect(url_for('admin_dashboard_users'))
 
-    elif request.method == 'GET':
-        # connecting to db and getting users details
-        cur = mysql.connection.cursor()
+    # connecting to db and getting users details
+    cur = mysql.connection.cursor()
 
-        reslt = cur.execute("SELECT name, email, username, activated FROM users_ WHERE id=%s", [id])
+    reslt = cur.execute("SELECT name, email, username, activated FROM users_ WHERE id=%s", [id])
 
-        if reslt:
-            user = cur.fetchone()
-            form.name.data = user['name']
-            form.email.data = user['email']
-            form.username.data = user['username']
-            form.activated.data = user['activated']
+    if reslt:
+        user = cur.fetchone()
+        form.name.data = user['name']
+        form.email.data = user['email']
+        form.username.data = user['username']
+        form.activated.data = user['activated']
 
-            cur.close()
-            return render_template('adminLTE/edit_user.html', form=form)
-        else:
-            flash('User not available', 'danger')
-            return redirect(url_for('admin_dashboard_users'))
+        cur.close()
+        return render_template('adminLTE/edit_user.html', form=form)
+    else:
+        flash('User not available', 'danger')
+        return redirect(url_for('admin_dashboard_users'))
 
 
 
