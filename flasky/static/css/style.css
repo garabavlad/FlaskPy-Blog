@@ -601,20 +601,25 @@ footer a:hover {
     }
 
     .carousel-caption {
-        top: 22%;
+        top: 30%;
     }
 
     .carousel-caption h1 {
-        font-size: 250%;
+        font-size: 149%;
         text-transform: uppercase;
         text-shadow: 1px 1px 10px #fff;
     }
 
     .carousel-caption h3 {
-        font-size: 130%;
+        font-size: 110%;
         font-weight: 400;
         text-shadow: 1px 1px 7px #000;
         padding-bottom: 0.2rem;
+    }
+
+    .carousel-caption button {
+        font-size: 1rem;
+        padding: .4rem .8rem;
     }
 
     .carousel-caption p {
