@@ -1,7 +1,8 @@
 # Flasky Blog App
 
 A CRUD Flask Py application for creating, displaying, and managing articles. 
-Users can create and manege their content using the dashboard.
+<br>Users can create and manege their content using the dashboard.
+<br>The application also has an administrator panel integrated with AdminLTE, which allows administrators to effectively manage the web app content.
 
 The application is using a MySQL database on JawsDB server
 
