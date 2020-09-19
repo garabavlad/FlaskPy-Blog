@@ -12,6 +12,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css') }}">
 
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/toastr/toastr.min.css') }}">
+
     {% block stylesheet_includes %}{% endblock %}
 
     <!-- IonIcons -->
@@ -60,6 +63,8 @@
 <script src="{{ url_for('static', filename='dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ url_for('static', filename='dist/js/pages/dashboard3.js') }}"></script>
+
+{% include "adminLTE/includes/_alerts.html" %}
 
 </body>
 </html>

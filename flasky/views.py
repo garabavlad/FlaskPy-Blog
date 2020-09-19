@@ -729,7 +729,7 @@ def admin_dashboard_users_edit(id):
         cur.close()
         return render_template('adminLTE/edit_user.html', form=form)
     else:
-        flash('User not available', 'danger')
+        flash('User not available', 'error')
         return redirect(url_for('admin_dashboard_users'))
 
 
