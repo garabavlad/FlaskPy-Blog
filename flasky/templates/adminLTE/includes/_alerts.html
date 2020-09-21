@@ -3,11 +3,8 @@
         {% for category, message in messages %}
             <!-- Toastr -->
             <script src="{{ url_for('static', filename='plugins/toastr/toastr.min.js') }}"></script>
-{#            <div class="alert alert-{{ category }}">{{ message }}</div>#}
             <script>
-
                 toastr.{{ category }}('{{ message }}');
-
             </script>
         {% endfor %}
     {% endif %}
