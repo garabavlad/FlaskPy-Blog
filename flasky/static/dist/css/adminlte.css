@@ -11725,6 +11725,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 }
 
 .brand-link .brand-image {
+  background: white;
   float: left;
   line-height: .8;
   margin-left: .8rem;
