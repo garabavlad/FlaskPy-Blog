@@ -465,21 +465,83 @@ svg {
     display: inline;
 }
 
-.udash-wrap {
-    padding: 0;
+.udash-content {
+    padding: 0 1rem;
     margin-left: 250px;
     margin-top: -64px;
+    width: 100%;
+}
+
+.udash-wrap {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
 }
 
 .udash-sidebar {
     background: rgba(0, 0, 0, .85);
-    height: inherit;
     min-height: 105%;
-    width: 250px;
-    position: absolute;
     left: 0;
     top: 65px;
+    position: fixed;
+    height: 100vh;
+    color: #fff;
+    transition: all 0.5s ease-in-out;
+    min-width: 250px;
+    max-width: 250px;
 }
+
+.udash-sidebar.active {
+    margin-left: -250px;
+}
+
+.udash-content.fullscreen {
+    margin-left: 0;
+    width: 100%;
+    transition: margin-left .5s ease-in-out;
+}
+
+.nav-link {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.nav-item {
+    /*padding: 20px 0;*/
+}
+
+.nav-link {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+.nav-link:hover {
+    color: rgba(0, 0, 0, .85);
+    background: #fff;
+}
+
+.nav-item.active:hover > .nav-link {
+    color: rgba(0, 0, 0, .85);
+    background: #ff2725;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #999;
+}
+
+.nav-item ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #4b4b4b;
+}
+
+.nav-item.active ul .nav-link:hover{
+    color: #000 !important;
+}
+
 
 .udash-sidebar-image-wrap {
     display: inline-block;
@@ -499,7 +561,7 @@ svg {
     width: 2.6rem;
 }
 
-.udash-sidebar-user-wrap{
+.udash-sidebar-user-wrap {
     overflow: hidden;
     white-space: nowrap;
     border-bottom: 1px solid #7c848c;

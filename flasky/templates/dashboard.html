@@ -1,17 +1,45 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flasky App</title>
+    {# FAVICON #}
+    <link rel="shortcut icon" type="image/jpg" href="{{ url_for('static', filename='img/fav-icon.png') }}"/>
 
-{% block style_includes %}
+    {# BOOTSTRAP 4 #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {# GOOGLE FONTS #}
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    {# FONT AWESOME #}
+    <script src="https://kit.fontawesome.com/95f68e1922.js" crossorigin="anonymous"></script>
+    {# STRIPE #}
+    <script src="https://js.stripe.com/v3/"></script>
+
     <!-- DataTables -->
     <link rel="stylesheet"
           href="{{ url_for('static', filename='plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet"
           href="{{ url_for('static', filename='plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-{% endblock %}
 
-{% block body %}
+    {# LOCAL STYLE CSS #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+</head>
+
+<body>
+{% include 'includes/_navbar.html' %}
+
+{% include "includes/_messages.html" %}
+
+<div class="udash-wrap">
     {#  SIDEBAR  #}
-    <aside class="udash-sidebar">
+    <nav class="udash-sidebar" id="sidebar">
+        {#    HEADER    #}
         <div class="udash-sidebar-user-wrap d-flex pt-3 pb-3 mb-3">
             <div class="udash-sidebar-image-wrap">
                 <img src="{{ url_for('static', filename='dist/img/avatar5.png') }}" alt="" class="udash-sidebar-image">
@@ -20,10 +48,33 @@
                 {{ session.auth.username }}
             </div>
         </div>
-    </aside>
+
+        {#    SIDEAR ULIST    #}
+
+        <ul class="list-unstyled components">
+            <li class="active nav-item">
+                <a href="#articlesMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">Articles</a>
+                <ul class="collapse list-unstyled" id="articlesMenu">
+                    <li>
+                        <a class="nav-link" href="#">Published Articles</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">Trashed Articles</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">New Article</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Profile</a>
+            </li>
+        </ul>
+
+    </nav>
 
     {#  CONTENT WRAP  #}
-    <div class="udash-wrap">
+    <div class="udash-content">
         <h2>
             Dashboard
         </h2>
@@ -38,10 +89,15 @@
         <a href="/become_user"
            class="btn pull-right {% if not session.auth.admin %} disabled btn-outline-info {% else %} btn-info {% endif %}">
             Become an User</a>
-        <a href="/add_article" class="btn btn-primary pull-right">New Article</a>
+        <a href="/add_article" class="btn btn-success pull-right">New Article</a>
+
+        <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Toggle Sidebar</span>
+        </button>
 
         <div class="my-4">
-            <table class="table table-striped table-bordered mt-3" id="udash-table">
+            <table class="table table-striped table-bordered mt-3" width="100" id="udash-table">
                 <thead>
                 <tr>
                     <th>Article Title</th>
@@ -73,12 +129,41 @@
             </table>
         </div>
     </div>
+</div>
 
 
-    {% if not session.auth.activated %}
-        <div class="alert alert-warning no-activate-alert" role="alert">
-            You haven't activated your account! <a href="/send_activation">Resend link</a>!
-        </div>
-    {% endif %}
+{% if not session.auth.activated %}
+    <div class="alert alert-warning no-activate-alert" role="alert">
+        You haven't activated your account! <a href="/send_activation">Resend link</a>!
+    </div>
+{% endif %}
 
-{% endblock %}
+
+{% include 'includes/_footer.html' %}
+
+<script
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
+<script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+
+<!-- DataTables -->
+<script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+<!-- jQuery Custom Scroller CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+{# LOCAL SCRIPTS #}
+<script src="{{ url_for('static', filename='js/udash.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
