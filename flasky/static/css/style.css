@@ -470,6 +470,7 @@ svg {
     margin-left: 250px;
     margin-top: -64px;
     width: 100%;
+    min-height: 66vh;
 }
 
 .udash-wrap {

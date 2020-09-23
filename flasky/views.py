@@ -738,15 +738,22 @@ def admin_dashboard_users_edit(id):
 @app.route('/dashboard')
 @is_logged_in
 def dashboard():
+    get_show = request.args.get("show")
+
     # connect to db & get articles
     cur = mysql.connection.cursor()
 
     try:
         if (session['auth']['admin']):
-            cur.execute("SELECT * FROM articles_ WHERE deleted = 0")
+            if get_show == 'trashed':
+                cur.execute("SELECT * FROM articles_ WHERE deleted = 1")
+            else:
+                cur.execute("SELECT * FROM articles_ WHERE deleted = 0")
     except:
-        cur.execute("SELECT * FROM articles_ WHERE author=%s AND deleted = 0", [session['auth']['username']])
-
+        if get_show == 'trashed':
+            cur.execute("SELECT * FROM articles_ WHERE author=%s AND deleted = 1", [session['auth']['username']])
+        else:
+            cur.execute("SELECT * FROM articles_ WHERE author=%s AND deleted = 0", [session['auth']['username']])
     articles = cur.fetchall()
     cur.close()
 
