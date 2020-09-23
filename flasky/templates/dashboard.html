@@ -47,27 +47,29 @@
             <div class="udash-sidebar-info-wrap">
                 {{ session.auth.username }}
             </div>
+            <i class="fas fa-chevron-circle-left udash-close-arrow"></i>
+
         </div>
 
         {#    SIDEAR ULIST    #}
 
         <ul class="list-unstyled components">
-            <li class="active nav-item">
+            <li class="{% if request.path == "/dashboard" %} {{ 'active' }} {% endif %} nav-item">
                 <a href="#articlesMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">Articles</a>
                 <ul class="collapse list-unstyled" id="articlesMenu">
                     <li>
-                        <a class="nav-link" href="#">Published Articles</a>
+                        <a class="nav-link" href="/dashboard">Published Articles</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#">Trashed Articles</a>
+                        <a class="nav-link" href="/dashboard?show=trashed">Trashed Articles</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#">New Article</a>
+                        <a class="nav-link" href="/add_article">New Article</a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">Profile</a>
+            <li class="nav-item {% if request.path == "/dashboard/profile" %} {{ 'active' }} {% endif %}">
+                <a href="/dashboard/profile" class="nav-link">Profile</a>
             </li>
         </ul>
 
@@ -83,6 +85,11 @@
             <span class="text-secondary">Admin Dashboard</span> {% endif %}!
         </p>
 
+        <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Toggle Sidebar</span>
+        </button>
+
         <a href="/become_admin"
            class="btn pull-right {% if session.auth.admin %} disabled btn-outline-danger {% else %} btn-danger {% endif %}">
             Become an Administrator</a>
@@ -91,10 +98,6 @@
             Become an User</a>
         <a href="/add_article" class="btn btn-success pull-right">New Article</a>
 
-        <button type="button" id="sidebarCollapse" class="btn btn-info">
-            <i class="fas fa-align-left"></i>
-            <span>Toggle Sidebar</span>
-        </button>
 
         <div class="my-4">
             <table class="table table-striped table-bordered mt-3" width="100" id="udash-table">
