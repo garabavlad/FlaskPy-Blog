@@ -3,7 +3,8 @@ from flask import render_template, abort, request, flash, redirect, url_for, ses
 from flask_mail import Message
 from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
-from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm, ForgotPwForm, RecoverPwForm, AdminDashboardUser
+from flasky.WTFormClasses import RegisterForm, LoginForm, ArticleForm, ForgotPwForm, RecoverPwForm, AdminDashboardUser, \
+    DashboardUser
 from flasky.middleware import is_not_logged_in, is_logged_in, is_admin
 from flasky.helpers import create_activation_link, decrypt_activation_link, activation_mail_body, allowed_file, \
     pwreset_mail_body, create_pwreset_link, decrypt_pwreset_link
@@ -303,6 +304,7 @@ def login():
         cur.close()
     return render_template('auth/login.html', form=form)
 
+
 # Forgot password
 @app.route('/iforgot', methods=['POST', 'GET'])
 def iforgot():
@@ -336,6 +338,7 @@ def iforgot():
         to_return = render_template('auth/forgot-password.html', sent=0, form=form)
     return to_return
 
+
 # Password recoved
 @app.route('/recover/<string:code>', methods=['POST', 'GET'])
 def recover(code):
@@ -346,7 +349,6 @@ def recover(code):
         if (id == -1):
             flash("Invalid activation link!", "danger")
             return redirect(url_for("index"))
-
 
         password = sha256_crypt.encrypt(str(form.password.data))
         cur = mysql.connection.cursor()
@@ -693,7 +695,7 @@ def admin_dashboard_users():
 @is_logged_in
 @is_admin
 def admin_dashboard_users_edit(id):
-    form =  AdminDashboardUser(request.form)
+    form = AdminDashboardUser(request.form)
 
     if request.method == "POST" and form.validate():
         name = form.name.data
@@ -705,9 +707,11 @@ def admin_dashboard_users_edit(id):
 
         cur = mysql.connection.cursor()
         if password:
-            cur.execute("UPDATE users_ SET name=%s, email=%s, username=%s, activated=%s, password=%s WHERE id=%s", (name, email, username, active, password, [id]))
+            cur.execute("UPDATE users_ SET name=%s, email=%s, username=%s, activated=%s, password=%s WHERE id=%s",
+                        (name, email, username, active, password, [id]))
         else:
-            cur.execute("UPDATE users_ SET name=%s, email=%s, username=%s, activated=%s WHERE id=%s", (name, email, username, active, [id]))
+            cur.execute("UPDATE users_ SET name=%s, email=%s, username=%s, activated=%s WHERE id=%s",
+                        (name, email, username, active, [id]))
         mysql.connection.commit()
         cur.close()
 
@@ -731,7 +735,6 @@ def admin_dashboard_users_edit(id):
     else:
         flash('User not available', 'error')
         return redirect(url_for('admin_dashboard_users'))
-
 
 
 # User Dashboard
@@ -762,6 +765,48 @@ def dashboard():
 
     return render_template('dashboard.html', articles=articles)
 
+
+@app.route('/dashboard/profile', methods=['POST', 'GET'])
+@is_logged_in
+def profile():
+    form = DashboardUser(request.form)
+    id = -1
+    cur = mysql.connection.cursor()
+    reslt = cur.execute("SELECT id, name, email, username, activated FROM users_ WHERE username=%s OR email=%s",
+                        [session['auth']['username'], session['auth']['username']])
+
+    if reslt:
+        user = cur.fetchone()
+        id = user['id']
+        form.name.data = user['name']
+        form.email.data = user['email']
+        form.username.data = user['username']
+
+        to_return = render_template('dashboard_profile.html', form=form)
+    else:
+        flash('User not available', 'error')
+        to_return = redirect(url_for('dashboard'))
+
+    if request.method == "POST" and form.validate():
+        name = form.name.data
+        username = form.username.data
+        password = sha256_crypt.encrypt(str(form.password.data)) if form.password.data != '' else None
+        post_cur = mysql.connection.cursor()
+
+        if password:
+            post_cur.execute("UPDATE users_ SET name=%s, username=%s, password=%s WHERE id=%s",
+                        (name, username, password, id))
+        else:
+            post_cur.execute("UPDATE users_ SET name=%s, username=%s WHERE id=%s",
+                        (name, username, id))
+
+        mysql.connection.commit()
+        post_cur.close()
+        flash('User successfully edited!', 'success')
+        to_return = redirect(url_for('profile'))
+
+    cur.close()
+    return to_return
 
 # Privacy
 @app.route('/privacy')

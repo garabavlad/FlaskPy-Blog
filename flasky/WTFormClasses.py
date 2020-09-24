@@ -32,6 +32,8 @@ class RegisterForm(Form):
     ],
                             render_kw={"placeholder": "Retype password"})
 
+    policy = BooleanField('', [validators.DataRequired()])
+
 
 # Login Form
 class LoginForm(Form):
@@ -76,6 +78,7 @@ class RecoverPwForm(Form):
     ],
                             render_kw={"placeholder": "Confirm password"})
 
+
 class AdminDashboardUser(Form):
     name = StringField('Full name', [
         validators.DataRequired()
@@ -91,3 +94,18 @@ class AdminDashboardUser(Form):
         validators.Length(min=5, max=40),
         validators.Optional()
     ], render_kw={'placeholder': 'Password'})
+
+
+class DashboardUser(Form):
+    name = StringField('Full name', [
+        validators.DataRequired()
+    ], render_kw={"placeholder": "Full name"})
+    email = StringField('Email', render_kw={'placeholder': "Email", 'disabled': 'disabled'})
+    username = StringField('Username', [
+        validators.DataRequired()
+    ], render_kw={'placeholder': 'Username'})
+    password = PasswordField('', [
+        validators.Length(min=5, max=40),
+        validators.Optional()
+    ], render_kw={'placeholder': 'Password'})
+    confirm = PasswordField('', [validators.Optional()], render_kw={"placeholder": "Confirm password"})

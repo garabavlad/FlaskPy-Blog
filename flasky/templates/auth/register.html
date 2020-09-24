@@ -81,11 +81,17 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" class="is-invalid custom-control-input" id="agreeTerms" required name="terms" value="agree">
+
+                        <div class="icheck-primary" id="signin-policy">
+                            <input type="checkbox" class="is-invalid custom-control-input" id="agreeTerms" required
+                                   name="terms" value="agree">
                             <label for="agreeTerms">
                                 I agree to the <a href="/privacy">terms</a>
                             </label>
+                        </div>
+
+                        <div id="rendered_checkbox">
+                            {{ render_field(form.policy, class_="") }}
                         </div>
                     </div>
                     <!-- /.col -->
@@ -123,5 +129,20 @@
 <!-- AdminLTE App -->
 <script src="{{ url_for('static', filename='dist/js/adminlte.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#rendered_checkbox").remove();
+
+        $("#signin-policy").html(
+            '<input type="checkbox" class="is-invalid custom-control-input" id="policy" required\n' +
+            '                                   name="policy" value="agree">\n' +
+            '                            <label for="policy">\n' +
+            '                                I agree to the <a href="/privacy">terms</a>\n' +
+            '                            </label>'
+        );
+
+    });
+</script>
 </body>
 </html>
