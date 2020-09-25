@@ -769,44 +769,41 @@ def dashboard():
 @app.route('/dashboard/profile', methods=['POST', 'GET'])
 @is_logged_in
 def profile():
-    form = DashboardUser(request.form)
-    id = -1
     cur = mysql.connection.cursor()
-    reslt = cur.execute("SELECT id, name, email, username, activated FROM users_ WHERE username=%s OR email=%s",
-                        [session['auth']['username'], session['auth']['username']])
-
-    if reslt:
-        user = cur.fetchone()
-        id = user['id']
-        form.name.data = user['name']
-        form.email.data = user['email']
-        form.username.data = user['username']
-
-        to_return = render_template('dashboard_profile.html', form=form)
-    else:
-        flash('User not available', 'error')
-        to_return = redirect(url_for('dashboard'))
+    form = DashboardUser(request.form)
 
     if request.method == "POST" and form.validate():
         name = form.name.data
         username = form.username.data
         password = sha256_crypt.encrypt(str(form.password.data)) if form.password.data != '' else None
-        post_cur = mysql.connection.cursor()
 
         if password:
-            post_cur.execute("UPDATE users_ SET name=%s, username=%s, password=%s WHERE id=%s",
-                        (name, username, password, id))
+            cur.execute("UPDATE users_ SET name=%s, username=%s, password=%s WHERE username=%s OR email=%s",
+                        (name, username, password, session['auth']['username'], session['auth']['username']))
         else:
-            post_cur.execute("UPDATE users_ SET name=%s, username=%s WHERE id=%s",
-                        (name, username, id))
-
+            cur.execute("UPDATE users_ SET name=%s, username=%s WHERE username=%s OR email=%s",
+                        (name, username, session['auth']['username'], session['auth']['username']))
         mysql.connection.commit()
-        post_cur.close()
-        flash('User successfully edited!', 'success')
-        to_return = redirect(url_for('profile'))
+        cur.close()
 
-    cur.close()
-    return to_return
+        flash('User successfully edited!', 'success')
+        return redirect(url_for('profile'))
+
+    reslt = cur.execute("SELECT name, email, username, activated FROM users_ WHERE username=%s OR email=%s",
+                        [session['auth']['username'], session['auth']['username']])
+
+    if reslt:
+        user = cur.fetchone()
+        form.name.data = user['name']
+        form.email.data = user['email']
+        form.username.data = user['username']
+
+        cur.close()
+        return render_template('dashboard_profile.html', form=form)
+    else:
+        flash('User not available', 'error')
+        return redirect(url_for('dashboard'))
+
 
 # Privacy
 @app.route('/privacy')
